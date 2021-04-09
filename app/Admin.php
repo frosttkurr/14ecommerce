@@ -20,6 +20,7 @@ class Admin extends Authenticatable
         'name', 'username', 'password','profile_image','phone'
     ];
 
+
     /**
      * The attributes that should be hidden for arrays.
      *
@@ -40,5 +41,10 @@ class Admin extends Authenticatable
 
     public function sendPasswordResetNotification($token){
         $this->notify(new AdminResetPasswordNotification($token));
+    }
+
+    public function response()
+    {
+        return $this->hasMany('App\Response');
     }
 }

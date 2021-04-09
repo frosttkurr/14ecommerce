@@ -1,7 +1,5 @@
-
 <!DOCTYPE html>
 <html lang="en">
-
   <head>
 
     <meta charset="utf-8">
@@ -10,7 +8,6 @@
     <meta name="author" content="">
     <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
 
-    <title>PHPJabbers.com | Free Mobile Store Website Template</title>
 
     <!-- Bootstrap core CSS -->
     <link href="<?php echo e(asset('styleuser/mobile/vendor/bootstrap/css/bootstrap.min.css')); ?>" rel="stylesheet">
@@ -39,7 +36,7 @@
         <div class="row">
           <div class="col-md-8 col-xs-12">
             <ul class="left-info">
-              <li><a href="#"><i class="fa fa-envelope"></i>contact@company.com</a></li>
+              <li><a href="#"><i class="fa fa-envelope"></i>phonestore@company.com</a></li>
               <li><a href="#"><i class="fa fa-phone"></i>123-456-7890</a></li>
             </ul>
           </div>
@@ -57,7 +54,6 @@
     <header class="">
       <nav class="navbar navbar-expand-lg">
         <div class="container">
-          <a class="navbar-brand" href="index.html"><h2>Mobile Store<em> Website</em></h2></a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
@@ -67,9 +63,6 @@
                 <a class="nav-link" href="index.html">Home
                   <span class="sr-only">(current)</span>
                 </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="products.html">Products</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="checkout.html">Checkout</a>
@@ -94,11 +87,11 @@
     </header>
 
     <!-- Page Content -->
-    <div class="main-banner header-text" id="top">
-      <div class="Modern-Slider">
+    <main>
     <?php echo $__env->yieldContent('page-contents'); ?>
-  </div>
-</div>
+    </main>
+
+    <br>
 
     <!-- Footer Starts Here -->
     <footer>

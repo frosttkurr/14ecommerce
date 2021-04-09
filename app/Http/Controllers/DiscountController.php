@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Discount;
+use App\Product;
 use Illuminate\Http\Request;
 
 class DiscountController extends Controller
@@ -13,7 +15,9 @@ class DiscountController extends Controller
      */
     public function index()
     {
-        //
+        $discount=Discount::with('Product')->paginate('15');
+        
+        return view('layout.admin.discount',compact('discount'));
     }
 
     /**
@@ -21,9 +25,10 @@ class DiscountController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($id)
     {
-        //
+        $product = Product::all();
+        return view('discount.discount',compact('product','id'));
     }
 
     /**
@@ -34,7 +39,23 @@ class DiscountController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([    
+            'percentage' => ['required', 'between:0,99.99'],
+            'start' => ['required'],
+            'end' => ['required']
+        ]);
+
+        $discount = new Discount();
+        $discount->id_product = $request->id_product;
+        $discount->percentage = $request->percentage;
+        $discount->start = $request->start;
+        $discount->end = $request->end;
+        
+        if($discount->save()){
+            return redirect()->intended(route('product.edit',['id'=> $request->id_product]))->with("success", "Successfully Add Discount");
+        }
+        return redirect()->back()->withInput($request->only('percentage', 'start', 'end'))->with("error", "Failed Add Discount");
+
     }
 
     /**
@@ -54,9 +75,10 @@ class DiscountController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(discount $discount)
     {
-        //
+        $product = Product::all();
+        return view('discount.editdiscount',compact('discount','product'));
     }
 
     /**
@@ -68,7 +90,20 @@ class DiscountController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'id_product' => ['required'],
+            'percentage' => ['required', 'between:0,99.99'],
+            'start' => ['required'],
+            'end' => ['required']
+        ]);
+        $discount = Discount::find($id);
+        $discount->id_product = $request->id_product;
+        $discount->percentage = $request->percentage;
+        $discount->start = $request->start;
+        $discount->end = $request->end;
+        $discount->save();
+        return redirect("/products");
+        
     }
 
     /**
@@ -79,6 +114,8 @@ class DiscountController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $discount = Discount::find($id);
+        $discount->delete();
+        return redirect()->back()->with("success", "Successfully Delete Discount");
     }
 }
