@@ -78,8 +78,8 @@ class ProductCategoriesController extends Controller
         $request->validate([
             'category_name' => ['required', 'max:30']
         ]);
-        $category = new product_categories();
-        $category = product_categories::find($id);
+        $category = new Product_Categories();
+        $category = Product_Categories::find($id);
         $category->category_name= $request->category_name;
         $category->save();
         return redirect('/categories');
@@ -94,7 +94,7 @@ class ProductCategoriesController extends Controller
      */
     public function destroy($id)
     {
-        $cat = product_categories::find($id);
+        $cat = Product_Categories::find($id);
         $product_cat_det = DB::table('product_category_details')->where('product_id','=',$cat->id)->get();
         if($product_cat_det->isEmpty()){
             DB::delete('delete from product_category_details where product_id = ?', [$cat->id]);

@@ -8,6 +8,7 @@ use Illuminate\Notifications\Notifiable;
 
 /**Fadhil Melakukan commit */
 
+
 class User extends Authenticatable implements MustVerifyEmail
 {
     use Notifiable;
