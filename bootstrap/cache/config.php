@@ -193,7 +193,7 @@
       'file' => 
       array (
         'driver' => 'file',
-        'path' => 'C:\\xamp\\htdocs\\pratikumPrognet\\storage\\framework/cache/data',
+        'path' => 'C:\\xampp\\htdocs\\14ecommerce\\storage\\framework/cache/data',
       ),
       'memcached' => 
       array (
@@ -357,12 +357,12 @@
       'local' => 
       array (
         'driver' => 'local',
-        'root' => 'C:\\xamp\\htdocs\\pratikumPrognet\\storage\\app',
+        'root' => 'C:\\xampp\\htdocs\\14ecommerce\\storage\\app',
       ),
       'public' => 
       array (
         'driver' => 'local',
-        'root' => 'C:\\xamp\\htdocs\\pratikumPrognet\\storage\\app/public',
+        'root' => 'C:\\xampp\\htdocs\\14ecommerce\\storage\\app/public',
         'url' => 'http://localhost/storage',
         'visibility' => 'public',
       ),
@@ -378,7 +378,7 @@
     ),
     'links' => 
     array (
-      'C:\\xamp\\htdocs\\pratikumPrognet\\public\\storage' => 'C:\\xamp\\htdocs\\pratikumPrognet\\storage\\app/public',
+      'C:\\xampp\\htdocs\\14ecommerce\\public\\storage' => 'C:\\xampp\\htdocs\\14ecommerce\\storage\\app/public',
     ),
   ),
   'hashing' => 
@@ -412,13 +412,13 @@
       'single' => 
       array (
         'driver' => 'single',
-        'path' => 'C:\\xamp\\htdocs\\pratikumPrognet\\storage\\logs/laravel.log',
+        'path' => 'C:\\xampp\\htdocs\\14ecommerce\\storage\\logs/laravel.log',
         'level' => 'debug',
       ),
       'daily' => 
       array (
         'driver' => 'daily',
-        'path' => 'C:\\xamp\\htdocs\\pratikumPrognet\\storage\\logs/laravel.log',
+        'path' => 'C:\\xampp\\htdocs\\14ecommerce\\storage\\logs/laravel.log',
         'level' => 'debug',
         'days' => 14,
       ),
@@ -468,7 +468,7 @@
       ),
       'emergency' => 
       array (
-        'path' => 'C:\\xamp\\htdocs\\pratikumPrognet\\storage\\logs/laravel.log',
+        'path' => 'C:\\xampp\\htdocs\\14ecommerce\\storage\\logs/laravel.log',
       ),
     ),
   ),
@@ -515,7 +515,7 @@
       'theme' => 'default',
       'paths' => 
       array (
-        0 => 'C:\\xamp\\htdocs\\pratikumPrognet\\resources\\views/vendor/mail',
+        0 => 'C:\\xampp\\htdocs\\14ecommerce\\resources\\views/vendor/mail',
       ),
     ),
   ),
@@ -593,7 +593,7 @@
     'lifetime' => '120',
     'expire_on_close' => false,
     'encrypt' => false,
-    'files' => 'C:\\xamp\\htdocs\\pratikumPrognet\\storage\\framework/sessions',
+    'files' => 'C:\\xampp\\htdocs\\14ecommerce\\storage\\framework/sessions',
     'connection' => NULL,
     'table' => 'sessions',
     'store' => NULL,
@@ -613,9 +613,9 @@
   array (
     'paths' => 
     array (
-      0 => 'C:\\xamp\\htdocs\\pratikumPrognet\\resources\\views',
+      0 => 'C:\\xampp\\htdocs\\14ecommerce\\resources\\views',
     ),
-    'compiled' => 'C:\\xamp\\htdocs\\pratikumPrognet\\storage\\framework\\views',
+    'compiled' => 'C:\\xampp\\htdocs\\14ecommerce\\storage\\framework\\views',
     'expires' => true,
   ),
   'flare' => 
