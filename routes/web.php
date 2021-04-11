@@ -72,4 +72,3 @@ Route::prefix('admin/discount')->group(function () {
     Route::put('/{id}/update', 'DiscountController@update')->name('discount.update');
     Route::delete('/{id}', 'DiscountController@destroy')->name('discount.destroy');
 });
-
