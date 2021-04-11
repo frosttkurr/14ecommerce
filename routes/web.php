@@ -25,6 +25,10 @@ Route::prefix('product')->group(function () {
     Route::post('review/{id}', 'HomeController@review_product')->name('review_product');
 });
 
+Route::get('/productuser', function() {
+    return view('user.productuser');
+});
+
 Route::prefix('admin')->group(function(){
     Route::get('/', 'AdminController@index')->name('admin.dashboard');
     Route::get('/login', 'Auth\AdminLoginController@showLoginform')->name('admin.login');
