@@ -24,6 +24,7 @@ Route::prefix('product')->group(function () {
     Route::get('/{id}', 'HomeController@detail_product')->name('detail_product');
     Route::post('review/{id}', 'HomeController@review_product')->name('review_product');
 });
+
 Route::get('/productuser', function() {
     return view('user.productuser');
 });
