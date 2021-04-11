@@ -14,10 +14,10 @@
       </div>
       <div class="panel-body">
           {{-- ------------------------------------------TOMBOL TAMBAH DATA---------------------------------------- --}}
-          <button type="button" class="btn btn-info " data-toggle="modal"
-              data-target="#tambahdata">
-              Tambah Data
-          </button>
+          <button type="button" class="btn btn-info " data-toggle="modal" data-target="#tambahdata">
+            <i class="fa fa-plus-square"></i>
+            Tambah Data
+        </button>
           {{-- ------------------------------------------Section & Tambah data---------------------------------------- --}}
           @if(Session::has('success'))
           <div class="alert alert-success">
