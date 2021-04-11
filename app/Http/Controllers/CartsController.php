@@ -24,12 +24,12 @@ class CartsController extends Controller
 
     public function  construct()
     {
-        $this->middleware('isUser');
+        $this->middleware(['auth', 'verified']);
     }
 
     public function index()
     {
-        echo "ini index";
+        //
     }
 
     /**
@@ -186,6 +186,6 @@ class CartsController extends Controller
                 'selling_price' => $carts->product->price*$carts->qty    
             ]);    
         }
-        return redirect('/pesananuser');        
+        return redirect('/checkout');        
     }
 }
