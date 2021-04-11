@@ -20,6 +20,7 @@ Route::get('/', function () {
 Auth::routes(['verify' =>true]);
 
 Route::get('/home', 'HomeController@index')->name('home');
+//review
 Route::prefix('product')->group(function () {
     Route::get('/{id}', 'HomeController@detail_product')->name('detail_product');
     Route::post('review/{id}', 'HomeController@review_product')->name('review_product');
