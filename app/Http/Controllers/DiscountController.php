@@ -17,7 +17,7 @@ class DiscountController extends Controller
     {
         $discount=Discount::with('Product')->paginate('15');
         
-        return view('layout.admin.discount',compact('discount'));
+        return view('discount.discount',compact('discount'));
     }
 
     /**
@@ -102,7 +102,7 @@ class DiscountController extends Controller
         $discount->start = $request->start;
         $discount->end = $request->end;
         $discount->save();
-        return redirect("/products");
+        return redirect("product.edit");
         
     }
 
