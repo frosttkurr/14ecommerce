@@ -72,7 +72,7 @@
 								<li><a href="#"><i class="lnr lnr-user"></i> <span>My Profile</span></a></li>
 								<li><a href="#"><i class="lnr lnr-envelope"></i> <span>Message</span></a></li>
 								<li><a href="#"><i class="lnr lnr-cog"></i> <span>Settings</span></a></li>
-								<li><a href="{{ route('logout') }}"><i class="lnr lnr-exit"></i> <span>Logout</span>
+								<li><a href="{{ route('admin.logout') }}"><i class="lnr lnr-exit"></i> <span>Logout</span>
                                 </a></li>
 							</ul>
 						</li>
