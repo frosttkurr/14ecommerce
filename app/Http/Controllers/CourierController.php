@@ -5,6 +5,12 @@ namespace App\Http\Controllers;
 use App\Courier;
 use Illuminate\Http\Request;
 
+/* 1905551041 */
+/* 1905551038 */
+/* 1805551126 */
+/* 1905551043 */
+/* 1905551077 */
+
 class CourierController extends Controller
 {
     /**
@@ -61,7 +67,7 @@ class CourierController extends Controller
      */
     public function edit(Courier $courier)
     {
-        $courier = Courier::find($courier)->first();
+         $courier= Courier::find($courier)->first();
         return view('courier.editcourier',compact('courier')); 
     }
 

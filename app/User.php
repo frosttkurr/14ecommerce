@@ -22,6 +22,11 @@ class User extends Authenticatable implements MustVerifyEmail
         'name', 'email', 'password','profile_image','status'
     ];
 
+    public function product_review()
+    {
+        return $this->hasMany('App\Product_Review');
+    }
+
     /**
      * The attributes that should be hidden for arrays.
      *
