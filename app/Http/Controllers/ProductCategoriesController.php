@@ -40,7 +40,7 @@ class ProductCategoriesController extends Controller
         $ct = new Product_Categories;
         $ct->category_name = $request->category_name;
         $ct->save();
-        return redirect('/categories');
+        return redirect('/categories')->with('success','Data Tersimpan');
     }
 
     /**
@@ -82,7 +82,7 @@ class ProductCategoriesController extends Controller
         $category = Product_Categories::find($id);
         $category->category_name= $request->category_name;
         $category->save();
-        return redirect('/categories');
+        return redirect('/categories')->with('edits','Data Berhasil dirubah');
        
     }
 
@@ -101,6 +101,6 @@ class ProductCategoriesController extends Controller
         }
         $cat->delete();
 
-        return redirect('/categories');
+        return redirect('/categories')->with('delete','Data Barang Berhasil Dihapus');
     }
 }

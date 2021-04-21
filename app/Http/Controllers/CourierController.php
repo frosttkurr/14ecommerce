@@ -45,7 +45,7 @@ class CourierController extends Controller
         $cr = new Courier;
         $cr->courier = $request->courier;
         $cr->save();
-        return redirect('/courier');
+        return redirect('/courier')->with('success','Data Tersimpan');
     }
 
     /**
@@ -82,7 +82,7 @@ class CourierController extends Controller
     {
         $courier->courier = $request->courier;
         $courier->save();
-        return redirect('/courier');
+        return redirect('/courier')->with('edits','Data Berhasil dirubah');
     }
 
     /**
@@ -94,6 +94,6 @@ class CourierController extends Controller
     public function destroy(Courier $courier)
     {
         $courier->delete($courier);
-        return redirect('/courier');
+        return redirect('/courier')->with('delete','Data Barang Berhasil Dihapus');
     }
 }

@@ -8,6 +8,39 @@
 </style>
 @endsection
 @section('page-contents')
+@if(Session::has('success'))
+<div class="alert alert-success">
+    <div class="alert-body">
+        <button class="close" data-dismiss="alert">
+            <span>&times;</span>
+        </button>
+        Data Berhasil Dimasukan
+    </div>
+</div>
+@endif
+
+@if(Session::has('edits'))
+<div class="alert alert-success">
+    <div class="alert-body">
+        <button class="close" data-dismiss="alert">
+            <span>&times;</span>
+        </button>
+        Data Berhasil Dirubah
+    </div>
+</div>
+@endif
+
+@if(Session::has('delete'))
+<div class="alert alert-danger">
+    <div class="alert-body">
+        <button class="close" data-dismiss="alert">
+            <span>&times;</span>
+        </button>
+        Data Berhasil Dihapus
+    </div>
+</div>
+@endif
+
 <div class="panel">
     <div class="panel-heading">
         <h3 class="panel-tittle">Courier</h3>
@@ -19,14 +52,6 @@
             Tambah Data
         </button>
         {{-- ------------------------------------------Section & Tambah data---------------------------------------- --}}
-        @if(Session::has('success'))
-        <div class="alert alert-success">
-            <p>{{Session::get('success') }}</p>
-        </div>
-        <button type="button" class="edit btn btn-outline-info " data-toggle="modal" data-target="#tambahdata">
-            Tambah Data
-        </button>
-        @endif
         <br>
         <br>
 

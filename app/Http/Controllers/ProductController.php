@@ -79,7 +79,7 @@ class ProductController extends Controller
                 $image->image_name=$name;
                 $image->save();
             }
-            return redirect("/products");
+            return redirect("/products")->with('success','Data Tersimpan');
         }
 
        return redirect()->back()->withInput($request->only('product_name', 'price', 'description', 'product_rate', 'stock', 'weight'))->with('error', 'Please fill in all fields with valid value');
@@ -141,7 +141,7 @@ class ProductController extends Controller
         $product->stock= $request->stock;
         $product->weight= $request->weight;
         $product->save();
-        return redirect("/products");
+        return redirect("/products")->with('edits','Data Berhasil dirubah');
     }
 
     public function add_image(Request $request, $id)
@@ -198,7 +198,7 @@ class ProductController extends Controller
         $product->discount()->delete();
         $product->product_category_details()->delete();
         $product->delete();
-        return redirect("/products");
+        return redirect("/products")->with('delete','Data Barang Berhasil Dihapus');
     }
 
     public function delete_image($id)
