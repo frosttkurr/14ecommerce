@@ -73,7 +73,7 @@ class ProductController extends Controller
             $product = DB::table('products')->where('product_name','=', $request->product_name)->first();
             foreach($request->file('product_images') as $file){
                 $name = rand(1000,9999) . '_.' . $file->extension();
-                $file->move("product_images/", $name);
+                $file->storeAs('/img/gambarproduk', $name);
                 $image = new Product_Image();
                 $image->product_id= $product->id;
                 $image->image_name=$name;
@@ -154,7 +154,7 @@ class ProductController extends Controller
 
         foreach($request->file('product_images') as $file){
                 $name = time() . '_.' . $file->extension();
-                $file->move("product_images/", $name);
+                $file->storeAs('/img/gambarproduk', $name);
                 $image = new Product_Image();
                 $image->product_id= $id;
                 $image->image_name=$name;
