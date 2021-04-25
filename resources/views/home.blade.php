@@ -1,4 +1,5 @@
 @extends('user')
+@section('title', 'Home')
 @section('page-contents')
  <!-- slider Area Start -->
         

@@ -77,3 +77,10 @@ Route::prefix('admin/discount')->group(function () {
     Route::put('/{id}/update', 'DiscountController@update')->name('discount.update')->middleware('auth:admin');
     Route::delete('/{id}', 'DiscountController@destroy')->name('discount.destroy')->middleware('auth:admin');
 });
+
+//Checkout
+Route::get('/cart', 'CartsController@index');
+Route::post('/cart', 'CartsController@store');
+Route::get('/checkout', function () {
+    return view('checkout.checkout');
+});

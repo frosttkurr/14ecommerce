@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="{{asset('styleuser/mobile/assets/css/fontawesome.css')}}">
     <link rel="stylesheet" href="{{asset('styleuser/mobile/assets/css/style.css')}}">
     <link rel="stylesheet" href="{{asset('styleuser/mobile/assets/css/owl.css')}}">
+    <title>@yield('title') - Phone Store</title>
   </head>
 
   <body>
@@ -60,12 +61,12 @@
           <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
               <li class="nav-item active">
-                <a class="nav-link" href="index.html">Home
-                  <span class="sr-only">(current)</span>
+                <a class="nav-link" href="{{ url('home') }}">Home
+                  <!--<span class="sr-only">(current)</span>-->
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="checkout.html">Checkout</a>
+                <a class="nav-link" href="{{ url('cart') }}">Cart</a>
               </li>
               <li class="nav-item dropdown">
                 <a class="dropdown-toggle nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">About</a>

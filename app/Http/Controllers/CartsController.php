@@ -5,13 +5,13 @@ namespace App\Http\Controllers;
 use Carbon\Carbon;
 use App\Cart;
 use App\Product;
+use App\Product_Image;
 use App\Courier;
 use App\Transaction;
 use App\Transaction_Detail;
-use App\Province;
-use App\City;
 use Illuminate\Support\Facades\Http; 
 use Illuminate\Support\Facades\Auth; 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
 class CartsController extends Controller
@@ -22,15 +22,16 @@ class CartsController extends Controller
         * @return \Illuminate\Http\Response
     */
 
-    public function  construct()
+    public function __construct()
     {
-        $this->middleware('isUser');
+        $this->middleware(['auth', 'verified']);
     }
 
     public function index()
     {
-        echo "ini index";
-    }
+        $cart = Cart::with('product')->get();
+        return view('checkout.cart',compact('cart'));
+    } 
 
     /**
         * Show the form for creating a new resource.
@@ -38,15 +39,24 @@ class CartsController extends Controller
         * @return \Illuminate\Http\Response
     */
     
+    /*public function add_to_cart($id){
+        $cart = session('cart');
+        $product = Product::find($id);
+        $product_image = Product_Image::where('product_id','=',$product->id)->get();
+        $cart['id'] = [
+            "product" => $product->product_name,
+            "price" => $product->price,
+            "stock" => $product->stock,
+            //"image" => $product_image->image_name,
+            "qty" => 1
+        ];
+        session(['cart' => $cart]);
+        return redirect('/cart');
+    }*/
+
     public function create()
     {
-        $id_user = Auth::guard('user')->id();
-        $products = Product::with('Cart')->get();
-        $carts = Cart::where('user_id',$id_user)->get();
-        $couriers = Courier::all();
-        $provinsi = Province::all();
-        
-        return view('user.cartuser', compact('carts','products','id_user','couriers','provinsi'));
+        //
     }
 
     /**
@@ -58,17 +68,33 @@ class CartsController extends Controller
     
     public function store(Request $request)
     {
-        if(Auth::guard('user')->check()){
-            $id_user = Auth::guard('user')->id(); Cart::create([
-                'user_id' => $id_user,
-                'product_id' => $request->id_product,
+        $cek = Cart::where('user_id', '=', $request->user_id)
+                    ->where('product_id', '=', $request->product_id)
+                    ->where('carts.status', '=', 'notyet')->first();
+        if (is_null($cek)) {
+            DB::table('carts')->insert(
+                ['user_id' => $request->user_id,
+                'product_id' => $request->product_id,
                 'qty' => $request->qty,
-                'status' => 'notyet'
-            ]);
-            return redirect('/products'); 
+                'status' => 'notyet']
+            );
+            /*$carts = new Cart;
+            $carts->product_id = $request->product_id;
+            $carts->qty = $request->qty;
+            $carts->user_id = $request->user_id;
+            $carts->status = "notyet";
+            $carts->save();
+            $cart_count = DB::table('carts')->where('carts.status', '=', 'notyet')
+                ->where('carts.user_id', '=', Auth::user()->id)->count('carts.id');*/
+            return redirect('/cart')->with('status', 'Product berhasil ditambah!');
         }else{
-            return redirect('/userLogin');
-        }
+            DB::table('carts')
+            ->where('product_id', $request->product_id)
+            ->update([
+                'qty' => $request->qty     
+            ]);
+            return redirect('/cart')->with('status', 'Product berhasil ditambah!');
+        } 
     }
     
     /**
@@ -92,7 +118,7 @@ class CartsController extends Controller
 
     public function edit(Cart $cart)
     {
-        echo "ini edit";
+        //
     }
 
     /**
@@ -117,75 +143,11 @@ class CartsController extends Controller
 
     public function destroy(Cart $cart)
     {
-        $cart_id = $cart->id;
-        // dd($cart_id);
-        // Cart::destroy($cart_id); 
-        Cart::where('id',$cart_id)->update([
-            'status' => 'cancelled'
-        ]);
-        return redirect('/cartuser');
+        //
     }
 
     public function transaction(Request $request)
     {
-        $origin = 114;
-        $destination =$request->destination;
-        $weight = 1000;
-        $courier_id = $request->courier;
-        $courier_name = Courier::where('id',$courier_id)->first('courier');
-        $province_name = Province::where('id',$request->province_to)->first('province');
-        $regency_name = City::where('id',$destination)->first('city_name');
-        $ongkir = Http::asForm()->withHeaders([
-            'key'=>'f9941f3ab651b045b7b3c32e83edc255'
-        ])->post('https://api.rajaongkir.com/starter/cost',[
-            'origin'=> $origin,
-            'destination'=> $destination,
-            'weight'=> $weight,
-            'courier'=> $courier_name->courier
-        ]);
-
-        $cekongkir = $ongkir['rajaongkir']['results'][0]['costs'];
-
-        foreach ($cekongkir as $hasil) {
-            $kirim=$hasil['cost'][0]['value'];
-        };
-
-        $id_user = Auth::guard('user')->id();
-        $sell = 0;
-        $all_cart       =       Cart::where('user_id',$id_user)->Where('status','notyet')->get();
-
-        foreach ($all_cart as $cart) {
-            $selling = $cart->qty*$cart->product->price;
-            $sell += $selling;
-        }
-
-        $sub_total = $sell+$kirim;
-        $date = Carbon::now()->addHours(8);
-        $timeout = $date->addHours(24);
-
-        $transaksi = Transaction::create([
-            'address' => $request->address,
-            'user_id' => $id_user,
-            'regency' => $regency_name->city_name,
-            'province' => $province_name->province,           
-            'total' => $sell,           
-            'shipping_cost' => $kirim,            
-            'sub_total' => $sub_total,            
-            'courier_id' => $courier_id,            
-            'timeout' => $timeout,           
-            'status' => 'unverified'       
-        ]);
-            
-        $transaksi_id = $transaksi->id;
-            
-        foreach ($all_cart as $carts) { 
-            Transaction_Detail::create([
-                'transaction_id' => $transaksi_id,
-                'product_id' => $carts->product_id,
-                'qty' => $carts->qty,
-                'selling_price' => $carts->product->price*$carts->qty    
-            ]);    
-        }
-        return redirect('/pesananuser');        
+        //   
     }
 }

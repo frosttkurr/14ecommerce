@@ -1,4 +1,5 @@
 @extends('user')
+@section('title', $product['product_name'])
 @section('page-contents')
 <div class="page-heading header-text">
     <div class="container">
@@ -33,24 +34,24 @@
             </p>
             <br>
             <br>
-            <form action="" method="post">
+            <form action="{{ url('cart') }}" method="post">
                 @csrf
-            <div class="card_area">
-                <div class="product_count_area">
-                    <p>Quantity</p>
-                    <input type="text" name="user_id" value="{{$user->id}}" hidden />
-                    <input type="text" name="product_id"  value="{{$product->id}}" hidden />
-                    <div class="product_count d-inline-block">
-                        <span class="product_count_item inumber-decrement"> <i class="ti-minus"></i></span>
-                        <input class="product_count_item input-number" name="qty" type="text" value="1" min="0" max="10">
-                        <span class="product_count_item number-increment"> <i class="ti-plus"></i></span>
-                    </div>
-                <p>Rp. {{number_format($product->price)}}</p>
+                <div class="card_area">
+                  <div class="product_count_area">
+                      <p>Quantity</p>
+                      <input type="text" name="user_id" value="{{$user->id}}" hidden />
+                      <input type="text" name="product_id"  value="{{$product->id}}" hidden />
+                      <div class="product_count d-inline-block">
+                          <span class="product_count_item inumber-decrement"> <i class="ti-minus"></i></span>
+                          <input class="product_count_item input-number" name="qty" type="text" value="1" min="0" max="10">
+                          <span class="product_count_item number-increment"> <i class="ti-plus"></i></span>
+                      </div>
+                  <p>Rp. {{number_format($product->price)}}</p>
+                  </div>
+                  <br>
+                <div class="form-group">
+                    <button type="submit"> <a class="filled-button">Add to Cart </a></button>
                 </div>
-                <br>
-              <div class="form-group">
-                  <a href="#" class="filled-button">Add to Cart</a>
-              </div>
               </form>
             </div>
           </div>
