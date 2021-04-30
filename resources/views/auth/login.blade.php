@@ -2,7 +2,7 @@
 <html lang="en" class="fullscreen-bg">
 
 <head>
-	<title>Login Admin</title>
+	<title>Login User</title>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
@@ -87,11 +87,8 @@
         
                                         @if (Route::has('password.request'))
                                         <div class="bottom">
-                                            <span class="helper-text"><i class="fa fa-lock"></i> <a href="{{ route('admin.password.request') }}">Forgot password?</a></span>
+                                            <span class="helper-text"><i class="fa fa-lock"></i> <a href="{{ route('password.request') }}">Forgot password?</a></span>
                                         </div>
-                                            {{-- <a class="btn btn-link" href="{{ route('admin.password.request') }}">
-                                                {{ __('Forgot Your Password?') }}
-                                            </a> --}}
                                         @endif
                                     </div>
                                 </div>
