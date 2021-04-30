@@ -112,8 +112,7 @@
                 <div class="container">
                     <h1 class="display-4">WELCOME TO <br><span class="font-weight-bold">PHONE STORE</span></h1>
                     <hr class="my-4">
-                    <p class="lead">It uses utility classes for typography and spacing to space content out within the larger container.</p>
-                    <a class="btn btn-primary btn-lg font-weight-bold" href="#" role="button">KUNJUNGI</a>
+                    <p class="lead">Harga Terjangkau, Kualitas Terjamin</p>
                 </div>
             </div>
         </div>

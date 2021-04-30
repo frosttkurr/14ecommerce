@@ -206,7 +206,7 @@ class ProductController extends Controller
         
         $product_image = Product_Image::find($id);
         $product_id = $product_image->product_id;
-        $path = 'product_images/'. $product_image->image_name;
+        $path = 'storage/img/gambarproduk/'. $product_image->image_name;
         if(file_exists($path)){
             unlink($path);
             $product_image->delete();
