@@ -48,7 +48,8 @@
                                         @php
                                             $image = DB::table('product_images')->where('product_id','=',$item->id)->get();
                                         @endphp
-                                        <img src="{{asset('product_images/'.$image[0]->image_name)}}" alt="">
+                                        <img src="{{asset('storage/img/gambarproduk/'.$image[0]->image_name)}}" alt="">
+                                
                                         
                                     </div>
                                     <div class="product-caption">
