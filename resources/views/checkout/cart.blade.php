@@ -41,16 +41,16 @@
                               <td></td>
                             </tr>
                           @else
-                            <span style="display:none;"><?= $grandtotal = 0 ?></span>
+                            @php $grandtotal = 0 @endphp
                             @foreach($cart as $item ) 
-                              <span style="display:none;"><?= $subtotal = $item->product->price * $item->qty ?></span>
+                              @php $subtotal = $item->product->price * $item->qty @endphp
                               <tr>
                                   <td><img src="https://dummyimage.com/50x50/55595c/fff" /> </td>
                                   <td>{{ $item->product->product_name }}</td>
                                   <td class="text-center">{{ "Rp" . number_format($item->product->price, 0, ",", ",") }}</td>
                                   <td class="text-center">{{ $item->qty }}</td>
                                   <td class="text-center">{{ "Rp" . number_format($subtotal, 0, ",", ",") }}</td>
-                                  <td class="text-center"><button class="btn btn-sm btn-danger"><a style="text-decoration: none; color: inherit;" href="{{ url('/cart/hapus/') }}"><i class="fa fa-trash"></i> </a> </button> </td>
+                                  <td class="text-center"><button class="btn btn-sm btn-danger"><a style="text-decoration: none; color: inherit;" href="{{ url('/cart/hapus/'. $item->product_id) }}"><i class="fa fa-trash"></i> </a> </button> </td>
                               </tr>
                               <?= $grandtotal+=$subtotal ?>
                             @endforeach

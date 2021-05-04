@@ -71,6 +71,8 @@ class CartsController extends Controller
         $cek = Cart::where('user_id', '=', $request->user_id)
                     ->where('product_id', '=', $request->product_id)
                     ->where('carts.status', '=', 'notyet')->first();
+        $product = Product::where('id', '=', $request->product_id)->first();
+        
         if (is_null($cek)) {
             DB::table('carts')->insert(
                 ['user_id' => $request->user_id,
@@ -78,20 +80,24 @@ class CartsController extends Controller
                 'qty' => $request->qty,
                 'status' => 'notyet']
             );
-            /*$carts = new Cart;
-            $carts->product_id = $request->product_id;
-            $carts->qty = $request->qty;
-            $carts->user_id = $request->user_id;
-            $carts->status = "notyet";
-            $carts->save();
-            $cart_count = DB::table('carts')->where('carts.status', '=', 'notyet')
-                ->where('carts.user_id', '=', Auth::user()->id)->count('carts.id');*/
+
+            DB::table('products')
+            ->where('id', $request->product_id)
+            ->update([
+                'stock' => $product->stock - $request->qty
+            ]);
             return redirect('/cart')->with('status', 'Product berhasil ditambah!');
         }else{
             DB::table('carts')
             ->where('product_id', $request->product_id)
             ->update([
-                'qty' => $request->qty     
+                'qty' => $cek->qty + $request->qty     
+            ]);
+
+            DB::table('products')
+            ->where('id', $request->product_id)
+            ->update([
+                'stock' => $product->stock - $request->qty
             ]);
             return redirect('/cart')->with('status', 'Product berhasil ditambah!');
         } 
@@ -141,7 +147,7 @@ class CartsController extends Controller
         * @return \Illuminate\Http\Response
     */
 
-    public function destroy(Cart $cart)
+    public function hapus(Cart $cart)
     {
         //
     }
