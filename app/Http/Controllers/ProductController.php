@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
 use File;
+use Illuminate\Support\Facades\Storage;
 
 
 class ProductController extends Controller
@@ -72,11 +73,12 @@ class ProductController extends Controller
 
             $product = DB::table('products')->where('product_name','=', $request->product_name)->first();
             foreach($request->file('product_images') as $file){
-                $name = rand(1000,9999) . '_.' . $file->extension();
-                $file->storeAs('/img/gambarproduk', $name);
+                // $name = rand(1000,9999) . '_.' . $file->extension();
+                // $file->storeAs('/img/gambarproduk', $name);
+                $gambar_produk = Storage::putFile('public_html/gambarproduct',$file);
                 $image = new Product_Image();
                 $image->product_id= $product->id;
-                $image->image_name=$name;
+                $image->image_name= basename($gambar_produk);
                 $image->save();
             }
             return redirect("/products")->with('success','Data Tersimpan');
@@ -153,14 +155,16 @@ class ProductController extends Controller
 
 
         foreach($request->file('product_images') as $file){
-                $name = time() . '_.' . $file->extension();
-                $file->storeAs('/img/gambarproduk', $name);
+                // $name = time() . '_.' . $file->extension();
+                $gambar_produk = Storage::putFile('public_html/gambarproduct',$file);
+                // $file->storeAs('/img/gambarproduk', $name);
                 $image = new Product_Image();
                 $image->product_id= $id;
-                $image->image_name=$name;
+                $image->image_name=basename($gambar_produk);
+                // $image->image_name=$name;
                 $image->save();
             }
-        if (file_exists('product_images/'.$name)) {
+        if (file_exists('storage/public/gambarproduct'.basename($gambar_produk))) {
             return redirect()->intended(route('product.edit', ['id' => $id]))->with("success", "Successfully Add Image");
         } 
 
