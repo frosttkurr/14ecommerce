@@ -1,12 +1,12 @@
 <?php return array (
   'root' => 
   array (
-    'pretty_version' => '1.0.0+no-version-set',
-    'version' => '1.0.0.0',
+    'pretty_version' => 'dev-main',
+    'version' => 'dev-main',
     'aliases' => 
     array (
     ),
-    'reference' => NULL,
+    'reference' => '00cb05b3f47fb921689987e4df550a85ea9e5f5d',
     'name' => 'laravel/laravel',
   ),
   'versions' => 
@@ -399,6 +399,15 @@
         0 => 'v7.30.4',
       ),
     ),
+    'kavist/rajaongkir' => 
+    array (
+      'pretty_version' => 'v1.1.0',
+      'version' => '1.1.0.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => 'c1ab72000d05b1cb6b0a1a1364d6200b78976377',
+    ),
     'kodova/hamcrest-php' => 
     array (
       'replaced' => 
@@ -417,12 +426,12 @@
     ),
     'laravel/laravel' => 
     array (
-      'pretty_version' => '1.0.0+no-version-set',
-      'version' => '1.0.0.0',
+      'pretty_version' => 'dev-main',
+      'version' => 'dev-main',
       'aliases' => 
       array (
       ),
-      'reference' => NULL,
+      'reference' => '00cb05b3f47fb921689987e4df550a85ea9e5f5d',
     ),
     'laravel/tinker' => 
     array (

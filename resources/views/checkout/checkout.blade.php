@@ -14,13 +14,129 @@
       </div>
     </div>
 
+    <!-- Product Information -->
+     <form action="#">
+    <div class="contact-information2">
+     <div class="container">
+       <div class="row">
+           <div class="col-12">
+               <div class="table-responsive">
+                   <table class="table table-striped">
+                       <thead>
+                           <tr>
+                              <th></th>
+                              <th scope="col" class="text-left">Product</th>
+                              <th scope="col" class="text-center">Price</th>
+                              <th scope="col" class="text-center">Quantity</th>
+                              <th scope="col" class="text-center">Weight</th>
+                              <th scope="col" class="text-center">Total Price</th>
+                           </tr>
+                       </thead>
+                       <tbody>
+                         @foreach($cart as $item ) 
+                              @php $subtotal = $item->product->price * $item->qty @endphp
+                              <tr>
+                                   <td class="align-center" hidden>{{ $item->product_id }}</td>
+                                   <td><img class="rounded mx-auto d-block" src="https://dummyimage.com/50x50/55595c/fff" /> </td>
+                                   <td>{{ $item->product->product_name }}</td>
+                                   <td class="text-center">{{ "Rp" . number_format($item->product->price, 0, ",", ",") }}</td>
+                                   <td class="text-center">{{ $item->qty }}</td>
+                                   <td class="text-center">{{ $item->product->weight }}kg</td>
+                                   <td class="text-center">{{ "Rp" . number_format($subtotal, 0, ",", ",") }}</td>
+                             </tr>
+                         @endforeach
+                       </tbody>
+                   </table>
+               </div>
+           </div>
+       </div>
+     </div>
+   </div>
+
+    <!-- Shipping Information -->
+    <div class="callback-form contact-us" style="margin-top: 35px; padding-top: 55px; padding-bottom: 55px;">
+     <div class="container">
+       <div class="row">
+         <div class="col-md-12">
+           <div class="contact-form">
+               <div class="row">
+                    <div class="col-sm-6 col-xs-12">
+                         <div class="form-group">
+                              <select class="form-control">
+                                   <option value="">-- Pilih Provinsi --</option>
+                                   {{--@foreach ($daftarProvinsi as $provinsi)
+                                        <option value="">{{ $provinsi }}</option>
+                                   @endforeach--}}
+                              </select>
+                         </div>
+                    </div>
+                    <div class="col-sm-6 col-xs-12">
+                         <div class="form-group">
+                              <select class="form-control">
+                                   <option value="">-- Pilih Kota/Kabupaten --</option>
+                                   <option value="">-- Choose --</option>
+                                   <option value="">-- Choose --</option>
+                                   <option value="">-- Choose --</option>
+                              </select>
+                         </div>
+                    </div>
+               </div>
+               <div class="row">
+                    <div class="col-sm-6 col-xs-12">
+                         <div class="form-group">
+                              <select class="form-control">
+                                   <option value="">-- Pilih Jasa Ekspedisi --</option>
+                                   <option value="">-- Choose --</option>
+                                   <option value="">-- Choose --</option>
+                                   <option value="">-- Choose --</option>
+                              </select>
+                         </div>
+                    </div>
+                    <div class="col-sm-6 col-xs-12">
+                         <div class="form-group">
+                              <input type="text" class="form-control" placeholder="Nama Jalan/Gedung, No. Rumah, Kecamatan, Kelurahan, Kode Pos">
+                         </div>
+                    </div>
+               </div>
+               <div class="row">
+                    <div class="col-sm-6 col-xs-12">
+                         <div class="form-group">
+                              <input type="text" class="form-control" placeholder="Nama Lengkap">
+                         </div>
+                    </div>
+                    <div class="col-sm-6 col-xs-12">
+                         <div class="form-group">
+                              <input type="text" class="form-control" placeholder="Nomor Handphone">
+                         </div>
+                    </div>
+               </div>
+               <div class="row">
+                    <div class="col-sm-12 col-xs-12">
+                         <div class="form-group">
+                              <select class="form-control">
+                                   <option value="">-- Choose Payment method --</option>
+                                   <option value="bni">BNI Virtual Account</option>
+                                   <option value="bca">BCA Virtual Account</option>
+                                   <option value="bri">BRI Virtual Account</option>
+                                   <option value="mandiri">MANDIRI Virtual Account</option>
+                              </select>
+                         </div>
+                    </div>
+               </div>
+           </div>
+         </div>
+       </div>
+     </div>
+   </div>
+
+    <!-- Total Information -->
     <div class="contact-information2">
       <div class="container">
         <ul class="list-group list-group-flush">
           <li class="list-group-item">
             <div class="row">
                   <div class="col-6">
-                       <em>Sub-total</em>
+                       <em>Sub-total untuk Produk</em>
                   </div>
                   
                   <div class="col-6 text-right">
@@ -44,7 +160,7 @@
           <li class="list-group-item">
                <div class="row">
                     <div class="col-6">
-                         <em>Pajak</em>
+                         <em>Total Ongkos Kirim</em>
                     </div>
 
                     <div class="col-6 text-right">
@@ -56,7 +172,7 @@
           <li class="list-group-item">
                <div class="row">
                     <div class="col-6">
-                         <em>Total</em>
+                         <em>Total Pembayaran</em>
                     </div>
 
                     <div class="col-6 text-right">
@@ -64,125 +180,15 @@
                     </div>
                </div>
           </li>
-         
         </ul>
       </div>
-    </div>
-
-    <div class="callback-form contact-us">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-12">
-            <div class="contact-form">
-              <form action="#" id="contact">
-                 <div class="row">
-                      <div class="col-sm-6 col-xs-12">
-                           <div class="form-group">
-                                <select class="form-control" data-msg-required="This field is required.">
-                                     <option value="">-- Choose Title --</option>
-                                     <option value="dr">Dr.</option>
-                                     <option value="miss">Miss</option>
-                                     <option value="mr">Mr.</option>
-                                     <option value="mrs">Mrs.</option>
-                                     <option value="ms">Ms.</option>
-                                     <option value="other">Other</option>
-                                     <option value="prof">Prof.</option>
-                                     <option value="rev">Rev.</option>
-                                </select>
-                           </div>
-                      </div>
-                      <div class="col-sm-6 col-xs-12">
-                           <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Name:">
-                           </div>
-                      </div>
-                 </div>
-                 <div class="row">
-                      <div class="col-sm-6 col-xs-12">
-                           <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Email:">
-                           </div>
-                      </div>
-                      <div class="col-sm-6 col-xs-12">
-                           <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Phone:">
-                           </div>
-                      </div>
-                 </div>
-                 <div class="row">
-                      <div class="col-sm-6 col-xs-12">
-                           <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Address 1:">
-                           </div>
-                      </div>
-                      <div class="col-sm-6 col-xs-12">
-                           <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Address 2:">
-                           </div>
-                      </div>
-                 </div>
-                 <div class="row">
-                      <div class="col-sm-6 col-xs-12">
-                           <div class="form-group">
-                                <input type="text" class="form-control" placeholder="City:">
-                           </div>
-                      </div>
-                      <div class="col-sm-6 col-xs-12">
-                           <div class="form-group">
-                                <input type="text" class="form-control" placeholder="State:">
-                           </div>
-                      </div>
-                 </div>
-                 <div class="row">
-                      <div class="col-sm-6 col-xs-12">
-                           <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Zip:">
-                           </div>
-                      </div>
-                      <div class="col-sm-6 col-xs-12">
-                           <div class="form-group">
-                                <select class="form-control">
-                                     <option value="">-- Choose Country --</option>
-                                     <option value="">-- Choose --</option>
-                                     <option value="">-- Choose --</option>
-                                     <option value="">-- Choose --</option>
-                                </select>
-                           </div>
-                      </div>
-                 </div>
-
-                 <div class="row">
-                      <div class="col-sm-6 col-xs-12">
-                           <div class="form-group">
-                                <select class="form-control">
-                                     <option value="">-- Choose Payment method --</option>
-                                     <option value="bank">Bank account</option>
-                                     <option value="cash">Cash</option>
-                                     <option value="cOD">Cash On Delivery</option>
-                                     <option value="paypal">PayPal</option>
-                                </select>
-                           </div>
-                      </div>
-
-                      <div class="col-sm-6 col-xs-12">
-                           <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Captcha">
-                           </div>
-                      </div>
-                 </div>
-
-                 <div class="row">
-                   <div class="col-lg-12">
-                      <button type="submit" id="form-submit" class="filled-button">Finish</button>
-                  </div>
-                 </div>
-              </form>
-
-            </div>
+      <div div class="col-sm-12 mt-4">
+          <div class="d-flex justify-content-center">
+               <button type="submit" id="form-submit" class="btn btn-success">Buat Pesanan</button>
           </div>
-        </div>
-      </div>
+     </div>   
     </div>
+     </form>
 
     <!-- Footer Starts Here -->
     @endsection

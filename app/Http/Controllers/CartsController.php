@@ -30,6 +30,7 @@ class CartsController extends Controller
     public function index()
     {
         $cart = Cart::with('product')->get();
+        //$product_images = Product_Image::where('product_id', '=', $cart->$cart["product_id"])->get();
         return view('checkout.cart',compact('cart'));
     } 
 
@@ -147,9 +148,10 @@ class CartsController extends Controller
         * @return \Illuminate\Http\Response
     */
 
-    public function hapus(Cart $cart)
+    public function destroy($id)
     {
-        //
+        $cart = Cart::where('product_id', '=', $id)->delete();
+        return redirect('/cart')->with('status', 'Product berhasil dihapus!');
     }
 
     public function transaction(Request $request)

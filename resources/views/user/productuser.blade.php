@@ -38,19 +38,23 @@
                 @csrf
                 <div class="card_area">
                   <div class="product_count_area">
-                      <p>Quantity</p>
-                      <input type="text" name="user_id" value="{{$user->id}}" hidden />
-                      <input type="text" name="product_id"  value="{{$product->id}}" hidden />
-                      <div class="product_count d-inline-block">
-                          <span class="product_count_item inumber-decrement"> <i class="ti-minus"></i></span>
-                          <input class="product_count_item input-number" name="qty" type="text" value="1" min="0" max="10">
-                          <span class="product_count_item number-increment"> <i class="ti-plus"></i></span>
-                      </div>
-                  <p>Rp. {{number_format($product->price)}}</p>
+                    <div class="mb-3">
+                      <h5>Quantity</h5>
+                    </div>
+                    <input type="text" name="user_id" value="{{$user->id}}" hidden />
+                    <input type="text" name="product_id"  value="{{$product->id}}" hidden />
+                    <div class="product_count d-inline-block">
+                      <span class="product_count_item inumber-decrement"> <i class="ti-minus"></i></span>
+                      <input class="product_count_item input-number form-control" name="qty" type="text" value="1" min="0" max="10">
+                      <span class="product_count_item number-increment"> <i class="ti-plus"></i></span>
+                    </div>
+                  <div class="mt-3">
+                    <h3>Rp. {{number_format($product->price)}}</h3>
                   </div>
+                </div>
                   <br>
                 <div class="form-group">
-                    <button type="submit"> <a class="filled-button">Add to Cart </a></button>
+                    <button type="submit" class="btn btn-lg btn-warning">Belanja Sekarang</button>
                 </div>
               </form>
             </div>

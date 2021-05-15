@@ -14,6 +14,7 @@ use App\City;
 use App\Province;
 use App\Admin;
 use App\Response;
+use Kavist\RajaOngkir\Facades\RajaOngkir;
 use App\Notifications\NewTransaction;
 use App\Notifications\UploadProof;
 use Illuminate\Support\Facades\Auth;
@@ -37,9 +38,9 @@ class TransactionsController extends Controller
 
     public function index()
     {
-        $products = Product::all();
-        $all_images = Product_Image::with('Product')->get();
-        return view('product.shop', compact('all_images','products'));
+        $cart = Cart::with('product')->get();
+        $province = Province::pluck('title', 'province_id');
+        return view('checkout.checkout', compact('cart', 'province'));
     }
 
     /**
@@ -83,7 +84,7 @@ class TransactionsController extends Controller
 
     public function store(Request $request)
     {
-        $origin = 114;
+        /*$origin = 114;
         $destination =$request->destination;
         $weight = 1000;
         $courier_id = $request->courier;
@@ -147,12 +148,12 @@ class TransactionsController extends Controller
             return redirect('/pesananuser');
         }else{
             return redirect('/userLogin');
-        }
+        }*/
     }
 
     public function destroy(Transaction $transaction)
     {
-        $transaction_id = $transaction->id;
+        /*$transaction_id = $transaction->id;
         // dd($transaction_id);
         $transDetail = Transaction_Detail::where('transaction_id',$transaction_id)->get();
         // echo $transDetail->id;
@@ -166,73 +167,6 @@ class TransactionsController extends Controller
                 'status' => 'canceled'
             ]);
 
-        return redirect('/pesananuser');
+        return redirect('/pesananuser');*/
     }
-
-    public function pesananUser()
-    {
-        $id_user = Auth::guard('user')->id();
-        $products = Product::with('Transaction_Detail')->get();
-        $status = 'unverified';
-        // $transactions = Transaction::table('transactions')
-        // ->where('user_id', $id_user)
-        // ->Where('status', 'unverified')
-        // ->get();
-
-        $transactions = Transaction::where('user_id',$id_user)->get();
-        $transaction_details = Transaction_Detail::with('Transaction','Product')->get();
-        // dd($transaction_details);
-
-        return view('user.pesananuser', compact('transactions','products','transaction_details','id_user'));
-    }
-
-    public function updateKonf(Request $request)
-    {
-        // dd($request);
-        $name_user = Auth::guard('user')->user()->name;
-        $id_user = Auth::guard('user')->id();
-        $file = $request->file('proof');
-        // echo $file;
-        // echo $berkas->getClientOriginalName();
-        $path = 'fresh/images/proof';
-        $name_file = $name_user."_".time()."_".$file->getClientOriginalName();
-        // echo $name_file;
-        
-        Transaction::where('id', $request->id_transaksi)->update([
-            'proof_of_payment' => $name_file,
-            'status' => 'waiting confirmation'
-        ]); 
-
-        Cart::where('user_id',$id_user)->update([
-            'status' => 'checkedout'
-        ]);
-
-        // //proses upload ke storage laravel
-        $file->move($path,$name_file);
-
-        $admins = Admin::all();
-
-        foreach ($admins as $admin) {
-            $admin->notify(new UploadProof());
-        }
-            
-        return redirect('/pesananuser');    
-    }
-            
-    public function getCityAjax($id)
-    {
-        $cities = City::where('province_id',$id)->pluck('city_name','id');
-        // dd($cities);  
-        return json_encode($cities);   
-    }
-            
-    public function updateExpired($id)
-    {      
-        // echo "sukses"; 
-        Transaction::where('id',$id)->update([
-            'status' => 'expired'
-        ]);
-    
-        return redirect('/pesananuser');          
-    }    
 }
