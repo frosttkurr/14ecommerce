@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use GuzzleHttp\Client;
 use Carbon\Carbon;
 use App\Transaction;
 use App\Transaction_Detail;
@@ -38,9 +39,19 @@ class TransactionsController extends Controller
 
     public function index()
     {
-        $cart = Cart::with('product')->get();
+        $user = Auth::id();
+        $checkout = session('checkout');
+        $product = $checkout['product_id'];
+        $cart = Cart::with('product')->where('user_id', $checkout['user_id'])->where('status', 'notyet')->get();
         $province = Province::pluck('title', 'province_id');
-        return view('checkout.checkout', compact('cart', 'province'));
+        $courier = Courier::pluck('courier', 'id');
+        return view('checkout.checkout', compact('cart', 'product', 'province', 'courier'));
+    }
+
+    public function getCities($id)
+    {
+        $city = City::where('province_id', $id)->pluck('title', 'city_id');
+        return json_encode($city);
     }
 
     /**
@@ -48,6 +59,29 @@ class TransactionsController extends Controller
         *
         * @return \Illuminate\Http\Response
     */
+
+
+    public function getCost(Request $request) {
+        $url = 'https://api.rajaongkir.com/starter/cost';
+        $client = new Client();
+
+        $request = $client->request('POST', $url, 
+        [
+            'headers' => [
+                'key' => 'c4267eb2dc0020aee5262bc61cdb044b',
+                'Content-Type' => 'application/x-www-form-urlencoded',
+            ],
+            'form_params' => [
+                'origin' => 114,
+                'destination' => $request->city,
+                'weight' => $request->weight,
+                'courier' => $request->courier,
+            ]
+        ]);
+
+        $cost = json_decode($request->getBody(), true);
+        dd($cost);
+    }
 
     public function create($id)
     {

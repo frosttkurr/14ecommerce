@@ -1359,6 +1359,75 @@
             "install-path": "../kavist/rajaongkir"
         },
         {
+            "name": "kozz/laravel-guzzle-provider",
+            "version": "6.1.4",
+            "version_normalized": "6.1.4.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/urakozz/laravel-guzzle.git",
+                "reference": "87fe28499496f7afae571be1e72bcf87e330f881"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/urakozz/laravel-guzzle/zipball/87fe28499496f7afae571be1e72bcf87e330f881",
+                "reference": "87fe28499496f7afae571be1e72bcf87e330f881",
+                "shasum": ""
+            },
+            "require": {
+                "guzzlehttp/guzzle": "^6.0",
+                "illuminate/support": "^5.0 | ^6.0| ^7.0 | ^8.0",
+                "php": "^7.2|^8.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.0"
+            },
+            "time": "2020-12-16T12:27:01+00:00",
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                },
+                "laravel": {
+                    "providers": [
+                        "Kozz\\Laravel\\Providers\\Guzzle"
+                    ],
+                    "aliases": {
+                        "Guzzle": "Kozz\\Laravel\\Facades\\Guzzle"
+                    }
+                }
+            },
+            "installation-source": "dist",
+            "autoload": {
+                "psr-4": {
+                    "Kozz\\Laravel\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Hongbo Tang",
+                    "email": "thbourlove@gmail.com"
+                },
+                {
+                    "name": "Yury Kozyrev",
+                    "email": "urakozz@gmail.com"
+                }
+            ],
+            "description": "Guzzle 5/6 Service Provider for Laravel",
+            "keywords": [
+                "Guzzle",
+                "http",
+                "laravel"
+            ],
+            "support": {
+                "source": "https://github.com/urakozz/laravel-guzzle/tree/6.1.4"
+            },
+            "install-path": "../kozz/laravel-guzzle-provider"
+        },
+        {
             "name": "laravel/framework",
             "version": "v7.30.4",
             "version_normalized": "7.30.4.0",

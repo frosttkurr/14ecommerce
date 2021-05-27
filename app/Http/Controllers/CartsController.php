@@ -29,8 +29,11 @@ class CartsController extends Controller
 
     public function index()
     {
-        $cart = Cart::with('product')->get();
-        //$product_images = Product_Image::where('product_id', '=', $cart->$cart["product_id"])->get();
+        $user = Auth::id();
+        $cart = Cart::with('product')->where('user_id', $user)->where('status', 'notyet')->get();
+        //$product_images = DB::table('product_images')
+                            //->distinct('product_id')
+                            //->get();
         return view('checkout.cart',compact('cart'));
     } 
 
@@ -102,6 +105,23 @@ class CartsController extends Controller
             ]);
             return redirect('/cart')->with('status', 'Product berhasil ditambah!');
         } 
+    }
+
+    public function checkout(Request $request)
+    {
+        session()->forget('checkout');
+        $user = Auth::id();
+        $request->validate([
+            'product_id' => 'required'
+        ]);
+
+        $checkout = session('checkout');      
+        $checkout = [
+            'user_id' => $user,   
+            'product_id' => $request->product_id
+        ];
+        session(['checkout' => $checkout]);
+        return redirect('/checkout');
     }
     
     /**

@@ -1962,6 +1962,8 @@ return array(
     'Kavist\\RajaOngkir\\Resources\\Provinsi' => $vendorDir . '/kavist/rajaongkir/src/Resources/Provinsi.php',
     'Kavist\\RajaOngkir\\SearchDrivers\\AbstractDriver' => $vendorDir . '/kavist/rajaongkir/src/SearchDrivers/AbstractDriver.php',
     'Kavist\\RajaOngkir\\SearchDrivers\\BasicDriver' => $vendorDir . '/kavist/rajaongkir/src/SearchDrivers/BasicDriver.php',
+    'Kozz\\Laravel\\Facades\\Guzzle' => $vendorDir . '/kozz/laravel-guzzle-provider/src/Facades/Guzzle.php',
+    'Kozz\\Laravel\\Providers\\Guzzle' => $vendorDir . '/kozz/laravel-guzzle-provider/src/Providers/Guzzle.php',
     'Laravel\\Tinker\\ClassAliasAutoloader' => $vendorDir . '/laravel/tinker/src/ClassAliasAutoloader.php',
     'Laravel\\Tinker\\Console\\TinkerCommand' => $vendorDir . '/laravel/tinker/src/Console/TinkerCommand.php',
     'Laravel\\Tinker\\TinkerCaster' => $vendorDir . '/laravel/tinker/src/TinkerCaster.php',

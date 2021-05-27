@@ -20,9 +20,9 @@ class ComposerStaticInit18aa3fc0c0911580b0144b1d7c383ab2
         'def43f6c87e4f8dfd0c9e1b1bab14fe8' => __DIR__ . '/..' . '/symfony/polyfill-iconv/bootstrap.php',
         '2c102faa651ef8ea5874edb585946bce' => __DIR__ . '/..' . '/swiftmailer/swiftmailer/lib/swift_required.php',
         '7b11c4dc42b3b3023073cb14e519683c' => __DIR__ . '/..' . '/ralouphie/getallheaders/src/getallheaders.php',
-        'a1105708a18b76903365ca1c4aa61b02' => __DIR__ . '/..' . '/symfony/translation/Resources/functions.php',
         'c964ee0ededf28c96ebd9db5099ef910' => __DIR__ . '/..' . '/guzzlehttp/promises/src/functions_include.php',
         'a0edc8309cc5e1d60e3047b5df6b7052' => __DIR__ . '/..' . '/guzzlehttp/psr7/src/functions_include.php',
+        'a1105708a18b76903365ca1c4aa61b02' => __DIR__ . '/..' . '/symfony/translation/Resources/functions.php',
         '37a3dc5111fe8f707ab4c132ef1dbc62' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/functions_include.php',
         '538ca81a9a966a6716601ecf48f4eaef' => __DIR__ . '/..' . '/opis/closure/functions.php',
         'e39a8b23c42d4e1452234d762b03835a' => __DIR__ . '/..' . '/ramsey/uuid/src/functions.php',
@@ -126,6 +126,7 @@ class ComposerStaticInit18aa3fc0c0911580b0144b1d7c383ab2
         ),
         'K' => 
         array (
+            'Kozz\\Laravel\\' => 13,
             'Kavist\\RajaOngkir\\' => 18,
         ),
         'I' => 
@@ -386,6 +387,10 @@ class ComposerStaticInit18aa3fc0c0911580b0144b1d7c383ab2
         'Laravel\\Tinker\\' => 
         array (
             0 => __DIR__ . '/..' . '/laravel/tinker/src',
+        ),
+        'Kozz\\Laravel\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/kozz/laravel-guzzle-provider/src',
         ),
         'Kavist\\RajaOngkir\\' => 
         array (
@@ -2448,6 +2453,8 @@ class ComposerStaticInit18aa3fc0c0911580b0144b1d7c383ab2
         'Kavist\\RajaOngkir\\Resources\\Provinsi' => __DIR__ . '/..' . '/kavist/rajaongkir/src/Resources/Provinsi.php',
         'Kavist\\RajaOngkir\\SearchDrivers\\AbstractDriver' => __DIR__ . '/..' . '/kavist/rajaongkir/src/SearchDrivers/AbstractDriver.php',
         'Kavist\\RajaOngkir\\SearchDrivers\\BasicDriver' => __DIR__ . '/..' . '/kavist/rajaongkir/src/SearchDrivers/BasicDriver.php',
+        'Kozz\\Laravel\\Facades\\Guzzle' => __DIR__ . '/..' . '/kozz/laravel-guzzle-provider/src/Facades/Guzzle.php',
+        'Kozz\\Laravel\\Providers\\Guzzle' => __DIR__ . '/..' . '/kozz/laravel-guzzle-provider/src/Providers/Guzzle.php',
         'Laravel\\Tinker\\ClassAliasAutoloader' => __DIR__ . '/..' . '/laravel/tinker/src/ClassAliasAutoloader.php',
         'Laravel\\Tinker\\Console\\TinkerCommand' => __DIR__ . '/..' . '/laravel/tinker/src/Console/TinkerCommand.php',
         'Laravel\\Tinker\\TinkerCaster' => __DIR__ . '/..' . '/laravel/tinker/src/TinkerCaster.php',

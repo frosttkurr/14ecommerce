@@ -81,5 +81,8 @@ Route::prefix('admin/discount')->group(function () {
 //Checkout
 Route::get('/cart', 'CartsController@index')->name('checkout.cart')->middleware('auth');
 Route::post('/cart', 'CartsController@store')->name('cart.add')->middleware('auth');
-Route::delete('/cart/{id}', 'CartsController@destroy')->name('cart.delete')->middleware('auth');
-Route::get('/checkout', 'TransactionsController@index')->name('checkout.checkout.noproduct')->middleware('auth');
+Route::get('/cart/{product_id}', 'CartsController@destroy')->name('cart.delete')->middleware('auth');
+Route::post('/checkout', 'CartsController@checkout')->name('cart.checkout')->middleware('auth');
+Route::get('/checkout', 'TransactionsController@index')->name('cart.index')->middleware('auth');
+Route::get('/province/{id}/cities', 'TransactionsController@getCities');
+Route::post('/', 'TransactionsController@getCost');

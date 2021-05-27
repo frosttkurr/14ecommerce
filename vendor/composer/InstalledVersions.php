@@ -30,7 +30,7 @@ private static $installed = array (
     'aliases' => 
     array (
     ),
-    'reference' => '00cb05b3f47fb921689987e4df550a85ea9e5f5d',
+    'reference' => '37d4b217acbe0e876510142ca0c7135b7635e891',
     'name' => 'laravel/laravel',
   ),
   'versions' => 
@@ -439,6 +439,15 @@ private static $installed = array (
         0 => '*',
       ),
     ),
+    'kozz/laravel-guzzle-provider' => 
+    array (
+      'pretty_version' => '6.1.4',
+      'version' => '6.1.4.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '87fe28499496f7afae571be1e72bcf87e330f881',
+    ),
     'laravel/framework' => 
     array (
       'pretty_version' => 'v7.30.4',
@@ -455,7 +464,7 @@ private static $installed = array (
       'aliases' => 
       array (
       ),
-      'reference' => '00cb05b3f47fb921689987e4df550a85ea9e5f5d',
+      'reference' => '37d4b217acbe0e876510142ca0c7135b7635e891',
     ),
     'laravel/tinker' => 
     array (
