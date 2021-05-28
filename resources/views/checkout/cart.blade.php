@@ -15,6 +15,15 @@
     </div>
 
     <div class="contact-information2">
+      @if (count($errors) > 0)
+        <div class="container alert alert-danger">
+          <ul>
+            @foreach ($errors->all() as $error)
+              <li>{{ $error }}</li>
+            @endforeach
+          </ul>
+        </div>
+      @endif
       <div class="container">
         <div class="row">
             <div class="col-12">
@@ -30,7 +39,7 @@
                                 <th scope="col" class="text-center">Price</th>
                                 <th scope="col" class="text-center">Quantity</th>
                                 <th scope="col" class="text-center">Total Price</th>
-                                <th> </th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -68,6 +77,7 @@
                               <td></td>
                               <td class="text-center"><strong>Sub-Total</strong></td>
                               <td class="text-center"><strong>@if (count($cart) > 0) {{ "Rp" . number_format($grandtotal, 0, ",", ",") }} @else Rp. 0 @endif</strong></td>
+                              <td></td>
                             </tr>
                         </tbody>
                     </table>

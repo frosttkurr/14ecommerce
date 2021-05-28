@@ -60,12 +60,12 @@
           </button>
           <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
-              <li class="nav-item active">
+              <li class="nav-item {{ Request::url() == url('/home') || Request::url() == url('/product') ? 'active' : '' }}">
                 <a class="nav-link" href="{{ url('home') }}">Home
                   <!--<span class="sr-only">(current)</span>-->
                 </a>
               </li>
-              <li class="nav-item">
+              <li class="nav-item {{ Request::url() == url('/cart') || Request::url() == url('/checkout') ? 'active' : '' }}">
                 <a class="nav-link" href="{{ url('cart') }}">Cart</a>
               </li>
               <li class="nav-item dropdown">

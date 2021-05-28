@@ -98,22 +98,25 @@ class CartsController extends Controller
                 'qty' => $cek->qty + $request->qty     
             ]);
 
-            DB::table('products')
+            /*DB::table('products')
             ->where('id', $request->product_id)
             ->update([
                 'stock' => $product->stock - $request->qty
-            ]);
+            ]);*/
             return redirect('/cart')->with('status', 'Product berhasil ditambah!');
         } 
     }
 
     public function checkout(Request $request)
     {
-        session()->forget('checkout');
+        $messages = [
+            'required' => 'Anda belum memilih product!',
+        ];
+
         $user = Auth::id();
         $request->validate([
             'product_id' => 'required'
-        ]);
+        ], $messages);
 
         $checkout = session('checkout');      
         $checkout = [

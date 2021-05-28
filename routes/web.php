@@ -85,4 +85,4 @@ Route::get('/cart/{product_id}', 'CartsController@destroy')->name('cart.delete')
 Route::post('/checkout', 'CartsController@checkout')->name('cart.checkout')->middleware('auth');
 Route::get('/checkout', 'TransactionsController@index')->name('cart.index')->middleware('auth');
 Route::get('/province/{id}/cities', 'TransactionsController@getCities');
-Route::post('/', 'TransactionsController@getCost');
+Route::post('/checkout/detail', 'TransactionsController@getCost')->name('checkout.detail')->middleware('auth');

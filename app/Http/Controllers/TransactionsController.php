@@ -13,6 +13,7 @@ use App\Product_Review;
 use App\Cart;
 use App\City;
 use App\Province;
+use App\Discount;
 use App\Admin;
 use App\Response;
 use Kavist\RajaOngkir\Facades\RajaOngkir;
@@ -43,10 +44,20 @@ class TransactionsController extends Controller
         $checkout = session('checkout');
         $product = $checkout['product_id'];
         $cart = Cart::with('product')->where('user_id', $checkout['user_id'])->where('status', 'notyet')->get();
+        $discount = Discount::where('id_product', $product)->get();
         $province = Province::pluck('title', 'province_id');
         $courier = Courier::pluck('courier', 'id');
-        return view('checkout.checkout', compact('cart', 'product', 'province', 'courier'));
+        return view('checkout.checkout', compact('cart', 'product', 'province', 'courier', 'discount'));
     }
+
+    public function confirm()
+    {
+        $checkout = session('checkout');
+        $product = $checkout['product_id'];
+        $cart = Cart::with('product')->where('user_id', $checkout['user_id'])->where('product_id', $product)->where('status', 'notyet')->get();
+        return view('checkout.confirm');
+    }
+
 
     public function getCities($id)
     {
@@ -62,10 +73,42 @@ class TransactionsController extends Controller
 
 
     public function getCost(Request $request) {
+        /*$product = $request->product_id;
+        $totalDiscount = 0;
+        foreach ($product as $product_id) {
+            $discount = Discount::where('id_product', $product_id)->get();
+            foreach($discount as $discounts) {
+                $totalDiscount += $discounts->percentage;
+            }
+            dd($totalDiscount);
+        }*/
+
         $url = 'https://api.rajaongkir.com/starter/cost';
         $client = new Client();
+        
+        $messages = [
+            'not_in' => ':attribute belum dipilih!',
+            'required' => ':attribute belum diisi!',
+            'min' => ':attribute minimal :min karakter!',
+            'numeric' => ':attribute hanya angka!',
+        ];
 
-        $request = $client->request('POST', $url, 
+        $request->validate([
+            'product_id' => 'required',
+            'nama_lengkap' => 'min:5',
+            'no_hp' => 'numeric|min:10',
+            'alamat' => 'required',
+            'province' => 'not_in:0',
+            'city' => 'not_in:0',
+            'courier' => 'not_in:0',
+            'payment' => 'not_in:0',
+        ], $messages);
+
+        $courier_name = Courier::where('id', $request->courier)->first('courier');
+        $getRegency = City::where('city_id', $request->city)->first('title');
+        $getProvince = Province::where('province_id', $request->province)->first('title');
+
+        $getCost = $client->request('POST', $url, 
         [
             'headers' => [
                 'key' => 'c4267eb2dc0020aee5262bc61cdb044b',
@@ -75,38 +118,91 @@ class TransactionsController extends Controller
                 'origin' => 114,
                 'destination' => $request->city,
                 'weight' => $request->weight,
-                'courier' => $request->courier,
+                'courier' => strtolower($courier_name->courier),
             ]
         ]);
 
-        $cost = json_decode($request->getBody(), true);
-        dd($cost);
-    }
-
-    public function create($id)
-    {
-        $product = \App\Product::find($id);
-        $all_review  =  Product_Review::with('Product')->get()->where('product_id',$id);
-        $all_respon = Response::with('Product_Review')->get();
-        // dd($all_respon);
-        $couriers = Courier::all();
-        $provinces = Province::all();
+        $transaction = $request->all();
+        $cost = json_decode($getCost->getBody(), true);
+        $date = Carbon::now('Asia/Makassar');
         
-        if(auth()){
-            $userName = Auth::guard('user')->user();
-        }else{
-            $userName = "";
+        $timeout = $date->addHours(24);
+        $address = $request->alamat;
+        $regency = $getRegency->title;
+        $province = $getProvince->title;
+        $shipping_cost = $cost['rajaongkir']['results'][0]['costs'][0]['cost'][0]['value'];
+        $etd = $cost['rajaongkir']['results'][0]['costs'][0]['cost'][0]['etd'];
+        $total = $request->subtotal + $shipping_cost;
+        $sub_total = $request->subtotal;
+        $user_id = Auth::id();
+        $courier_id = $request->courier;
+        
+        $transaksi = Transaction::create([
+            'timeout' => $timeout,
+            'address' => $address,
+            'regency' => $regency,
+            'province' => $province,
+            'total' => $total,
+            'shipping_cost' => $shipping_cost,
+            'sub_total' => $sub_total,
+            'user_id' => $user_id,
+            'courier_id' => $courier_id,
+            'status' => 'unverified'
+        ]);
+        
+        $transaksi_id = $transaksi->id;
+        $product = $request->product_id;
+        
+        /*$product = $request->product_id;
+        $totalDiscount = 0;
+        foreach ($product as $product_id) {
+            $discount = Discount::where('id_product', $product_id)->get();
+            foreach($discount as $discounts) {
+                $totalDiscount += $discounts->percentage;
+            }
+            dd($totalDiscount);
+        }*/
+        
+        foreach ($product as $product_id) {
+            $user_id = Auth::id();
+            $totalDiscount = 0;
+            $getProduct = Product::where('id', $product_id)->first();
+            $cart = Cart::with('product')->where('product_id', $product_id)->where('status', 'notyet')->first();
+            $discount = Discount::where('id_product', $product_id)->get();
+            foreach($discount as $discounts) {
+                $totalDiscount += $discounts->percentage;
+            }
+            Transaction_Detail::create([
+                'transaction_id' => $transaksi_id,
+                'product_id' => $product_id,
+                'qty' => $cart->qty,
+                'discount' => $totalDiscount,
+                'selling_price' => $cart->product->price
+            ]);
+            Cart::where('product_id', $product_id)->where('user_id', $user_id)->where('status', 'notyet')
+                ->update([
+                    'status' => 'checkedout'
+                ]);
+            /*Product::where('id', $product_id)
+                ->update([
+                    'stock' => $getProduct->stock - $cart->qty
+                ]);*/
         }
-
-        // echo $userName;        
-        return view('products.shopdetail', [
-            'product' => $product, 
-            'all_respon' =>  $all_respon,
-            'courier' =>  $couriers, 
-            'all_review'=> $all_review, 
-            'userName' => $userName, 
-            'provinces'=>$provinces
-        ]);    
+        
+        //return view('checkout.confirm', compact('user', 'cost', 'transaction'));
+        
+        /*DB::table('transactions')->insert(
+            ['timeout' => now(),
+            'address' => $request->nama.' '.' '.$request->no_hp.' '.$request->alamat,
+            'regency' => $request->city,
+            'province' => $request->province,
+            'total' => $request->total,
+            'shipping_cost' => $cost['rajaongkir']['results'][0]['costs'][1]['cost'][0]['value'],
+            'status' => 'notyet']
+        );*/
+        
+        
+        //['rajaongkir']['results'][0]['costs'][1]['cost'][0]['value']
     }
 
     /**
