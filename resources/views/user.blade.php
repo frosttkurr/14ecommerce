@@ -60,26 +60,33 @@
           </button>
           <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
-              <li class="nav-item {{ Request::url() == url('/home') || Request::url() == url('/product') ? 'active' : '' }}">
-                <a class="nav-link" href="{{ url('home') }}">Home
-                  <!--<span class="sr-only">(current)</span>-->
-                </a>
-              </li>
-              <li class="nav-item {{ Request::url() == url('/cart') || Request::url() == url('/checkout') ? 'active' : '' }}">
-                <a class="nav-link" href="{{ url('cart') }}">Cart</a>
-              </li>
-              <li class="nav-item dropdown">
-                <a class="dropdown-toggle nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">About</a>
-              
-                <div class="dropdown-menu">
-                    <a class="dropdown-item" href="about.html">About Us</a>
-                    <a class="dropdown-item" href="blog.html">Blog</a>
-                    <a class="dropdown-item" href="testimonials.html">Testimonials</a>
-                    <a class="dropdown-item" href="terms.html">Terms</a>
-                </div>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="contact.html">Contact Us</a>
+                <li class="nav-item {{ Request::url() == url('/home') || Request::url() == url('/product') ? 'active' : '' }}">
+                  <a class="nav-link" href="{{ url('home') }}">Home
+                    <!--<span class="sr-only">(current)</span>-->
+                  </a>
+                </li>
+                <li class="nav-item {{ Request::url() == url('/cart') || Request::url() == url('/checkout/{id}') ? 'active' : '' }}">
+                  <a class="nav-link" href="{{ url('cart') }}">Cart</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#">Status Pesan</a>
+                </li>
+                <li class="nav-item dropdown">
+                  <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                      {{ Auth::user()->name }} <span class="caret"></span>
+                  </a>
+                  
+                  <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                      <a class="dropdown-item" href="{{ route('logout') }}"
+                      onclick="event.preventDefault();
+                                      document.getElementById('logout-form').submit();">
+                          {{ __('Logout') }}
+                      </a>
+
+                      <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                          @csrf
+                      </form>
+                  </div>
               </li>
             </ul>
           </div>

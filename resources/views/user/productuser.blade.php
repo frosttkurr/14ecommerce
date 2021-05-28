@@ -5,7 +5,7 @@
     <div class="container">
       <div class="row">
         <div class="col-md-12">
-          <h1>{{$product->product_name}}</h1>
+          <h1 class="display-1">{{$product->product_name}}</h1>
         </div>
       </div>
     </div>
@@ -112,7 +112,7 @@
             <img src="{{asset('image_user/'.$item->user->profile_image)}}" style="width: 75px; height:75px;" alt="" class="img-fluid">
 					</div>
 					<div class="col-md-9 mt-sm-20">
-            <kbd>{{$loop->iteration.'. '.$item->user->name}}</kbd>
+            <p><b>{{$loop->iteration.'. '.$item->user->name}}</b></p>
             <p>
               @for ($i = 1; $i <= $item->rate; $i++)
                   ★
@@ -126,15 +126,14 @@
           @endphp        
           @if (!$responses->isEmpty())
                @foreach ($responses as $respon)
-               <br>
-              <h5 class="mb-30">Response Admin</h5>
-                <div class="row">
-                  <div class="col-lg-12">
-                    <blockquote class="generic-blockquote">
-                      {{$respon->content}}
-                    </blockquote>
+                  <div class="row mt-3 mb-2">
+                    <kbd>Response Admin</kbd>
+                    <div class="col-lg-12 mt-2">
+                      <blockquote class="generic-blockquote">
+                         <small>{{$respon->content}}</small>
+                      </blockquote>
+                    </div>
                   </div>
-                </div>
                 @endforeach
           @endif
         @endforeach
@@ -146,3 +145,14 @@
  	</div>   
   <!--================End Single Product Area =================-->
 @endsection
+
+<script language = "text/Javascript"> 
+  cleared[0] = cleared[1] = cleared[2] = 0; //set a cleared flag for each field
+  function clearField(t){                   //declaring the array outside of the
+  if(! cleared[t.id]){                      // function makes it static and global
+      cleared[t.id] = 1;  // you could use true and false, but that's more typing
+      t.value='';         // with more chance of typos
+      t.style.color='#fff';
+      }
+  }
+</script>
