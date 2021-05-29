@@ -9,6 +9,7 @@ use App\Product_Review;
 use App\Response;
 use App\Admin;
 use App\User;
+use App\Transaction;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -43,7 +44,8 @@ class HomeController extends Controller
         $product_reviews = Product_Review::where('product_id', '=', $product->id)->with('user')->paginate(5);
         $user = Auth::user();
         $user_review = Product_Review::where('product_id', '=', $product->id)->where('user_id', '=', $user->id)->with('user')->first();
-        return view('user.productuser',compact('product', 'product_images', 'product_reviews','user','user_review'));
+        $transaction = Transaction::where('user_id', $user->id)->where('status', 'success')->get();
+        return view('user.productuser',compact('product', 'product_images', 'product_reviews','user','user_review','transaction'));
     }
 
     public function review_product($id, Request $request)

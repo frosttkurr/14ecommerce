@@ -71,40 +71,43 @@
         <h3 class="">Review Customer</h3>
         <hr class="mb-30" style="width:22%;text-align:left;margin-left:0">
         <div class="row">
-          
-          @if ($user_review==null)
-            <div class="col-lg-12 col-md-12">
-						  <form action="{{route('review_product',['id'=>$product->id])}}" method="POST">
-                @csrf
-                <input type="text" name="user_id" value="{{$user->id}}" hidden />
-                <input type="text" name="product_id"  value="{{$product->id}}" hidden />
-                <div class="input-group-icon mt-10">
-                  <div class="icon"><i class="fa fa-star" aria-hidden="true"></i></div>
-                  <div class="form-select" id="default-select">
-                  <select name="rate" class="form-control col-sm-2">
-                      <option disabled selected>Rating</option>
-                      <option value="1">★</option>
-                      <option value="2">★★</option>
-                      <option value="3">★★★</option>
-                      <option value="4">★★★★</option>
-                      <option value="5">★★★★★</option>
-                    </select>
-                  </div>
-                </div>
-                <br>
-                <div class="mt-20">
-                  <input type="text" class="form-control col-sm-4" name="content" placeholder="Content"
-                    onfocus="this.placeholder = ''" onblur="this.placeholder = 'Content'" required
-                    class="single-input">
-                </div>
-                <br>
-                <div class="button-group-area mt-10">
-                  <input type="submit" class="btn genric-btn success radius" value="Submit" />
-                </div>  
-              </form>
-          </div>
-          @endif
-					
+          @foreach ($transaction as $order)
+            @php $transaction_detail = \App\Transaction_Detail::where('transaction_id', $order->id)->where('product_id', $product->id)->first(); @endphp
+            @if ($transaction_detail != null)
+              @if ($user_review==null)
+                <div class="col-lg-12 col-md-12">
+                  <form action="{{route('review_product',['id'=>$product->id])}}" method="POST">
+                    @csrf
+                    <input type="text" name="user_id" value="{{$user->id}}" hidden />
+                    <input type="text" name="product_id"  value="{{$product->id}}" hidden />
+                    <div class="input-group-icon mt-10">
+                      <div class="icon"><i class="fa fa-star" aria-hidden="true"></i></div>
+                      <div class="form-select" id="default-select">
+                      <select name="rate" class="form-control col-sm-2">
+                          <option disabled selected>Rating</option>
+                          <option value="1">★</option>
+                          <option value="2">★★</option>
+                          <option value="3">★★★</option>
+                          <option value="4">★★★★</option>
+                          <option value="5">★★★★★</option>
+                        </select>
+                      </div>
+                    </div>
+                    <br>
+                    <div class="mt-20">
+                      <input type="text" class="form-control col-sm-4" name="content" placeholder="Tulis review..."
+                        onfocus="this.placeholder = ''" onblur="this.placeholder = 'Content'" required
+                        class="single-input">
+                    </div>
+                    <br>
+                    <div class="button-group-area mt-10">
+                      <input type="submit" class="btn genric-btn success radius" value="Submit" />
+                    </div>  
+                  </form>
+              </div>
+              @endif
+            @endif
+          @endforeach
         </div>
         	@foreach ($product_reviews as $item)
          <div class="row">

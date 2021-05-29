@@ -188,6 +188,8 @@ class TransactionsController extends Controller
                     'stock' => $getProduct->stock - $cart->qty
                 ]);*/
         }
+
+        return redirect('order');
         
         //return view('checkout.confirm', compact('user', 'cost', 'transaction'));
         
@@ -201,7 +203,6 @@ class TransactionsController extends Controller
             'status' => 'notyet']
         );*/
         
-        
         //['rajaongkir']['results'][0]['costs'][1]['cost'][0]['value']
     }
 
@@ -211,6 +212,100 @@ class TransactionsController extends Controller
         * @param \Illuminate\Http\Request $request
         * @return \Illuminate\Http\Response
     */
+
+    public function orderAll()
+    {
+        $user_id = Auth::id();
+        $transaction = Transaction::with('user')->with('courier')->where('user_id', $user_id)->orderBy('created_at', 'DESC')->get();
+        //$transaction_detail = Transaction_Detail::with('transaction')->with('product')->where('transaction_id', $transaction->id)->get();
+        return view('order.index', compact('transaction'));
+    }
+
+    public function orderUnpaid()
+    {
+        $user_id = Auth::id();
+        $transaction = Transaction::with('user')->with('courier')->where('user_id', $user_id)->where('status', 'unverified')->where('proof_of_payment', NULL)->orderBy('created_at', 'DESC')->get();
+        //$transaction_detail = Transaction_Detail::with('transaction')->with('product')->where('transaction_id', $transaction->id)->get();
+        return view('order.unpaid', compact('transaction'));
+    }
+
+    public function orderUnverified()
+    {
+        $user_id = Auth::id();
+        $transaction = Transaction::with('user')->with('courier')->where('user_id', $user_id)->where('status', 'unverified')->whereNotNull('proof_of_payment')->orderBy('created_at', 'DESC')->get();
+        //$transaction_detail = Transaction_Detail::with('transaction')->with('product')->where('transaction_id', $transaction->id)->get();
+        return view('order.unverified', compact('transaction'));
+    }
+
+    public function orderVerified()
+    {
+        $user_id = Auth::id();
+        $transaction = Transaction::with('user')->with('courier')->where('user_id', $user_id)->where('status', 'verified')->orderBy('created_at', 'DESC')->get();
+        //$transaction_detail = Transaction_Detail::with('transaction')->with('product')->where('transaction_id', $transaction->id)->get();
+        return view('order.verified', compact('transaction'));
+    }
+
+    public function orderDelivered()
+    {
+        $user_id = Auth::id();
+        $transaction = Transaction::with('user')->with('courier')->where('user_id', $user_id)->where('status', 'delivered')->orderBy('created_at', 'DESC')->get();
+        //$transaction_detail = Transaction_Detail::with('transaction')->with('product')->where('transaction_id', $transaction->id)->get();
+        return view('order.delivered', compact('transaction'));
+    }
+
+    public function orderSuccess()
+    {
+        $user_id = Auth::id();
+        $transaction = Transaction::with('user')->with('courier')->where('user_id', $user_id)->where('status', 'success')->orderBy('created_at', 'DESC')->get();
+        //$transaction_detail = Transaction_Detail::with('transaction')->with('product')->where('transaction_id', $transaction->id)->get();
+        return view('order.success', compact('transaction'));
+    }
+
+    public function orderExpired()
+    {
+        $user_id = Auth::id();
+        $transaction = Transaction::with('user')->with('courier')->where('user_id', $user_id)->where('status', 'expired')->orderBy('created_at', 'DESC')->get();
+        //$transaction_detail = Transaction_Detail::with('transaction')->with('product')->where('transaction_id', $transaction->id)->get();
+        return view('order.expired', compact('transaction'));
+    }
+
+    public function orderCanceled()
+    {
+        $user_id = Auth::id();
+        $transaction = Transaction::with('user')->with('courier')->where('user_id', $user_id)->where('status', 'canceled')->orderBy('created_at', 'DESC')->get();
+        //$transaction_detail = Transaction_Detail::with('transaction')->with('product')->where('transaction_id', $transaction->id)->get();
+        return view('order.canceled', compact('transaction'));
+    }
+
+    public function storeBukti(Request $request)
+    {
+        $messages = [
+            'required' => 'Bukti pembayaran belum diupload!',
+            'image' => 'Upload hanya gambar bukti pembayaran!',
+            'max' => 'Batas ukuran gambar hanya :max MB',
+            'mimes' => 'Upload file sesuai ekstensi :mimes'
+
+        ];
+
+        $request->validate([
+            'payment' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+        ], $messages);
+        
+        $imageName = time().'_.'.$request->payment->extension();
+        $request->payment->move(public_path('payment/'), $imageName);
+
+        Transaction::where('id', $request->transaction_id)
+                ->update([
+                    'proof_of_payment' => $imageName
+                ]);
+
+        if (file_exists('payment/'.$imageName)) {
+            return redirect('order')->with("success", "Bukti pembayaran berhasil diupload!");
+        } else {
+            return redirect('home')->with("failed", "Upload ulang bukti pembayaran!");
+        }
+    }
+    
 
     public function store(Request $request)
     {

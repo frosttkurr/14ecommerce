@@ -26,9 +26,9 @@ Route::prefix('product')->group(function () {
     Route::post('review/{id}', 'HomeController@review_product')->name('review_product');
 });
 
-Route::get('/productuser', function() {
+/*Route::get('/productuser', function() {
     return view('user.productuser');
-});
+});*/
 
 Route::prefix('admin')->group(function(){
     Route::get('/', 'AdminController@index')->name('admin.dashboard');
@@ -86,3 +86,14 @@ Route::post('/checkout', 'CartsController@checkout')->name('cart.checkout')->mid
 Route::get('/checkout', 'TransactionsController@index')->name('cart.index')->middleware('auth');
 Route::get('/province/{id}/cities', 'TransactionsController@getCities');
 Route::post('/checkout/detail', 'TransactionsController@getCost')->name('checkout.detail')->middleware('auth');
+
+//Order
+Route::get('/order', 'TransactionsController@orderAll')->name('order.all')->middleware('auth');
+Route::post('/order', 'TransactionsController@storeBukti')->name('order.payment')->middleware('auth');
+Route::get('/order/unpaid', 'TransactionsController@orderUnpaid')->name('order.unpaid')->middleware('auth');
+Route::get('/order/unverified', 'TransactionsController@orderUnverified')->name('order.unverified')->middleware('auth');
+Route::get('/order/verified', 'TransactionsController@orderVerified')->name('order.verified')->middleware('auth');
+Route::get('/order/delivered', 'TransactionsController@orderDelivered')->name('order.delivered')->middleware('auth');
+Route::get('/order/success', 'TransactionsController@orderSuccess')->name('order.success')->middleware('auth');
+Route::get('/order/expired', 'TransactionsController@orderExpired')->name('order.expired')->middleware('auth');
+Route::get('/order/canceled', 'TransactionsController@orderCanceled')->name('order.canceled')->middleware('auth');

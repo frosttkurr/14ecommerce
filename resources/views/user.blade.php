@@ -68,8 +68,8 @@
                 <li class="nav-item {{ Request::url() == url('/cart') || Request::url() == url('/checkout/{id}') ? 'active' : '' }}">
                   <a class="nav-link" href="{{ url('cart') }}">Cart</a>
                 </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#">Status Pesan</a>
+                <li class="nav-item {{ Request::url() == url('/order') || Request::url() == url('/order/unverified') || Request::url() == url('/order/verified') || Request::url() == url('/order/delivered') || Request::url() == url('/order/success') || Request::url() == url('/order/expired') || Request::url() == url('/order/canceled') ? 'active' : '' }}">
+                  <a class="nav-link" href="{{ url('order') }}">Status Pesan</a>
                 </li>
                 <li class="nav-item dropdown">
                   <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
