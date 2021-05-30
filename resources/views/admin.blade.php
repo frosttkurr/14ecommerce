@@ -20,8 +20,8 @@
 	<!-- GOOGLE FONTS -->
 	<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700" rel="stylesheet">
 	<!-- ICONS -->
-	<link rel="apple-touch-icon" sizes="76x76" href="{{asset('style/template/assets/img/apple-icon.png')}}">
-	<link rel="icon" type="image/png" sizes="96x96" href="{{asset('style/template/assets/img/favicon.png')}}">
+	{{-- <link rel="apple-touch-icon" sizes="76x76" href="{{asset('style/template/assets/img/apple-icon.png')}}">
+	<link rel="icon" type="image/png" sizes="96x96" href="{{asset('style/template/assets/img/favicon.png')}}"> --}}
 </head>
 
 <body>
@@ -90,11 +90,10 @@
 			<div class="sidebar-scroll">
 				<nav>
 					<ul class="nav">
-						<li><a href="/admin" class="{{ Request::url() == url('/admin') ? 'active' : '' }}"><i class="lnr lnr-home"></i> <span>Dashboard</span></a></li>
-						<li><a href="/courier" class="{{ Request::url() == url('/courier') ? 'active' : '' }}"><i class="lnr lnr-code"></i> <span>Courier</span></a></li>
-						<li><a href="/products" class="{{ Request::url() == url('/products') ? 'active' : '' }}"><i class="lnr lnr-chart-bars"></i> <span>Product</span></a></li>
-						<li><a href="/categories" class="{{ Request::url() == url('/categories') ? 'active' : '' }}"><i class="lnr lnr-cog"></i> <span>Product Categories</span></a></li>
-						<li><a href="/transactions" class="{{ Request::url() == url('/transactions') ? 'active' : '' }}"><i class="fa fa-shopping-cart"></i> <span>Transactions</span></a></li>
+						<li><a href="/admin" class="active"><i class="lnr lnr-home"></i> <span>Dashboard</span></a></li>
+						<li><a href="/courier" class=""><i class="lnr lnr-code"></i> <span>Courier</span></a></li>
+						<li><a href="/products" class=""><i class="lnr lnr-chart-bars"></i> <span>Product</span></a></li>
+						<li><a href="/categories" class=""><i class="lnr lnr-cog"></i> <span>Product Categories</span></a></li>
 					</ul>
 				</nav>
 			</div>
