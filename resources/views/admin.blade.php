@@ -30,7 +30,7 @@
 		<!-- NAVBAR -->
 		<nav class="navbar navbar-default navbar-fixed-top">
 			<div class="brand">
-				<a href="{{asset('style/template/index.html')}}"><img src="{{asset('style/template/assets/img/logo-phone.png')}}" alt="Klorofil Logo" class="img-responsive logo"></a>
+				<a href="/admin"><img src="{{asset('style/template/assets/img/logo-phone.png')}}" alt="Klorofil Logo" class="img-responsive logo"></a>
 			</div>
 			<div class="container-fluid">
 				<div class="navbar-btn">

@@ -68,7 +68,7 @@
             <td class="text-center">{{ $item->created_at->format('d/m/Y H:m:s') }}</td>
             <td class="text-center">
                 @if (isset($item->proof_of_payment))
-                    <span class="label label-default"><a style="text-decoration: none; color: inherit;" href="{{asset('payment/'.$item->proof_of_payment)}}" target="_blank">Lihat Bukti</a></span>                    
+                    <span class="label label-default"><a style="text-decoration: none; color: inherit;" href="{{url('storage/public_html/payment/'.$item->proof_of_payment)}}" target="_blank">Lihat Bukti</a></span>                    
                 @else 
                     Tidak ada
                 @endif
