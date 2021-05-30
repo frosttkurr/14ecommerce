@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Storage;
 use GuzzleHttp\Client;
 use Carbon\Carbon;
 use App\Transaction;
@@ -358,19 +359,21 @@ class TransactionsController extends Controller
             'payment' => 'required|image|mimes:jpeg,png,jpg|max:2048',
         ], $messages);
         
-        $imageName = time().'_.'.$request->payment->extension();
-        $request->payment->move(public_path('payment/'), $imageName);
+        //$imageName = time().'_.'.$request->payment->extension();
+        //$request->payment->move(public_path('payment/'), $imageName);
+        $imageName = Storage::putFile('public_html/payment',$request->payment);
 
         Transaction::where('id', $request->transaction_id)
                 ->update([
-                    'proof_of_payment' => $imageName
+                    'proof_of_payment' => basename($imageName)
                 ]);
 
-        if (file_exists('payment/'.$imageName)) {
+    return redirect('order')->with("success", "Bukti pembayaran berhasil diupload!");
+        /*if (file_exists('payment/'.$imageName)) {
             return redirect('order')->with("success", "Bukti pembayaran berhasil diupload!");
         } else {
             return redirect('home')->with("failed", "Upload ulang bukti pembayaran!");
-        }
+        }*/
     }
     
 
