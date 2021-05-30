@@ -36,12 +36,7 @@
 				<div class="navbar-btn">
 					<button type="button" class="btn-toggle-fullwidth"><i class="lnr lnr-arrow-left-circle"></i></button>
 				</div>
-				<form class="navbar-form navbar-left">
-					<div class="input-group">
-						<input type="text" value="" class="form-control" placeholder="Search dashboard...">
-						<span class="input-group-btn"><button type="button" class="btn btn-primary">Go</button></span>
-					</div>
-				</form>
+
 				<div id="navbar-menu">
 					<ul class="nav navbar-nav navbar-right">
 						<li class="dropdown">
@@ -58,17 +53,9 @@
 								<li><a href="#" class="more">See all notifications</a></li>
 							</ul>
 						</li>
+		
 						<li class="dropdown">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="lnr lnr-question-circle"></i> <span>Help</span> <i class="icon-submenu lnr lnr-chevron-down"></i></a>
-							<ul class="dropdown-menu">
-								<li><a href="#">Basic Use</a></li>
-								<li><a href="#">Working With Data</a></li>
-								<li><a href="#">Security</a></li>
-								<li><a href="#">Troubleshooting</a></li>
-							</ul>
-						</li>
-						<li class="dropdown">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown"><img src="{{asset('style/template/assets/img/user.png')}}" class="img-circle" alt="Avatar"> <span>Samuel</span> <i class="icon-submenu lnr lnr-chevron-down"></i></a>
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown"><span>pastibisa08</span> <i class="icon-submenu lnr lnr-chevron-down"></i></a>
 							<ul class="dropdown-menu">
 								<li><a href="#"><i class="lnr lnr-user"></i> <span>My Profile</span></a></li>
 								<li><a href="#"><i class="lnr lnr-envelope"></i> <span>Message</span></a></li>
@@ -90,10 +77,11 @@
 			<div class="sidebar-scroll">
 				<nav>
 					<ul class="nav">
-						<li><a href="/admin" class="active"><i class="lnr lnr-home"></i> <span>Dashboard</span></a></li>
-						<li><a href="/courier" class=""><i class="lnr lnr-code"></i> <span>Courier</span></a></li>
-						<li><a href="/products" class=""><i class="lnr lnr-chart-bars"></i> <span>Product</span></a></li>
-						<li><a href="/categories" class=""><i class="lnr lnr-cog"></i> <span>Product Categories</span></a></li>
+						<li><a href="/admin" class="{{ Request::url() == url('/admin') ? 'active' : '' }}"><i class="lnr lnr-home"></i> <span>Dashboard</span></a></li>
+						<li><a href="/courier" class="{{ Request::url() == url('/courier') ? 'active' : '' }}"><i class="lnr lnr-code"></i> <span>Courier</span></a></li>
+						<li><a href="/products" class="{{ Request::url() == url('/products') ? 'active' : '' }}"><i class="lnr lnr-chart-bars"></i> <span>Product</span></a></li>
+						<li><a href="/categories" class="{{ Request::url() == url('/categories') ? 'active' : '' }}"><i class="lnr lnr-cog"></i> <span>Product Categories</span></a></li>
+						<li><a href="/transactions" class="{{ Request::url() == url('/transactions') ? 'active' : '' }}"><i class="fa fa-shopping-cart"></i> <span>Transactions</span></a></li>
 					</ul>
 				</nav>
 			</div>
