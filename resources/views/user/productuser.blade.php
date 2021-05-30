@@ -19,7 +19,6 @@
              <div>
                 <img src="{{ url('storage/public_html/gambarproduct/'.$image->image_name) }}" alt class="img-fluid wc-image">
                 <div class="single-gallery-image" style="background: url({{ url('storage/public_html/gambarproduct/'.$image->image_name) }});"></div>
-                </=>
                 </div>
 		    </div>
             @endforeach
