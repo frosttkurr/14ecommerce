@@ -16,12 +16,12 @@
       <div class="row">
         <div class="col-md-7">
             @foreach ($product_images as $image)
+            
             <div class="col-md-7">
              <div>
                 <img src="{{ url('storage/public_html/gambarproduct/'.$image->image_name) }}" alt class="img-fluid wc-image">
                 <div class="single-gallery-image" style="background: url({{ url('storage/public_html/gambarproduct/'.$image->image_name) }});"></div>
               </div>
-            </div>
 		    </div>
             @endforeach
             <br>
