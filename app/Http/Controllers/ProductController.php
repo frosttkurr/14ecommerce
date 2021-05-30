@@ -72,11 +72,12 @@ class ProductController extends Controller
 
             $product = DB::table('products')->where('product_name','=', $request->product_name)->first();
             foreach($request->file('product_images') as $file){
-                $name = rand(1000,9999) . '_.' . $file->extension();
-                $file->move("product_images/", $name);
+                // $name = rand(1000,9999) . '_.' . $file->extension();
+                // $file->storeAs('/img/gambarproduk', $name);
+                $gambar_produk = Storage::putFile('public_html/gambarproduct',$file);
                 $image = new Product_Image();
                 $image->product_id= $product->id;
-                $image->image_name=$name;
+                $image->image_name= basename($gambar_produk);
                 $image->save();
             }
             return redirect("/products")->with('success','Data Tersimpan');
