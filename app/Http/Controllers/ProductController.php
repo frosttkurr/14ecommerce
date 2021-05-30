@@ -153,14 +153,16 @@ class ProductController extends Controller
 
 
         foreach($request->file('product_images') as $file){
-                $name = time() . '_.' . $file->extension();
-                $file->move("product_images/", $name);
+                // $name = time() . '_.' . $file->extension();
+                $gambar_produk = Storage::putFile('public_html/gambarproduct',$file);
+                // $file->storeAs('/img/gambarproduk', $name);
                 $image = new Product_Image();
                 $image->product_id= $id;
-                $image->image_name=$name;
+                $image->image_name=basename($gambar_produk);
+                // $image->image_name=$name;
                 $image->save();
             }
-        if (file_exists('product_images/'.$name)) {
+        if (file_exists('storage/public/gambarproduct'.basename($gambar_produk))) {
             return redirect()->intended(route('product.edit', ['id' => $id]))->with("success", "Successfully Add Image");
         } 
 
