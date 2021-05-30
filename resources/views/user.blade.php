@@ -59,31 +59,34 @@
           </button>
           <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
-              <li class="nav-item active">
-                <a class="nav-link" href="index.html">Home
-                  <span class="sr-only">(current)</span>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="checkout.html">Checkout</a>
-              </li>
-              <li class="nav-item dropdown">
-                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                    {{ Auth::user()->name }} <span class="caret"></span>
-                </a>
-                
-                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="{{ route('logout') }}"
-                    onclick="event.preventDefault();
-                                    document.getElementById('logout-form').submit();">
-                        {{ __('Logout') }}
-                    </a>
+                <li class="nav-item {{ Request::url() == url('/home') || Request::url() == url('/product') ? 'active' : '' }}">
+                  <a class="nav-link" href="{{ url('home') }}">Home
+                    <!--<span class="sr-only">(current)</span>-->
+                  </a>
+                </li>
+                <li class="nav-item {{ Request::url() == url('/cart') || Request::url() == url('/checkout') ? 'active' : '' }}">
+                  <a class="nav-link" href="{{ url('cart') }}">Cart</a>
+                </li>
+                <li class="nav-item {{ Request::url() == url('/order') || Request::url() == url('/order/unverified') || Request::url() == url('/order/verified') || Request::url() == url('/order/delivered') || Request::url() == url('/order/success') || Request::url() == url('/order/expired') || Request::url() == url('/order/canceled') ? 'active' : '' }}">
+                  <a class="nav-link" href="{{ url('order') }}">Status Pesan</a>
+                </li>
+                <li class="nav-item dropdown">
+                  <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                      {{ Auth::user()->name }} <span class="caret"></span>
+                  </a>
+                  
+                  <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                      <a class="dropdown-item" href="{{ route('logout') }}"
+                      onclick="event.preventDefault();
+                                      document.getElementById('logout-form').submit();">
+                          {{ __('Logout') }}
+                      </a>
 
-                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                        @csrf
-                    </form>
-                </div>
-            </li>
+                      <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                          @csrf
+                      </form>
+                  </div>
+              </li>
             </ul>
           </div>
         </div>
