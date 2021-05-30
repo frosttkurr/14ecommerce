@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use File;
 use Illuminate\Support\Facades\Storage;
 use App\Product;
 use App\Product_Categories;
@@ -10,11 +11,15 @@ use App\Product_Image;
 use App\Discount;
 use App\Product_Review;
 use App\Response;
+use App\AdminNotification;
+use App\UserNotification;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
-use File;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 
 class ProductController extends Controller
@@ -229,6 +234,21 @@ class ProductController extends Controller
         return redirect()->intended(route('product.edit', ['id' => $product_id]))->with("success", "Successfully Delete Category");
     }
 
+    /*public function productreviewinsert(Request $request){
+        $admin = Auth::guard('admin')->user()->id;
+        $insert = Response::create([
+            'review_id' => $request->id,
+            'admin_id' => $admin,
+            'content' => $request->response
+            ]);
+        $review = ProductReview::find($request->id);
+        if($insert->exists){
+            loginUser::find($review->user_id)->notify(new UserNotifications('Hai! Review-mu telah di respon admin.','/notifications'));
+            return response()->json("success");
+        }else{
+            return response()->json("error");
+        }
+    }*/
 }
 
 

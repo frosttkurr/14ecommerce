@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use App\AdminNotifications;
 
 class Admin extends Authenticatable
 {
@@ -41,6 +42,21 @@ class Admin extends Authenticatable
 
     public function sendPasswordResetNotification($token){
         $this->notify(new AdminResetPasswordNotification($token));
+    }
+
+    public function notifications()
+    {
+        return $this->morphMany(AdminNotifications::class, 'notifiable')->orderby('created_at', 'desc');
+    }
+
+    public function createNotif($data)
+    {
+        $notif = new AdminNotifications();
+        $notif->type = 'App\Notifications\AdminNotification';
+        $notif->notifiable_type = 'App\User';
+        $notif->notifiable_id = $this->id;
+        $notif->data = $data;
+        $notif->save();
     }
 
     public function response()
