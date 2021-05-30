@@ -83,8 +83,16 @@
                                                     <em>Status : {{ ucfirst($order->status) }}</em>
                                                 </p>
                                                 <p>
-                                                    <em>Courier : {{ $order->courier->courier }}</em>
+                                                    <em>Kurir : {{ $order->courier->courier }}</em>
                                                 </p>
+                                                @if (($order->status == 'unverified') && (is_null($order->proof_of_payment)))
+                                                    <p>
+                                                        <em>Transfer ke : {{ substr(str_shuffle("0123456789"), 0, 16) }}</em>
+                                                    </p>
+                                                    <p>
+                                                        <em>Batas Bayar : <em id="countdown{{$order->id}}"></em></em>
+                                                    </p>
+                                                @endif
                                             </div>
                                         </div>
                                         <div class="row">
@@ -102,7 +110,14 @@
                                                     @php $transaction_detail = \App\Transaction_Detail::with('product')->where('transaction_id', $order->id)->get(); @endphp
                                                     @foreach ($transaction_detail as $order_detail)
                                                         <tr>
-                                                            <td class="col-md-9"><em>{{ $order_detail->product->product_name }}</em></h4></td>
+                                                            <td class="col-md-9">
+                                                                <em>{{ $order_detail->product->product_name }}</em></h4>
+                                                                @if ($order->status == 'success')
+                                                                    <button class="ml-2 btn btn-sm btn-info">
+                                                                        <a style="text-decoration: none; color: inherit;" href="{{ route('detail_product', ['id' => $order_detail->product_id]) }}" target="_blank">Review</a>
+                                                                    </button>
+                                                                @endif
+                                                            </td>
                                                             <td class="col-md-1 text-center">{{ $order_detail->qty }}</td>
                                                             <td class="col-md-1 text-center">{{ "Rp" . number_format($order_detail->selling_price, 0, ",", ",") }}</td>
                                                             <td class="col-md-1 text-center">{{ $order_detail->discount }}%</td>
@@ -153,25 +168,79 @@
                                                     <button type="submit" class="btn btn-dark btn-lg btn-block">
                                                         Upload Bukti Pembayaran   <span class="glyphicon glyphicon-chevron-right"></span>
                                                     </button>
+</form>
+                                                    <div class="container-fluid">
+                                                        <form action="{{ url('userCanceled/'. $order->id) }}" method="POST">
+                                                            {{ method_field('PUT') }}
+                                                            {{ csrf_field() }}
+                                                            <button type="submit" class="btn btn-danger btn-lg btn-block mt-2">
+                                                                Batalkan Pesanan   <span class="glyphicon glyphicon-chevron-right"></span>
+                                                            </button>
+                                                        </form>
+                                                        <form id="timeout" action="{{ url('timeout/'. $order->id) }}" method="POST" hidden>
+                                                            {{ method_field('PUT') }}
+                                                            {{ csrf_field() }}
+                                                            <button type="submit" class="btn btn-danger btn-lg btn-block mt-2" hidden>
+                                                                Expired   <span class="glyphicon glyphicon-chevron-right" hidden></span>
+                                                            </button>
+                                                        </form>
+                                                    </div>
+                                                    <script>
+                                                        CountDownTimer('{{$order->created_at}}', 'countdown{{$order->id}}', '{{$order->timeout}}');
+                                                        function CountDownTimer(dt, id, timeout)
+                                                        {
+                                                            var end = new Date(timeout);
+                                                            var _second = 1000;
+                                                            var _minute = _second * 60;
+                                                            var _hour = _minute * 60;
+                                                            var _day = _hour * 24;
+                                                            var timer;
+                                                            function showRemaining() {
+                                                                var now = new Date();
+                                                                var distance = end - now;
+                                                                if (distance < 0) {
+                                                                    clearInterval(timer);
+                                                                    document.getElementById(id).innerHTML = 'Expired'
+                                                                    document.getElementById("timeout").submit();
+                                                                    return;
+                                                                }
+                                                                var days = Math.floor(distance / _day);
+                                                                var hours = Math.floor((distance % _day) / _hour);
+                                                                var minutes = Math.floor((distance % _hour) / _minute);
+                                                                var seconds = Math.floor((distance % _minute) / _second);
+                                                    
+                                                                document.getElementById(id).innerHTML = days + ' days ';
+                                                                document.getElementById(id).innerHTML += hours + ' hrs ';
+                                                                document.getElementById(id).innerHTML += minutes + ' mins ';
+                                                                document.getElementById(id).innerHTML += seconds + ' secs';
+                                                            }
+                                                            timer = setInterval(showRemaining, 1000);
+                                                        }
+                                                    </script>
                                                 @else
-                                                    <button type="button" class="btn btn-light btn-lg btn-block">
+                                                    <button type="button" class="btn btn-warning btn-lg btn-block">
                                                         Sedang Menunggu Verifikasi   <span class="glyphicon glyphicon-chevron-right"></span>
                                                     </button>
                                                 @endif
                                             @elseif ($order->status == 'verified')
-                                                <button type="button" class="btn btn-secondary btn-lg btn-block">
+                                                <button type="button" class="btn btn-info btn-lg btn-block">
                                                     Pesanan Verified - Segera Dikirim   <span class="glyphicon glyphicon-chevron-right"></span>
                                                 </button>
                                             @elseif ($order->status == 'delivered') 
-                                                <button type="button" class="btn btn-info btn-lg btn-block">
+                                                <button type="button" class="btn btn-primary btn-lg btn-block">
                                                     Pesanan Sedang Dikirim   <span class="glyphicon glyphicon-chevron-right"></span>
+                                                </button>
+                                                <button type="submit" class="btn btn-success btn-lg btn-block">
+                                                    <a style="text-decoration: none; color: inherit;" href="{{ route('order.delivered') }}">
+                                                        Saya Sudah Terima Pesanan   <span class="glyphicon glyphicon-chevron-right"></span>
+                                                    </a>
                                                 </button>
                                             @elseif ($order->status == 'success')
                                                 <button type="button" class="btn btn-success btn-lg btn-block">
                                                     Pesanan Sudah Diterima   <span class="glyphicon glyphicon-chevron-right"></span>
                                                 </button>
                                             @elseif ($order->status == 'expired')
-                                                <button type="button" class="btn btn-warning btn-lg btn-block">
+                                                <button type="button" class="btn btn-light btn-lg btn-block">
                                                     Pesanan Expired   <span class="glyphicon glyphicon-chevron-right"></span>
                                                 </button>
                                             @elseif ($order->status == 'canceled')
@@ -187,12 +256,12 @@
                     @endforeach
                 </div>
                 <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="sr-only">Previous</span>
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
                 </a>
                 <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="sr-only">Next</span>
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
                 </a>
             </div>
         @else
@@ -207,54 +276,6 @@
             </div>
         @endif
     </div>
-</form>
 
-    <!-- Footer Starts Here -->
-    @endsection
-
-    <!-- Bootstrap core JavaScript -->
-     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
-     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
-
-    <!-- Additional Scripts -->
-    <script src="{{asset('styleuser/mobile/assets/js/custom.js')}}"></script>
-    <script src="{{asset('styleuser/mobile/assets/js/owl.js')}}"></script>
-    <script src="{{asset('styleuser/mobile/assets/js/slick.js')}}"></script>
-    <script src="{{asset('styleuser/mobile/assets/js/accordions.js')}}"></script>
-
-    <script>
-          $(document).ready(function () {
-               $('select[name="province"]').on('change', function() {
-                    let provinceId = $(this).val();
-                    if (provinceId) {
-                         jQuery.ajax({
-                              url: '/province/'+provinceId+'/cities',
-                              type: 'GET',
-                              dataType: 'json',
-                              success:function(data) {
-                                   $('select[name="city"]').empty();
-                                   $.each(data, function(key, value) {
-                                        $('select[name="city"]').append('<option value="'+key+'">'+value+'</option>');
-                                   });
-                              },
-                         });
-                    } else {
-                         $('select[name="city"]').empty();
-                         $('select[name="city"]').append('<option value="">-- Pilih Kota/Kabupaten --</option>');
-                    }
-               });
-          });
-    </script>
-
-    <script language = "text/Javascript"> 
-      cleared[0] = cleared[1] = cleared[2] = 0; //set a cleared flag for each field
-      function clearField(t){                   //declaring the array outside of the
-      if(! cleared[t.id]){                      // function makes it static and global
-          cleared[t.id] = 1;  // you could use true and false, but that's more typing
-          t.value='';         // with more chance of typos
-          t.style.color='#fff';
-          }
-      }
-    </script>
-
+<!-- Footer Starts Here -->
+@endsection

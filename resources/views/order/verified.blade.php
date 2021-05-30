@@ -139,7 +139,7 @@
                                                     </tr>
                                                 </tbody>
                                             </table>
-                                            <button type="button" class="btn btn-secondary btn-lg btn-block">
+                                            <button type="button" class="btn btn-info btn-lg btn-block">
                                                 Pesanan Verified - Segera Dikirim   <span class="glyphicon glyphicon-chevron-right"></span>
                                             </button>
                                         </div>
@@ -172,52 +172,5 @@
     </div>
 </form>
 
-    <!-- Footer Starts Here -->
-    @endsection
-
-    <!-- Bootstrap core JavaScript -->
-     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
-     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
-
-    <!-- Additional Scripts -->
-    <script src="{{asset('styleuser/mobile/assets/js/custom.js')}}"></script>
-    <script src="{{asset('styleuser/mobile/assets/js/owl.js')}}"></script>
-    <script src="{{asset('styleuser/mobile/assets/js/slick.js')}}"></script>
-    <script src="{{asset('styleuser/mobile/assets/js/accordions.js')}}"></script>
-
-    <script>
-          $(document).ready(function () {
-               $('select[name="province"]').on('change', function() {
-                    let provinceId = $(this).val();
-                    if (provinceId) {
-                         jQuery.ajax({
-                              url: '/province/'+provinceId+'/cities',
-                              type: 'GET',
-                              dataType: 'json',
-                              success:function(data) {
-                                   $('select[name="city"]').empty();
-                                   $.each(data, function(key, value) {
-                                        $('select[name="city"]').append('<option value="'+key+'">'+value+'</option>');
-                                   });
-                              },
-                         });
-                    } else {
-                         $('select[name="city"]').empty();
-                         $('select[name="city"]').append('<option value="">-- Pilih Kota/Kabupaten --</option>');
-                    }
-               });
-          });
-    </script>
-
-    <script language = "text/Javascript"> 
-      cleared[0] = cleared[1] = cleared[2] = 0; //set a cleared flag for each field
-      function clearField(t){                   //declaring the array outside of the
-      if(! cleared[t.id]){                      // function makes it static and global
-          cleared[t.id] = 1;  // you could use true and false, but that's more typing
-          t.value='';         // with more chance of typos
-          t.style.color='#fff';
-          }
-      }
-    </script>
-
+<!-- Footer Starts Here -->
+@endsection

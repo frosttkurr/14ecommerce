@@ -51,8 +51,6 @@
      </div>
    </div>
 
-<form action="{{ route('order.payment') }}" method="POST" enctype="multipart/form-data">
-     {{ csrf_field() }}
     <!-- Order Information -->
     <div class="callback-form contact-us" style="margin-top: 25px; padding-top: 45px; padding-bottom: 0;">
         @if (sizeOf($transaction) > 0)
@@ -80,10 +78,16 @@
                                                     <em>Tanggal : {{ \Carbon\Carbon::parse($order->created_at)->format('d/m/Y') }}</em>
                                                 </p>
                                                 <p>
-                                                    <em>Status : {{ ucfirst($order->status) }}</em>
+                                                    <em>Status : Unpaid</em>
                                                 </p>
                                                 <p>
-                                                    <em>Courier : {{ $order->courier->courier }}</em>
+                                                    <em>Kurir : {{ $order->courier->courier }}</em>
+                                                </p>
+                                                <p>
+                                                    <em>Transfer ke : {{ substr(str_shuffle("0123456789"), 0, 16) }}</em>
+                                                </p>
+                                                <p>
+                                                    <em>Batas Bayar : <em id="countdown{{$order->id}}"></em></em>
                                                 </p>
                                             </div>
                                         </div>
@@ -151,11 +155,59 @@
                                             <button type="submit" class="btn btn-dark btn-lg btn-block">
                                                 Upload Bukti Pembayaran   <span class="glyphicon glyphicon-chevron-right"></span>
                                             </button>
+                                            <div class="container-fluid">
+                                                <form action="{{ url('userCanceled/'. $order->id) }}" method="POST">
+                                                    {{ method_field('PUT') }}
+                                                    {{ csrf_field() }}
+                                                    <button type="submit" class="btn btn-danger btn-lg btn-block mt-2">
+                                                        Batalkan Pesanan   <span class="glyphicon glyphicon-chevron-right"></span>
+                                                    </button>
+                                                </form>
+                                                <form id="timeout" action="{{ url('timeout/'. $order->id) }}" method="POST" hidden>
+                                                    {{ method_field('PUT') }}
+                                                    {{ csrf_field() }}
+                                                    <button type="submit" class="btn btn-danger btn-lg btn-block mt-2" hidden>
+                                                        Expired   <span class="glyphicon glyphicon-chevron-right" hidden></span>
+                                                    </button>
+                                                </form>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        <script>
+                            CountDownTimer('{{$order->created_at}}', 'countdown{{$order->id}}', '{{$order->timeout}}');
+                            function CountDownTimer(dt, id, timeout)
+                            {
+                                var end = new Date(timeout);
+                                var _second = 1000;
+                                var _minute = _second * 60;
+                                var _hour = _minute * 60;
+                                var _day = _hour * 24;
+                                var timer;
+                                function showRemaining() {
+                                    var now = new Date();
+                                    var distance = end - now;
+                                    if (distance < 0) {
+                                        clearInterval(timer);
+                                        document.getElementById(id).innerHTML = 'Expired'
+                                        document.getElementById("timeout").submit();
+                                        return;
+                                    }
+                                    var days = Math.floor(distance / _day);
+                                    var hours = Math.floor((distance % _day) / _hour);
+                                    var minutes = Math.floor((distance % _hour) / _minute);
+                                    var seconds = Math.floor((distance % _minute) / _second);
+                        
+                                    document.getElementById(id).innerHTML = days + ' days ';
+                                    document.getElementById(id).innerHTML += hours + ' hrs ';
+                                    document.getElementById(id).innerHTML += minutes + ' mins ';
+                                    document.getElementById(id).innerHTML += seconds + ' secs';
+                                }
+                                timer = setInterval(showRemaining, 1000);
+                            }
+                        </script>
                     @endforeach
                 </div>
                 <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
@@ -179,54 +231,6 @@
             </div>
         @endif
     </div>
-</form>
 
-    <!-- Footer Starts Here -->
-    @endsection
-
-    <!-- Bootstrap core JavaScript -->
-     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
-     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
-
-    <!-- Additional Scripts -->
-    <script src="{{asset('styleuser/mobile/assets/js/custom.js')}}"></script>
-    <script src="{{asset('styleuser/mobile/assets/js/owl.js')}}"></script>
-    <script src="{{asset('styleuser/mobile/assets/js/slick.js')}}"></script>
-    <script src="{{asset('styleuser/mobile/assets/js/accordions.js')}}"></script>
-
-    <script>
-          $(document).ready(function () {
-               $('select[name="province"]').on('change', function() {
-                    let provinceId = $(this).val();
-                    if (provinceId) {
-                         jQuery.ajax({
-                              url: '/province/'+provinceId+'/cities',
-                              type: 'GET',
-                              dataType: 'json',
-                              success:function(data) {
-                                   $('select[name="city"]').empty();
-                                   $.each(data, function(key, value) {
-                                        $('select[name="city"]').append('<option value="'+key+'">'+value+'</option>');
-                                   });
-                              },
-                         });
-                    } else {
-                         $('select[name="city"]').empty();
-                         $('select[name="city"]').append('<option value="">-- Pilih Kota/Kabupaten --</option>');
-                    }
-               });
-          });
-    </script>
-
-    <script language = "text/Javascript"> 
-      cleared[0] = cleared[1] = cleared[2] = 0; //set a cleared flag for each field
-      function clearField(t){                   //declaring the array outside of the
-      if(! cleared[t.id]){                      // function makes it static and global
-          cleared[t.id] = 1;  // you could use true and false, but that's more typing
-          t.value='';         // with more chance of typos
-          t.style.color='#fff';
-          }
-      }
-    </script>
-
+<!-- Footer Starts Here -->
+@endsection

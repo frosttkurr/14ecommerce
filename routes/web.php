@@ -78,6 +78,17 @@ Route::prefix('admin/discount')->group(function () {
     Route::delete('/{id}', 'DiscountController@destroy')->name('discount.destroy')->middleware('auth:admin');
 });
 
+//Admin Transactions
+Route::get('/transactions', 'TransactionsController@adminIndex')->name('transactions')->middleware('auth:admin');
+Route::get('/transactions/detail/{id}', 'TransactionsController@adminDetail')->name('transactions.detail')->middleware('auth:admin');
+Route::put('/approve/{id}', 'TransactionsController@adminApprove')->name('transactions.approve')->middleware('auth:admin');
+Route::put('/delivered/{id}', 'TransactionsController@adminDelivered')->name('transactions.delivered')->middleware('auth:admin');
+Route::put('/canceled/{id}', 'TransactionsController@adminCanceled')->name('transactions.canceled')->middleware('auth:admin');
+Route::put('/expired/{id}', 'TransactionsController@adminExpired')->name('transactions.expired')->middleware('auth:admin');
+Route::put('/success/{id}', 'TransactionsController@userSuccess')->name('user.success')->middleware('auth');
+Route::put('/userCanceled/{id}', 'TransactionsController@userCanceled')->name('user.canceled')->middleware('auth');
+Route::put('/timeout/{id}', 'TransactionsController@transactionsTimeout')->name('transactions.timeout');
+
 //Checkout
 Route::get('/cart', 'CartsController@index')->name('checkout.cart')->middleware('auth');
 Route::post('/cart', 'CartsController@store')->name('cart.add')->middleware('auth');

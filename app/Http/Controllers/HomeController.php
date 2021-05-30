@@ -38,7 +38,6 @@ class HomeController extends Controller
 
     function detail_product($id)
     {
-        
         $product = Product::find($id);
         $product_images = Product_Image::where('product_id','=',$product->id)->get();
         $product_reviews = Product_Review::where('product_id', '=', $product->id)->with('user')->paginate(5);

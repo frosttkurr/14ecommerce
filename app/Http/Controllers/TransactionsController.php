@@ -50,6 +50,101 @@ class TransactionsController extends Controller
         return view('checkout.checkout', compact('cart', 'product', 'province', 'courier', 'discount'));
     }
 
+    public function adminIndex()
+    {
+        $transactions = Transaction::with('user')->orderBy('created_at', 'DESC')->get();
+        return view('transactions.transactions', compact('transactions'));
+    }
+
+    public function adminDetail($id)
+    {
+        $transactions = Transaction::where('id', $id)->get();
+        return view('transactions.detail', compact('transactions', 'id'));
+    }
+
+    public function adminApprove($id)
+    {
+        Transaction::where('id', $id)
+                ->update([
+                    'status' => 'verified'
+                ]);
+
+        $transaction_detail = Transaction_Detail::where('transaction_id', $id)->get();
+
+        foreach ($transaction_detail as $detail) {
+            $product = Product::where('id', $detail->product_id)->first();
+            Product::where('id', $detail->product_id)
+                ->update([
+                    'stock' => $product->stock - $detail->qty
+            ]);
+        }
+        return redirect('/transactions');
+    }
+
+    public function adminDelivered($id)
+    {
+        Transaction::where('id', $id)
+                ->update([
+                    'status' => 'delivered'
+                ]);
+        return redirect('/transactions');
+    }
+
+    public function adminCanceled($id)
+    {
+        Transaction::where('id', $id)
+                ->update([
+                    'status' => 'canceled'
+                ]);
+        return redirect('/transactions');
+    }
+
+    public function adminExpired($id)
+    {
+        Transaction::where('id', $id)
+                ->update([
+                    'status' => 'expired'
+                ]);
+        return redirect('/transactions');
+    }
+
+    public function transactionsTimeout($id)
+    {
+        Transaction::where('id', $id)
+                ->update([
+                    'status' => 'expired'
+                ]);
+        return redirect('order/expired');
+    }
+
+    public function userSuccess($id)
+    {
+        Transaction::where('id', $id)
+                ->update([
+                    'status' => 'success'
+                ]);
+        return redirect('order/success');
+    }
+
+    public function userCanceled($id)
+    {
+        Transaction::where('id', $id)
+                ->update([
+                    'status' => 'canceled'
+                ]);
+        return redirect('/order/canceled');
+    }
+
+    public function viewPayment($id)
+    {
+        $products = Product::get();
+        $datacart  =  Cart::where('user_id', Auth::guard('user')->user()->id)->get();
+        $transaction = Transaction::where(['user_id' => Auth::guard('user')->user()->id, 'id' => $id])->first();
+        $total_price = $this->gettotalprice();
+        $categories = ProductCategories::all();
+        return view('pages.payment',compact('products','datacart','transaction', 'total_price', 'categories'));
+    }
+    
     public function confirm()
     {
         $checkout = session('checkout');
@@ -147,21 +242,12 @@ class TransactionsController extends Controller
             'sub_total' => $sub_total,
             'user_id' => $user_id,
             'courier_id' => $courier_id,
+            'created_at' => $date,
             'status' => 'unverified'
         ]);
         
         $transaksi_id = $transaksi->id;
         $product = $request->product_id;
-        
-        /*$product = $request->product_id;
-        $totalDiscount = 0;
-        foreach ($product as $product_id) {
-            $discount = Discount::where('id_product', $product_id)->get();
-            foreach($discount as $discounts) {
-                $totalDiscount += $discounts->percentage;
-            }
-            dd($totalDiscount);
-        }*/
         
         foreach ($product as $product_id) {
             $user_id = Auth::id();
@@ -183,27 +269,8 @@ class TransactionsController extends Controller
                 ->update([
                     'status' => 'checkedout'
                 ]);
-            /*Product::where('id', $product_id)
-                ->update([
-                    'stock' => $getProduct->stock - $cart->qty
-                ]);*/
         }
-
         return redirect('order');
-        
-        //return view('checkout.confirm', compact('user', 'cost', 'transaction'));
-        
-        /*DB::table('transactions')->insert(
-            ['timeout' => now(),
-            'address' => $request->nama.' '.' '.$request->no_hp.' '.$request->alamat,
-            'regency' => $request->city,
-            'province' => $request->province,
-            'total' => $request->total,
-            'shipping_cost' => $cost['rajaongkir']['results'][0]['costs'][1]['cost'][0]['value'],
-            'status' => 'notyet']
-        );*/
-        
-        //['rajaongkir']['results'][0]['costs'][1]['cost'][0]['value']
     }
 
     /**

@@ -65,7 +65,7 @@
                     <!--<span class="sr-only">(current)</span>-->
                   </a>
                 </li>
-                <li class="nav-item {{ Request::url() == url('/cart') || Request::url() == url('/checkout/{id}') ? 'active' : '' }}">
+                <li class="nav-item {{ Request::url() == url('/cart') || Request::url() == url('/checkout') ? 'active' : '' }}">
                   <a class="nav-link" href="{{ url('cart') }}">Cart</a>
                 </li>
                 <li class="nav-item {{ Request::url() == url('/order') || Request::url() == url('/order/unverified') || Request::url() == url('/order/verified') || Request::url() == url('/order/delivered') || Request::url() == url('/order/success') || Request::url() == url('/order/expired') || Request::url() == url('/order/canceled') ? 'active' : '' }}">
