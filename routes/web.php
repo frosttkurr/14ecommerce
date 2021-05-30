@@ -26,9 +26,9 @@ Route::prefix('product')->group(function () {
     Route::post('review/{id}', 'HomeController@review_product')->name('review_product');
 });
 
-Route::get('/productuser', function() {
+/*Route::get('/productuser', function() {
     return view('user.productuser');
-});
+});*/
 
 Route::prefix('admin')->group(function(){
     Route::get('/', 'AdminController@index')->name('admin.dashboard');
@@ -77,3 +77,34 @@ Route::prefix('admin/discount')->group(function () {
     Route::put('/{id}/update', 'DiscountController@update')->name('discount.update')->middleware('auth:admin');
     Route::delete('/{id}', 'DiscountController@destroy')->name('discount.destroy')->middleware('auth:admin');
 });
+
+//Admin Transactions
+Route::get('/transactions', 'TransactionsController@adminIndex')->name('transactions')->middleware('auth:admin');
+Route::get('/transactions/detail/{id}', 'TransactionsController@adminDetail')->name('transactions.detail')->middleware('auth:admin');
+Route::put('/approve/{id}', 'TransactionsController@adminApprove')->name('transactions.approve')->middleware('auth:admin');
+Route::put('/delivered/{id}', 'TransactionsController@adminDelivered')->name('transactions.delivered')->middleware('auth:admin');
+Route::put('/canceled/{id}', 'TransactionsController@adminCanceled')->name('transactions.canceled')->middleware('auth:admin');
+Route::put('/expired/{id}', 'TransactionsController@adminExpired')->name('transactions.expired')->middleware('auth:admin');
+Route::put('/success/{id}', 'TransactionsController@userSuccess')->name('user.success')->middleware('auth');
+Route::put('/userCanceled/{id}', 'TransactionsController@userCanceled')->name('user.canceled')->middleware('auth');
+Route::put('/timeout/{id}', 'TransactionsController@transactionsTimeout')->name('transactions.timeout');
+
+//Checkout
+Route::get('/cart', 'CartsController@index')->name('checkout.cart')->middleware('auth');
+Route::post('/cart', 'CartsController@store')->name('cart.add')->middleware('auth');
+Route::get('/cart/{product_id}', 'CartsController@destroy')->name('cart.delete')->middleware('auth');
+Route::post('/checkout', 'CartsController@checkout')->name('cart.checkout')->middleware('auth');
+Route::get('/checkout', 'TransactionsController@index')->name('cart.index')->middleware('auth');
+Route::get('/province/{id}/cities', 'TransactionsController@getCities');
+Route::post('/checkout/detail', 'TransactionsController@getCost')->name('checkout.detail')->middleware('auth');
+
+//Order
+Route::get('/order', 'TransactionsController@orderAll')->name('order.all')->middleware('auth');
+Route::post('/order', 'TransactionsController@storeBukti')->name('order.payment')->middleware('auth');
+Route::get('/order/unpaid', 'TransactionsController@orderUnpaid')->name('order.unpaid')->middleware('auth');
+Route::get('/order/unverified', 'TransactionsController@orderUnverified')->name('order.unverified')->middleware('auth');
+Route::get('/order/verified', 'TransactionsController@orderVerified')->name('order.verified')->middleware('auth');
+Route::get('/order/delivered', 'TransactionsController@orderDelivered')->name('order.delivered')->middleware('auth');
+Route::get('/order/success', 'TransactionsController@orderSuccess')->name('order.success')->middleware('auth');
+Route::get('/order/expired', 'TransactionsController@orderExpired')->name('order.expired')->middleware('auth');
+Route::get('/order/canceled', 'TransactionsController@orderCanceled')->name('order.canceled')->middleware('auth');

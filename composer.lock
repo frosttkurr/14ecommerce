@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "18934ccd94a8203942f39a7c11b4b723",
+    "content-hash": "1cbd7152ff4648460b4999e64ac90ea9",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -798,6 +798,136 @@
                 "source": "https://github.com/guzzle/psr7/tree/1.7.0"
             },
             "time": "2020-09-30T07:37:11+00:00"
+        },
+        {
+            "name": "kavist/rajaongkir",
+            "version": "v1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/kavist/rajaongkir.git",
+                "reference": "c1ab72000d05b1cb6b0a1a1364d6200b78976377"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/kavist/rajaongkir/zipball/c1ab72000d05b1cb6b0a1a1364d6200b78976377",
+                "reference": "c1ab72000d05b1cb6b0a1a1364d6200b78976377",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.0"
+            },
+            "require-dev": {
+                "codedungeon/phpunit-result-printer": "^0.26.2",
+                "fzaninotto/faker": "^1.8",
+                "mockery/mockery": "^1.2",
+                "orchestra/testbench": "^4.1",
+                "phpunit/phpunit": "^8.0",
+                "spatie/phpunit-watcher": "^1.12"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Kavist\\RajaOngkir\\Providers\\LaravelServiceProvider"
+                    ],
+                    "aliases": {
+                        "RajaOngkir": "Kavist\\RajaOngkir\\Facades\\RajaOngkir"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Kavist\\RajaOngkir\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Ian Mustafa",
+                    "email": "mail@ianmustafa.com",
+                    "role": "Maintainer"
+                }
+            ],
+            "description": "Klien API PHP untuk RajaOngkir",
+            "homepage": "https://github.com/kavist/rajaongkir",
+            "keywords": [
+                "laravel",
+                "rajaongkir"
+            ],
+            "support": {
+                "issues": "https://github.com/kavist/rajaongkir/issues",
+                "source": "https://github.com/kavist/rajaongkir/tree/v1.1.0"
+            },
+            "time": "2019-10-11T01:21:56+00:00"
+        },
+        {
+            "name": "kozz/laravel-guzzle-provider",
+            "version": "6.1.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/urakozz/laravel-guzzle.git",
+                "reference": "87fe28499496f7afae571be1e72bcf87e330f881"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/urakozz/laravel-guzzle/zipball/87fe28499496f7afae571be1e72bcf87e330f881",
+                "reference": "87fe28499496f7afae571be1e72bcf87e330f881",
+                "shasum": ""
+            },
+            "require": {
+                "guzzlehttp/guzzle": "^6.0",
+                "illuminate/support": "^5.0 | ^6.0| ^7.0 | ^8.0",
+                "php": "^7.2|^8.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                },
+                "laravel": {
+                    "providers": [
+                        "Kozz\\Laravel\\Providers\\Guzzle"
+                    ],
+                    "aliases": {
+                        "Guzzle": "Kozz\\Laravel\\Facades\\Guzzle"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Kozz\\Laravel\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Hongbo Tang",
+                    "email": "thbourlove@gmail.com"
+                },
+                {
+                    "name": "Yury Kozyrev",
+                    "email": "urakozz@gmail.com"
+                }
+            ],
+            "description": "Guzzle 5/6 Service Provider for Laravel",
+            "keywords": [
+                "Guzzle",
+                "http",
+                "laravel"
+            ],
+            "support": {
+                "source": "https://github.com/urakozz/laravel-guzzle/tree/6.1.4"
+            },
+            "time": "2020-12-16T12:27:01+00:00"
         },
         {
             "name": "laravel/framework",

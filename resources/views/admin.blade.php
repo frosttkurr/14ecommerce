@@ -30,7 +30,7 @@
 		<!-- NAVBAR -->
 		<nav class="navbar navbar-default navbar-fixed-top">
 			<div class="brand">
-				<a href="{{asset('style/template/index.html')}}"><img src="{{asset('style/template/assets/img/logo-phone.png')}}" alt="Klorofil Logo" class="img-responsive logo"></a>
+				<a href="/admin"><img src="{{asset('style/template/assets/img/logo-phone.png')}}" alt="Klorofil Logo" class="img-responsive logo"></a>
 			</div>
 			<div class="container-fluid">
 				<div class="navbar-btn">
@@ -57,9 +57,6 @@
 						<li class="dropdown">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown"><span>pastibisa08</span> <i class="icon-submenu lnr lnr-chevron-down"></i></a>
 							<ul class="dropdown-menu">
-								<li><a href="#"><i class="lnr lnr-user"></i> <span>My Profile</span></a></li>
-								<li><a href="#"><i class="lnr lnr-envelope"></i> <span>Message</span></a></li>
-								<li><a href="#"><i class="lnr lnr-cog"></i> <span>Settings</span></a></li>
 								<li><a href="{{ route('admin.logout') }}"><i class="lnr lnr-exit"></i> <span>Logout</span>
                                 </a></li>
 							</ul>
@@ -77,10 +74,11 @@
 			<div class="sidebar-scroll">
 				<nav>
 					<ul class="nav">
-						<li><a href="/admin" class="active"><i class="lnr lnr-home"></i> <span>Dashboard</span></a></li>
-						<li><a href="/courier" class=""><i class="lnr lnr-code"></i> <span>Courier</span></a></li>
-						<li><a href="/products" class=""><i class="lnr lnr-chart-bars"></i> <span>Product</span></a></li>
-						<li><a href="/categories" class=""><i class="lnr lnr-cog"></i> <span>Product Categories</span></a></li>
+						<li><a href="/admin" class="{{ Request::url() == url('/admin') ? 'active' : '' }}"><i class="lnr lnr-home"></i> <span>Dashboard</span></a></li>
+						<li><a href="/courier" class="{{ Request::url() == url('/courier') ? 'active' : '' }}"><i class="lnr lnr-code"></i> <span>Courier</span></a></li>
+						<li><a href="/products" class="{{ Request::url() == url('/products') ? 'active' : '' }}"><i class="lnr lnr-chart-bars"></i> <span>Product</span></a></li>
+						<li><a href="/categories" class="{{ Request::url() == url('/categories') ? 'active' : '' }}"><i class="lnr lnr-cog"></i> <span>Product Categories</span></a></li>
+						<li><a href="/transactions" class="{{ Request::url() == url('/transactions') ? 'active' : '' }}"><i class="fa fa-shopping-cart"></i> <span>Transactions</span></a></li>
 					</ul>
 				</nav>
 			</div>

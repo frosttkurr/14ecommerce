@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="{{asset('styleuser/mobile/assets/css/fontawesome.css')}}">
     <link rel="stylesheet" href="{{asset('styleuser/mobile/assets/css/style.css')}}">
     <link rel="stylesheet" href="{{asset('styleuser/mobile/assets/css/owl.css')}}">
+    <title>@yield('title') - Phone Store</title>
   </head>
 
   <body>

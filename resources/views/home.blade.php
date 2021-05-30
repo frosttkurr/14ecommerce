@@ -1,4 +1,5 @@
 @extends('user')
+@section('title', 'Home')
 @section('page-contents')
  <!-- slider Area Start -->
         
@@ -15,12 +16,13 @@
             </div>
           </div>
         </div>
-        <div class="services">
+        <div class="services mt-5 mb-5">
           <div class="container">
             <div class="row">
               <div class="col-md-12">
                 <div class="section-heading">
                   <h2>Our <em>Products</em></h2>
+                  <span>Pilih Smartphone Kesukaanmu!</span>
                 </div>
              </div>
             <div class="col-md-10">
@@ -44,20 +46,16 @@
                              @foreach ($product as $item)  
                             <div class="col-xl-4 col-lg-4 col-md-6">
                                 <div class="single-product mb-60">
-                                    <div class="product-img">
+                                    <div class="product-img rounded-xll">
                                         @php
                                             $image = DB::table('product_images')->where('product_id','=',$item->id)->get();
                                         @endphp
-                                        <img src="  {{ url('storage/public_html/gambarproduct/'.$image[0]->image_name) }}" alt="">
-                                      
-                                
-                                        
+                                        <a href="{{route('detail_product',['id'=>$item->id])}}"><img src="  {{ url('storage/public_html/gambarproduct/'.$image[0]->image_name) }}" style="height:250px;" alt="">                                        
                                     </div>
                                     <div class="product-caption">
                                         <div class="product-ratting">
                                             @for ($i = 0; $i < 5; $i++)
                                                 @if ($i<$item->product_rate)
-                                                    
                                                      <i class="fa fa-star"></i>
                                                 @else
                                                      <i class="fa fa-star low-star"></i>
