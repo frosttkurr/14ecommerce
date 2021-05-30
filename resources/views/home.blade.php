@@ -50,9 +50,7 @@
                                         @php
                                             $image = DB::table('product_images')->where('product_id','=',$item->id)->get();
                                         @endphp
-                                        <a href="{{route('detail_product',['id'=>$item->id])}}"><img src="  {{ url('storage/public_html/gambarproduct/'.$image[0]->image_name) }}" style="height:250px;" alt="">
-                                        
-                                        
+                                        <a href="{{route('detail_product',['id'=>$item->id])}}"><img src="  {{ url('storage/public_html/gambarproduct/'.$image[0]->image_name) }}" style="height:250px;" alt="">                                        
                                     </div>
                                     <div class="product-caption">
                                         <div class="product-ratting">
