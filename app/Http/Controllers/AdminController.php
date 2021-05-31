@@ -29,7 +29,9 @@ class AdminController extends Controller
     {
         $now = Carbon::now();
         $allTransactions = Transaction::where('status', 'success')->get();
-        $allSales = Transaction::where('status', 'success')->count();;
+        $allSales = Transaction::where('status', 'success')->count();
+        $monthlySales = Transaction::where('status', 'success')->whereMonth('created_at', $now->month)->count();
+        $annualSales = Transaction::where('status', 'success')->whereYear('created_at', $now->year)->count();
         $monthlyTransactions = Transaction::where('status', 'success')->whereMonth('created_at', $now->month)->get();
         $annualTranscations = Transaction::where('status', 'success')->whereYear('created_at', $now->year)->get();
         $incomeTotal = 0;
@@ -49,7 +51,7 @@ class AdminController extends Controller
             $incomeAnnual+=$annual->total;
         }
 
-        return view('admin.admindashboard', compact('now', 'allSales', 'incomeTotal', 'incomeMonthly', 'incomeAnnual'));
+        return view('admin.admindashboard', compact('now', 'allSales', 'monthlySales', 'annualSales', 'incomeTotal', 'incomeMonthly', 'incomeAnnual'));
     }
 
     public function adminNotif($id) 
