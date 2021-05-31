@@ -26,8 +26,9 @@
                         <div class="col-12">
 					            	</div>
                     </div>
-                  <form action="{{route('product.edit',['id'=>$product->id])}}" method="POST" class="form">
-                        @csrf
+                  <form action="{{route('product.update',['id'=>$product->id])}}" method="POST" class="form">
+                    @csrf
+
                       <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group bmd-form-group">

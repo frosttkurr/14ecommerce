@@ -94,17 +94,21 @@
 					<!-- OVERVIEW -->
 					<div class="panel panel-headline">
 						<div class="panel-heading">
-							<h3 class="panel-title">Weekly Overview</h3>
-							<p class="panel-subtitle">Period: Maret 14, 2021 - Mei 21, 2021</p>
+							<h3 class="panel-title">Admin Overview</h3>
+							<p class="panel-subtitle">Period: {{ date('d-m-Y H:m:s', strtotime($now)) }}</p>
 						</div>
 						<div class="panel-body">
 							<div class="row">
 								<div class="col-md-3">
 									<div class="metric">
-										<span class="icon"><i class="fa fa-download"></i></span>
+										<span class="icon">
+											<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" class="bi bi-basket" viewBox="0 0 16 16">
+												<path d="M5.757 1.071a.5.5 0 0 1 .172.686L3.383 6h9.234L10.07 1.757a.5.5 0 1 1 .858-.514L13.783 6H15a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1v4.5a2.5 2.5 0 0 1-2.5 2.5h-9A2.5 2.5 0 0 1 1 13.5V9a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h1.217L5.07 1.243a.5.5 0 0 1 .686-.172zM2 9v4.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V9H2zM1 7v1h14V7H1zm3 3a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3A.5.5 0 0 1 4 10zm2 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3A.5.5 0 0 1 6 10zm2 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3A.5.5 0 0 1 8 10zm2 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3a.5.5 0 0 1 .5-.5zm2 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3a.5.5 0 0 1 .5-.5z"/>
+											</svg>
+										</span>
 										<p>
-											<span class="number">1,252</span>
-											<span class="title">Downloads</span>
+											<span class="number">{{rand(1, 99)}}</span>
+											<span class="title">Tipe Smartphone</span>
 										</p>
 									</div>
 								</div>
@@ -112,8 +116,8 @@
 									<div class="metric">
 										<span class="icon"><i class="fa fa-shopping-bag"></i></span>
 										<p>
-											<span class="number">203</span>
-											<span class="title">Sales</span>
+											<span class="number">{{ $allSales }}</span>
+											<span class="title">Transaksi</span>
 										</p>
 									</div>
 								</div>
@@ -121,17 +125,8 @@
 									<div class="metric">
 										<span class="icon"><i class="fa fa-eye"></i></span>
 										<p>
-											<span class="number">274,678</span>
+											<span class="number">{{rand(1, 99999)}}</span>
 											<span class="title">Visits</span>
-										</p>
-									</div>
-								</div>
-								<div class="col-md-3">
-									<div class="metric">
-										<span class="icon"><i class="fa fa-bar-chart"></i></span>
-										<p>
-											<span class="number">35%</span>
-											<span class="title">Conversions</span>
 										</p>
 									</div>
 								</div>
@@ -142,16 +137,16 @@
 								</div>
 								<div class="col-md-3">
 									<div class="weekly-summary text-right">
-										<span class="number">2,315</span> <span class="percentage"><i class="fa fa-caret-up text-success"></i> 12%</span>
-										<span class="info-label">Total Sales</span>
+										<span class="number">Rp{{ number_format($incomeAnnual) }}</span>
+										<span class="info-label">Pendapatan Tahunan</span>
 									</div>
 									<div class="weekly-summary text-right">
-										<span class="number">$5,758</span> <span class="percentage"><i class="fa fa-caret-up text-success"></i> 23%</span>
-										<span class="info-label">Monthly Income</span>
+										<span class="number">Rp{{ number_format($incomeMonthly) }}</span>
+										<span class="info-label">Pendapatan Bulanan</span>
 									</div>
 									<div class="weekly-summary text-right">
-										<span class="number">$65,938</span> <span class="percentage"><i class="fa fa-caret-down text-danger"></i> 8%</span>
-										<span class="info-label">Total Income</span>
+										<span class="number">Rp{{ number_format($incomeTotal) }}</span>
+										<span class="info-label">Total Pendapatan</span>
 									</div>
 								</div>
 							</div>
