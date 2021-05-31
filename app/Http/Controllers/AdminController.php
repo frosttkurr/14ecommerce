@@ -34,6 +34,7 @@ class AdminController extends Controller
         $annualSales = Transaction::where('status', 'success')->whereYear('created_at', $now->year)->count();
         $monthlyTransactions = Transaction::where('status', 'success')->whereMonth('created_at', $now->month)->get();
         $annualTranscations = Transaction::where('status', 'success')->whereYear('created_at', $now->year)->get();
+        
         $incomeTotal = 0;
         $incomeMonthly = 0;
         $incomeAnnual = 0;
@@ -51,7 +52,20 @@ class AdminController extends Controller
             $incomeAnnual+=$annual->total;
         }
 
-        return view('admin.admindashboard', compact('now', 'allSales', 'monthlySales', 'annualSales', 'incomeTotal', 'incomeMonthly', 'incomeAnnual'));
+        $january = Transaction::where('status', 'success')->whereMonth('created_at', '01')->count();
+        $february = Transaction::where('status', 'success')->whereMonth('created_at', '02')->count();
+        $march = Transaction::where('status', 'success')->whereMonth('created_at', '03')->count();
+        $april = Transaction::where('status', 'success')->whereMonth('created_at', '04')->count();
+        $may = Transaction::where('status', 'success')->whereMonth('created_at', '05')->count();
+        $june = Transaction::where('status', 'success')->whereMonth('created_at', '06')->count();
+        $july = Transaction::where('status', 'success')->whereMonth('created_at', '07')->count();
+        $august = Transaction::where('status', 'success')->whereMonth('created_at', '08')->count();
+        $september = Transaction::where('status', 'success')->whereMonth('created_at', '09')->count();
+        $october = Transaction::where('status', 'success')->whereMonth('created_at', '10')->count();
+        $november = Transaction::where('status', 'success')->whereMonth('created_at', '11')->count();
+        $december = Transaction::where('status', 'success')->whereMonth('created_at', '12')->count();
+
+        return view('admin.admindashboard', compact('now', 'allSales', 'monthlySales', 'annualSales', 'incomeTotal', 'incomeMonthly', 'incomeAnnual', 'january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november', 'december'));
     }
 
     public function adminNotif($id) 
