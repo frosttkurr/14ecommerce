@@ -101,6 +101,7 @@ class ResponseController extends Controller
      */
     public function edit($id)
     {
+        $response = Response::find($id);
         $product_review = Product_Review::where('id', '=', $response->review_id)->with('user', 'product')->get();
         $admin = \Auth::user();
         $content = $response->content;
