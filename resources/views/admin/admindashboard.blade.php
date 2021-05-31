@@ -39,16 +39,17 @@
 				<div id="navbar-menu">
 					<ul class="nav navbar-nav navbar-right">
 						<li class="dropdown">
-							@php $admin_unRead = \App\AdminNotifications::where('notifiable_id', 10)->where('read_at', NULL)->orderBy('created_at','desc')->get(); @endphp
+							@php $admin_unRead = \App\AdminNotifications::where('notifiable_id', 10)->where('read_at', NULL)->orderBy('created_at','desc')->count(); @endphp
 							<a href="#" class="dropdown-toggle icon-menu" data-toggle="dropdown">
 								<i class="lnr lnr-alarm"></i>
-								<span class="badge bg-danger">@php count($admin_unRead) @endphp</span>
+								<span class="badge bg-danger">@php echo $admin_unRead @endphp</span>
 							</a>
 							<ul class="dropdown-menu notifications">
-								@php $admin_notifikasi = \App\AdminNotifications::where('notifiable_id', 10)->orderBy('created_at','desc')->get(); @endphp
+								@php $admin_notifikasi = \App\AdminNotifications::where('notifiable_id', 10)->where('read_at', NULL)->orderBy('created_at','desc')->get(); @endphp
 								@forelse ($admin_notifikasi as $notifikasi)
 									@php $notif = json_decode($notifikasi->data); @endphp
-									<li><a href="{{route('transactions.detail', $notif->id)}}" class="notification-item"><span class="dot bg-warning"></span><small>[{{$notif->nama}}]</small> {{$notif->message}}</a></li>
+									<li>
+										<a href="{{ route('admin.notification', $notifikasi->id) }}" class="notification-item"><span class="dot bg-warning"></span><small>[{{$notif->nama}}]</small> {{$notif->message}}</a></li>
 								@empty
 									<li><a href="" class="notification-item">Tidak ada notifikasi</a></li>
 								@endforelse
