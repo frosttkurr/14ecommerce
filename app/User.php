@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use App\UserNotification;
 
 /**Fadhil Melakukan commit */
 
@@ -44,4 +45,14 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function createNotifUser($data)
+    {
+        $notif = new UserNotifications();
+        $notif->type = 'App\Notifications\AdminNotification';
+        $notif->notifiable_type = 'App\User';
+        $notif->notifiable_id = $this->id;
+        $notif->data = $data;
+        $notif->save();
+    }
 }

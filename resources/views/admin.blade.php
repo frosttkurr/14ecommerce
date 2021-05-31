@@ -30,7 +30,7 @@
 		<!-- NAVBAR -->
 		<nav class="navbar navbar-default navbar-fixed-top">
 			<div class="brand">
-				<a href="{{asset('style/template/index.html')}}"><img src="{{asset('style/template/assets/img/logo-phone.png')}}" alt="Klorofil Logo" class="img-responsive logo"></a>
+				<a href="/admin"><img src="{{asset('style/template/assets/img/logo-phone.png')}}" alt="Klorofil Logo" class="img-responsive logo"></a>
 			</div>
 			<div class="container-fluid">
 				<div class="navbar-btn">
@@ -40,26 +40,25 @@
 				<div id="navbar-menu">
 					<ul class="nav navbar-nav navbar-right">
 						<li class="dropdown">
+							@php $admin_unRead = \App\AdminNotifications::where('notifiable_id', 10)->where('read_at', NULL)->orderBy('created_at','desc')->get(); @endphp
 							<a href="#" class="dropdown-toggle icon-menu" data-toggle="dropdown">
 								<i class="lnr lnr-alarm"></i>
-								<span class="badge bg-danger">5</span>
+								<span class="badge bg-danger">@php count($admin_unRead) @endphp</span>
 							</a>
 							<ul class="dropdown-menu notifications">
-								<li><a href="#" class="notification-item"><span class="dot bg-warning"></span>System space is almost full</a></li>
-								<li><a href="#" class="notification-item"><span class="dot bg-danger"></span>You have 9 unfinished tasks</a></li>
-								<li><a href="#" class="notification-item"><span class="dot bg-success"></span>Monthly report is available</a></li>
-								<li><a href="#" class="notification-item"><span class="dot bg-warning"></span>Weekly meeting in 1 hour</a></li>
-								<li><a href="#" class="notification-item"><span class="dot bg-success"></span>Your request has been approved</a></li>
-								<li><a href="#" class="more">See all notifications</a></li>
+								@php $admin_notifikasi = \App\AdminNotifications::where('notifiable_id', 10)->orderBy('created_at','desc')->get(); @endphp
+								@forelse ($admin_notifikasi as $notifikasi)
+									@php $notif = json_decode($notifikasi->data); @endphp
+									<li><a href="{{route('transactions.detail', $notif->id)}}" class="notification-item"><span class="dot bg-warning"></span><small>[{{$notif->nama}}]</small> {{$notif->message}}</a></li>
+								@empty
+									<li><a href="" class="notification-item">Tidak ada notifikasi</a></li>
+								@endforelse
 							</ul>
 						</li>
 		
 						<li class="dropdown">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown"><span>pastibisa08</span> <i class="icon-submenu lnr lnr-chevron-down"></i></a>
 							<ul class="dropdown-menu">
-								<li><a href="#"><i class="lnr lnr-user"></i> <span>My Profile</span></a></li>
-								<li><a href="#"><i class="lnr lnr-envelope"></i> <span>Message</span></a></li>
-								<li><a href="#"><i class="lnr lnr-cog"></i> <span>Settings</span></a></li>
 								<li><a href="{{ route('admin.logout') }}"><i class="lnr lnr-exit"></i> <span>Logout</span>
                                 </a></li>
 							</ul>
@@ -77,10 +76,11 @@
 			<div class="sidebar-scroll">
 				<nav>
 					<ul class="nav">
-						<li><a href="/admin" class="active"><i class="lnr lnr-home"></i> <span>Dashboard</span></a></li>
-						<li><a href="/courier" class=""><i class="lnr lnr-code"></i> <span>Courier</span></a></li>
-						<li><a href="/products" class=""><i class="lnr lnr-chart-bars"></i> <span>Product</span></a></li>
-						<li><a href="/categories" class=""><i class="lnr lnr-cog"></i> <span>Product Categories</span></a></li>
+						<li><a href="/admin" class="{{ Request::url() == url('/admin') ? 'active' : '' }}"><i class="lnr lnr-home"></i> <span>Dashboard</span></a></li>
+						<li><a href="/courier" class="{{ Request::url() == url('/courier') ? 'active' : '' }}"><i class="lnr lnr-code"></i> <span>Courier</span></a></li>
+						<li><a href="/products" class="{{ Request::url() == url('/products') ? 'active' : '' }}"><i class="lnr lnr-chart-bars"></i> <span>Product</span></a></li>
+						<li><a href="/categories" class="{{ Request::url() == url('/categories') ? 'active' : '' }}"><i class="lnr lnr-cog"></i> <span>Product Categories</span></a></li>
+						<li><a href="/transactions" class="{{ Request::url() == url('/transactions') ? 'active' : '' }}"><i class="fa fa-shopping-cart"></i> <span>Transactions</span></a></li>
 					</ul>
 				</nav>
 			</div>

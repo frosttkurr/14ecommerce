@@ -24,6 +24,28 @@
       0 => 'Fruitcake\\Cors\\CorsServiceProvider',
     ),
   ),
+  'kavist/rajaongkir' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Kavist\\RajaOngkir\\Providers\\LaravelServiceProvider',
+    ),
+    'aliases' => 
+    array (
+      'RajaOngkir' => 'Kavist\\RajaOngkir\\Facades\\RajaOngkir',
+    ),
+  ),
+  'kozz/laravel-guzzle-provider' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Kozz\\Laravel\\Providers\\Guzzle',
+    ),
+    'aliases' => 
+    array (
+      'Guzzle' => 'Kozz\\Laravel\\Facades\\Guzzle',
+    ),
+  ),
   'laravel/tinker' => 
   array (
     'providers' => 
