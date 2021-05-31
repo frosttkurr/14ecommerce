@@ -111,5 +111,5 @@ Route::get('/order/expired', 'TransactionsController@orderExpired')->name('order
 Route::get('/order/canceled', 'TransactionsController@orderCanceled')->name('order.canceled')->middleware('auth');
 
 //Notification
-Route::get('/{id}', 'HomeController@userNotif')->name('user.notification')->middleware('auth');
-Route::get('/{id}', 'AdminController@adminNotif')->name('admin.notification')->middleware('auth:admin');
+Route::get('user/{id}', 'HomeController@userNotif')->name('user.notification')->middleware('auth');
+Route::get('admin/{id}', 'AdminController@adminNotif')->name('admin.notification')->middleware('auth:admin');

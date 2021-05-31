@@ -62,10 +62,10 @@ class AdminController extends Controller
                     'read_at' => $date
                 ]);
         
-        if ($notif->category = 'transaction') {
+        if ($notif->category == 'transaction') {
             return redirect()->route('transactions.detail', $notif->id);
-        } elseif ($notif->category = 'review') {
-            return redirect()->route('product.edit', $notif->id);
+        } elseif ($notif->category == 'review') {
+            return redirect('/products');
         } 
     }
 }

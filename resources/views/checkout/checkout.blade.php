@@ -184,12 +184,12 @@
                     </div>
 
                     <div class="col-6 text-right">
-                         <strong id="total-potongan">{{ "Rp" . number_format($totalDisc, 0, ",", ",") }}</strong>
+                         <strong id="total-potongan">-{{ "Rp" . number_format($totalDisc, 0, ",", ",") }}</strong>
                     </div>
                </div>
           </li>
 
-          <li class="list-group-item">
+          {{--<li class="list-group-item">
                <div class="row">
                     <div class="col-6">
                          <em>Total Ongkos Kirim</em>
@@ -199,12 +199,12 @@
                          <strong id="total-ongkos">Rp. 0</strong>
                     </div>
                </div>
-          </li>
+          </li>--}}
 
           <li class="list-group-item">
                <div class="row">
                     <div class="col-6">
-                         <em>Total Pembayaran</em>
+                         <em>Total</em>
                     </div>
 
                     <div class="col-6 text-right">
@@ -216,7 +216,7 @@
       </div>
       <div div class="col-sm-12 mt-4">
           <div class="d-flex justify-content-center">
-               <button type="submit" id="form-submit" class="btn btn-warning">Buat Pesanan</button>
+               <button type="submit" id="form-submit" class="btn btn-warning">Buat Pesanan & Cek Ongkir</button>
           </div>
      </div>   
     </div>

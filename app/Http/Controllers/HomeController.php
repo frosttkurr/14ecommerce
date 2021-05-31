@@ -125,6 +125,8 @@ class HomeController extends Controller
             return redirect()->route('order.expired');
         } elseif ($notif->category == 'success') {
             return redirect()->route('order.success');
+        } elseif ($notif->category == 'review') {
+            return redirect()->route('detail_product', $notif->id);
         }
     }
 }

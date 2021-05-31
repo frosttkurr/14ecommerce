@@ -49,7 +49,7 @@
 								@forelse ($admin_notifikasi as $notifikasi)
 									@php $notif = json_decode($notifikasi->data); @endphp
 									<li>
-										<a href="{{ route('admin.notification', $notifikasi->id) }}" class="notification-item"><span class="dot bg-warning"></span><small>[{{$notif->nama}}]</small> {{$notif->message}}</a></li>
+										<a href="@if ($notif->category == 'transaction') {{ route('admin.notification', $notifikasi->id) }} @elseif ($notif->category == 'review') {{ route('admin.notification', $notifikasi->id) }} @endif" class="notification-item"><span class="dot bg-warning"></span><small>[{{$notif->nama}}]</small> {{$notif->message}}</a></li>
 								@empty
 									<li><a href="" class="notification-item">Tidak ada notifikasi</a></li>
 								@endforelse
