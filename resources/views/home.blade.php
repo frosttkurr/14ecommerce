@@ -45,13 +45,15 @@
                         <div class="row">
                              @foreach ($product as $item)  
                             <div class="col-xl-4 col-lg-4 col-md-6">
-                                <div class="single-product mb-60">
-                                    <div class="product-img rounded-xll">
-                                        @php
-                                            $image = DB::table('product_images')->where('product_id','=',$item->id)->get();
-                                        @endphp
-                                        <a href="{{route('detail_product',['id'=>$item->id])}}" style="color: inherit;"><img src="  {{ url('storage/public_html/gambarproduct/'.$image[0]->image_name) }}" style="height:250px;" alt="">                                        
-                                    </div>
+                                <div class="single-product mb-5">
+                                	@php $product_images = \App\Product_Image::where('product_id','=',$item->id)->get(); @endphp
+                                          <div class="product-img rounded-xll">
+                                          @foreach ($product_images as $image)
+                                              <a href="{{route('detail_product',['id'=>$item->id])}}" style="color: inherit;">
+                                              <img src="{{ url('storage/app/public/public_html/gambarproduct/'.$image->image_name) }}" style="height:250px;" alt="">
+                                              @php break; @endphp
+                                          @endforeach
+                                           </div>  
                                     <div class="product-caption">
                                         <div class="product-ratting">
                                             @for ($i = 0; $i < 5; $i++)

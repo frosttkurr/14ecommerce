@@ -19,7 +19,7 @@
             <div class="col-md-12">
               <div class="card">
                 <div class="card-header card-header-rose">
-                    <i class="material-icons">people_alt</i>
+                    <i class="material-icons"></i>
                   <h4 class="card-title "> </h4>
                 </div>
                 <div class="card-body">
@@ -52,7 +52,7 @@
                                 </div>
                                 <div class="form-group bmd-form-group">
                                     <label class="bmd-label-floating">Start</label>
-                                    <input type="text" hidden name="id" value="{{ $discount->id }}"  class="form-control" >
+                                    <input type="text" name="id" value="{{ $discount->id }}"  class="form-control hidden">
                                     <input type="date" name="start" value="{{  $discount->start }}"  class="form-control" >
                                 </div>
                                 <div class="form-group bmd-form-group">
