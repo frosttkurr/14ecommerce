@@ -37,6 +37,10 @@ class ProductCategoriesController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'category_name' => ['required', 'max:30']
+        ]);
+        
         $ct = new Product_Categories;
         $ct->category_name = $request->category_name;
         $ct->save();
