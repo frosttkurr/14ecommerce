@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use File;
-use Illuminate\Support\Facades\Storage;
 use App\Product;
 use App\Product_Categories;
 use App\Product_Category_Details;

@@ -7,6 +7,7 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'App\\Admin' => $baseDir . '/app/Admin.php',
+    'App\\AdminNotifications' => $baseDir . '/app/AdminNotifications.php',
     'App\\Cart' => $baseDir . '/app/Cart.php',
     'App\\City' => $baseDir . '/app/City.php',
     'App\\Console\\Kernel' => $baseDir . '/app/Console/Kernel.php',
@@ -29,6 +30,7 @@ return array(
     'App\\Http\\Controllers\\CourierController' => $baseDir . '/app/Http/Controllers/CourierController.php',
     'App\\Http\\Controllers\\DiscountController' => $baseDir . '/app/Http/Controllers/DiscountController.php',
     'App\\Http\\Controllers\\HomeController' => $baseDir . '/app/Http/Controllers/HomeController.php',
+    'App\\Http\\Controllers\\NotifController' => $baseDir . '/app/Http/Controllers/NotifController.php',
     'App\\Http\\Controllers\\OngkirController' => $baseDir . '/app/Http/Controllers/OngkirController.php',
     'App\\Http\\Controllers\\ProductCategoriesController' => $baseDir . '/app/Http/Controllers/ProductCategoriesController.php',
     'App\\Http\\Controllers\\ProductCategoryDetailsController' => $baseDir . '/app/Http/Controllers/ProductCategoryDetailsController.php',
@@ -46,7 +48,9 @@ return array(
     'App\\Http\\Middleware\\TrimStrings' => $baseDir . '/app/Http/Middleware/TrimStrings.php',
     'App\\Http\\Middleware\\TrustProxies' => $baseDir . '/app/Http/Middleware/TrustProxies.php',
     'App\\Http\\Middleware\\VerifyCsrfToken' => $baseDir . '/app/Http/Middleware/VerifyCsrfToken.php',
+    'App\\Notifications\\AdminNotification' => $baseDir . '/app/Notifications/AdminNotification.php',
     'App\\Notifications\\AdminResetPasswordNotification' => $baseDir . '/app/Notifications/AdminResetPasswordNotification.php',
+    'App\\Notifications\\UserNotification' => $baseDir . '/app/Notifications/UserNotification.php',
     'App\\Product' => $baseDir . '/app/Product.php',
     'App\\Product_Categories' => $baseDir . '/app/Product_Categories.php',
     'App\\Product_Category_Details' => $baseDir . '/app/Product_Category_Details.php',
@@ -62,6 +66,7 @@ return array(
     'App\\Transaction' => $baseDir . '/app/Transaction.php',
     'App\\Transaction_Detail' => $baseDir . '/app/Transaction_Detail.php',
     'App\\User' => $baseDir . '/app/User.php',
+    'App\\UserNotifications' => $baseDir . '/app/UserNotifications.php',
     'Asm89\\Stack\\Cors' => $vendorDir . '/asm89/stack-cors/src/Asm89/Stack/Cors.php',
     'Asm89\\Stack\\CorsService' => $vendorDir . '/asm89/stack-cors/src/Asm89/Stack/CorsService.php',
     'Attribute' => $vendorDir . '/symfony/polyfill-php80/Resources/stubs/Attribute.php',

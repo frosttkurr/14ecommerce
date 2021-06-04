@@ -109,7 +109,7 @@
                             {{$loop->iteration}}
                           </td>
                           <td>
-                            <img src="{{ url('storage/public_html/gambarproduct/'.$i->image_name) }}" style="width:260px;" alt="">
+                            <img src="{{ url('storage/app/public/public_html/gambarproduct/'.$i->image_name) }}" style="width:260px;" alt="">
                             {{-- <img src="{{asset('storage/img/gambarproduk/'.$i->image_name)}}" style="width:260px;" alt="">
                             --}}
                           </td>
