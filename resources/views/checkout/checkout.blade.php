@@ -51,21 +51,24 @@
                               @foreach ($product as $id)
                                    @if ($item->product_id == $id)
                                         @php $subtotal = $item->product->price * $item->qty @endphp
-                                        @php $image = DB::table('product_images')->where('product_id', '=' , $id)->get(); @endphp
+                                        @php $images = DB::table('product_images')->where('product_id', '=' , $id)->get(); @endphp
                                         @php $discount = DB::table('discounts')->where('id_product', '=', $id)->whereDate('end', '>=', now())->get(); @endphp
                                         @foreach ($discount as $disc)
                                              @php $subDisc = $disc->percentage*$item->product->price/100 @endphp
                                              @php $totalDisc += $subDisc @endphp
                                         @endforeach
+                                        @foreach ($images as $image)
                                         <tr>
                                              <td class="text-center" hidden><input type="checkbox" checked name="product_id[]" value="{{ $item->product_id }}"></td>
-                                             <td><img src="{{ asset('product_images/'.$image[0]->image_name) }}" height="45"/> </td>
+                                             <td><img src="{{ url('storage/app/public/public_html/gambarproduct/'.$image->image_name) }}" height="45"/> </td>
                                              <td>{{ $item->product->product_name }}</td>
                                              <td class="text-center">{{ "Rp" . number_format($item->product->price, 0, ",", ",") }}</td>
                                              <td class="text-center">{{ $item->qty }}</td>
                                              <td class="text-center">{{ ($item->product->weight)/1000 }}kg</td>
                                              <td class="text-center">{{ "Rp" . number_format($subtotal, 0, ",", ",") }}</td>
                                         </tr>
+                                        @php break; @endphp
+                                        @endforeach
                                         @php $grandtotal += $subtotal @endphp
                                         @php $weight += $item->product->weight @endphp
                                    @endif
@@ -184,12 +187,12 @@
                     </div>
 
                     <div class="col-6 text-right">
-                         <strong id="total-potongan">{{ "Rp" . number_format($totalDisc, 0, ",", ",") }}</strong>
+                         <strong id="total-potongan">-{{ "Rp" . number_format($totalDisc, 0, ",", ",") }}</strong>
                     </div>
                </div>
           </li>
 
-          <li class="list-group-item">
+          {{--<li class="list-group-item">
                <div class="row">
                     <div class="col-6">
                          <em>Total Ongkos Kirim</em>
@@ -199,12 +202,12 @@
                          <strong id="total-ongkos">Rp. 0</strong>
                     </div>
                </div>
-          </li>
+          </li>--}}
 
           <li class="list-group-item">
                <div class="row">
                     <div class="col-6">
-                         <em>Total Pembayaran</em>
+                         <em>Total</em>
                     </div>
 
                     <div class="col-6 text-right">
@@ -216,7 +219,7 @@
       </div>
       <div div class="col-sm-12 mt-4">
           <div class="d-flex justify-content-center">
-               <button type="submit" id="form-submit" class="btn btn-warning">Buat Pesanan</button>
+               <button type="submit" id="form-submit" class="btn btn-warning">Buat Pesanan & Cek Ongkir</button>
           </div>
      </div>   
     </div>
@@ -270,4 +273,3 @@
           }
       }
     </script>
-

@@ -60,7 +60,7 @@ class ProductController extends Controller
             'description' => ['required'],
             'product_rate' => ['required','max:100'],
             'stock' => ['required', 'max:10'],
-            'weight' => ['required', 'max:3'],
+            'weight' => ['required'],
 
         ]);
 
@@ -138,7 +138,7 @@ class ProductController extends Controller
             'description' => ['required'],
             'product_rate' => ['required', 'max:100'],
             'stock' => ['required', 'max:10'],
-            'weight' => ['required', 'max:3'],
+            'weight' => ['required'],
         ]);
 
         $product->product_name= $request->product_name;
@@ -215,7 +215,7 @@ class ProductController extends Controller
         
         $product_image = Product_Image::find($id);
         $product_id = $product_image->product_id;
-        $path = 'storage/img/gambarproduk/'. $product_image->image_name;
+        $path = 'storage/app/public/public_html/gambarproduct/'. $product_image->image_name;
         if(file_exists($path)){
             unlink($path);
             $product_image->delete();
@@ -249,6 +249,3 @@ class ProductController extends Controller
         }
     }*/
 }
-
-
-

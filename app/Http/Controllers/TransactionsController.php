@@ -17,8 +17,8 @@ use App\Province;
 use App\Discount;
 use App\Admin;
 use App\Response;
-use App\AdminNotification;
-use App\UserNotification;
+use App\AdminNotifications;
+use App\UserNotifications;
 use App\User;
 use Illuminate\Support\Facades\Notification;
 use Kavist\RajaOngkir\Facades\RajaOngkir;
@@ -94,7 +94,8 @@ class TransactionsController extends Controller
         $data = [
             'nama'=> $user->name,
             'message'=>'Pesanan terverifikasi!',
-            'id'=> $id
+            'id'=> $id,
+            'category' => 'transaction'
         ];
         $data_encode = json_encode($data);
         $admin->createNotif($data_encode);
@@ -103,7 +104,8 @@ class TransactionsController extends Controller
         $data = [
             'nama'=> $user->name,
             'message'=>'Pesanan terverifikasi!',
-            'id'=> $id
+            'id'=> $id,
+            'category' => 'approved'
         ];
         $data_encode = json_encode($data);
         $user->createNotifUser($data_encode);
@@ -125,7 +127,8 @@ class TransactionsController extends Controller
         $data = [
             'nama'=> $user->name,
             'message'=>'Pesanan dikirim!',
-            'id'=> $id
+            'id'=> $id,
+            'category' => 'transaction'
         ];
         $data_encode = json_encode($data);
         $admin->createNotif($data_encode);
@@ -134,7 +137,8 @@ class TransactionsController extends Controller
         $data = [
             'nama'=> $user->name,
             'message'=>'Pesanan dikirim!',
-            'id'=> $id
+            'id'=> $id,
+            'category' => 'delivered'
         ];
         $data_encode = json_encode($data);
         $user->createNotifUser($data_encode);
@@ -154,9 +158,10 @@ class TransactionsController extends Controller
         //Notif Admin
         $admin = Admin::find(10);
         $data = [
-            'nama'=> $user->name,
-            'message'=>'Admin membatalkan pesanan!',
-            'id'=> $id
+            'nama'=> 'Admin',
+            'message'=>'membatalkan pesanan!',
+            'id'=> $id,
+            'category' => 'transaction'
         ];
         $data_encode = json_encode($data);
         $admin->createNotif($data_encode);
@@ -165,7 +170,8 @@ class TransactionsController extends Controller
         $data = [
             'nama'=> $user->name,
             'message'=>'Pesanan dibatalkan!',
-            'id'=> $id
+            'id'=> $id,
+            'category' => 'canceled'
         ];
         $data_encode = json_encode($data);
         $user->createNotifUser($data_encode);
@@ -187,7 +193,8 @@ class TransactionsController extends Controller
         $data = [
             'nama'=> $user->name,
             'message'=>'Pesanan expired!',
-            'id'=> $id
+            'id'=> $id,
+            'category' => 'transaction'
         ];
         $data_encode = json_encode($data);
         $admin->createNotif($data_encode);
@@ -196,7 +203,8 @@ class TransactionsController extends Controller
         $data = [
             'nama'=> $user->name,
             'message'=>'Pesanan expired!',
-            'id'=> $id
+            'id'=> $id,
+            'category' => 'expired'
         ];
         $data_encode = json_encode($data);
         $user->createNotifUser($data_encode);
@@ -218,7 +226,8 @@ class TransactionsController extends Controller
         $data = [
             'nama'=> $user->name,
             'message'=>'Pesanan expired!',
-            'id'=> $id
+            'id'=> $id,
+            'category' => 'transaction'
         ];
         $data_encode = json_encode($data);
         $admin->createNotif($data_encode);
@@ -227,7 +236,8 @@ class TransactionsController extends Controller
         $data = [
             'nama'=> $user->name,
             'message'=>'Pesanan expired!',
-            'id'=> $id
+            'id'=> $id,
+            'category' => 'expired'
         ];
         $data_encode = json_encode($data);
         $user->createNotifUser($data_encode);
@@ -250,7 +260,8 @@ class TransactionsController extends Controller
         $data = [
             'nama'=> $user->name,
             'message'=>'Pesanan diterima!',
-            'id'=> $id
+            'id'=> $id,
+            'category' => 'transaction'
         ];
         $data_encode = json_encode($data);
         $admin->createNotif($data_encode);
@@ -259,7 +270,8 @@ class TransactionsController extends Controller
         $data = [
             'nama'=> $user->name,
             'message'=>'Pesanan diterima!',
-            'id'=> $id
+            'id'=> $id,
+            'category' => 'success'
         ];
         $data_encode = json_encode($data);
         $user->createNotifUser($data_encode);
@@ -282,7 +294,8 @@ class TransactionsController extends Controller
         $data = [
             'nama'=> $user->name,
             'message'=>'membatalkan pesanan!',
-            'id'=> $id
+            'id'=> $id,
+            'category' => 'transaction'
         ];
         $data_encode = json_encode($data);
         $admin->createNotif($data_encode);
@@ -291,7 +304,8 @@ class TransactionsController extends Controller
         $data = [
             'nama'=> $user->name,
             'message'=>'Pesanan dibatalkan!',
-            'id'=> $id
+            'id'=> $id,
+            'category' => 'canceled'
         ];
         $data_encode = json_encode($data);
         $user->createNotifUser($data_encode);
@@ -332,16 +346,6 @@ class TransactionsController extends Controller
 
 
     public function getCost(Request $request) {
-        /*$product = $request->product_id;
-        $totalDiscount = 0;
-        foreach ($product as $product_id) {
-            $discount = Discount::where('id_product', $product_id)->get();
-            foreach($discount as $discounts) {
-                $totalDiscount += $discounts->percentage;
-            }
-            dd($totalDiscount);
-        }*/
-
         $url = 'https://api.rajaongkir.com/starter/cost';
         $client = new Client();
         
@@ -418,7 +422,8 @@ class TransactionsController extends Controller
         $data = [
             'nama'=> Auth::user()->name,
             'message'=>'melakukan transaksi!',
-            'id'=> $transaksi_id
+            'id'=> $transaksi_id,
+            'category' => 'transaction'
         ];
         $data_encode = json_encode($data);
         $admin->createNotif($data_encode);
@@ -427,8 +432,9 @@ class TransactionsController extends Controller
         $user = User::find($transaksi->user_id);
         $data = [
             'nama'=>Auth::user()->name,
-            'message'=>'Transaksi sedang diproses!',
-            'id'=>$transaksi_id
+            'message'=>'Upload bukti pembayaran!',
+            'id'=>$transaksi_id,
+            'category' => 'transaction'
         ];
         $data_encode = json_encode($data);
         $user->createNotifUser($data_encode);
@@ -558,7 +564,8 @@ class TransactionsController extends Controller
         $data = [
             'nama'=> $user->name,
             'message'=>'mengupload bukti pembayaran!',
-            'id'=> $request->transaction_id
+            'id'=> $request->transaction_id,
+            'category' => 'transaction'
         ];
         $data_encode = json_encode($data);
         $admin->createNotif($data_encode);
@@ -567,142 +574,12 @@ class TransactionsController extends Controller
         $data = [
             'nama'=> $user->name,
             'message'=>'Bukti pembayaran diupload!',
-            'id'=> $request->transaction_id
+            'id'=> $request->transaction_id,
+            'category' => 'transaction'
         ];
         $data_encode = json_encode($data);
         $user->createNotifUser($data_encode);
 
-    return redirect('order')->with("success", "Bukti pembayaran berhasil diupload!");
-        /*if (file_exists('payment/'.$imageName)) {
-            return redirect('order')->with("success", "Bukti pembayaran berhasil diupload!");
-        } else {
-            return redirect('home')->with("failed", "Upload ulang bukti pembayaran!");
-        }*/
-    }
-    
-
-    /*public function checknotification($id){
-        $check = Auth::guard('user')->check();
-        
-        if($check === true){
-            loginUser::find(Auth::guard('user')->user()->id)->unreadNotifications->find($id)->markAsRead();
-            return response()->json('success');
-        }else{
-            loginAdmin::find(Auth::guard('admin')->user()->id)->unreadNotifications->find($id)->markAsRead();
-            return response()->json('success');
-        }
-    }
-    
-    public function updateTransaction(Request $request){
-        $user = Transaction::find($request->id);
-        $update = Transaction::where('id', $request->id)
-            ->update(
-                ['status' => $request->status]
-            );
-        //'unverified','verified','delivered','success','expired','canceled','reviewed'
-        
-        if($update > 0){
-            if($request->status == 'verified'){
-                loginUser::find($user->user_id)->notify(new UserNotifications('Hai!Transaksimu Telah di Verifikasi.','/notifications'));
-            }else if($request->status == 'delivered'){
-                loginUser::find($user->user_id)->notify(new UserNotifications('Hai! Transaksi mu Telah di Kirim.','/notifications'));
-            }else if($request->status == 'success'){
-                loginUser::find($user->user_id)->notify(new UserNotifications('Hai! Transaksi mu Telah di terima.','/notifications'));
-            }else if($request->status == 'expired'){
-                loginUser::find($user->user_id)->notify(new UserNotifications('Yah... Transaksi mu telah kadaluarsa.','/notifications'));
-            }elseif($request->status == 'canceled'){
-                loginUser::find($user->user_id)->notify(new UserNotifications('Yah... Transaksi mu telah di batalakan.','/notifications'));
-            }
-            return response()->json('success');
-        }
-    }*/
-
-
-    public function store(Request $request)
-    {
-        /*$origin = 114;
-        $destination =$request->destination;
-        $weight = 1000;
-        $courier_id = $request->courier;
-        $courier_name = Courier::where('id',$courier_id)->first('courier');
-        $province_name = Province::where('id',$request->province_to)->first('province');
-        $regency_name = City::where('id',$destination)->first('city_name');
-
-        if(Auth::guard('user')->check()){
-            $ongkir = Http::asForm()->withHeaders(['key'=>'f9941f3ab651b045b7b3c32e83edc255'])->post('https://api.rajaongkir.com/starter/cost',[
-                'origin'=> $origin,
-                'destination'=> $destination,
-                'weight'=> $weight,
-                'courier'=> $courier_name->courier
-            ]);
-
-            $cekongkir = $ongkir['rajaongkir']['results'][0]['costs'];
-
-            foreach ($cekongkir as $hasil) {
-                $kirim = $hasil['cost'][0]['value'];
-            };
-
-            $total = $request->price * $request->qty;
-            $sub_total = $total + $kirim;
-            $id_user = Auth::guard('user')->id();
-            $date = Carbon::now('Asia/Makassar');
-            $timeout = $date->addHours(24);
-            // echo $date;
-            $transaksi = Transaction::create([
-                'address' => $request->address,
-                'user_id' => $id_user,
-                'regency' => $regency_name->city_name,
-                'province' => $province_name->province,
-                'total' => $total,
-                'shipping_cost' => $kirim,
-                'sub_total' => $sub_total,
-                'courier_id' => $courier_id,
-                'timeout' => $timeout,
-                'status' => 'unverified'
-            ]);
-
-            $transaksi_id = $transaksi->id;
-            // echo $transaksi_id;
-            // $transaction = Transaction::where('user_id',$id_user)->get();
-            // foreach ($transaction as $transactions) {
-            // $transaction_id = $transactions->id;
-            // } 
-
-            Transaction_Detail::create([
-                'transaction_id' => $transaksi_id,
-                'product_id' => $request->product_id,
-                'qty' => $request->qty,
-                'selling_price' => $request->price
-            ]);
-
-            $admins = Admin::all();
-
-            foreach ($admins as $admin) {
-                $admin->notify(new NewTransaction());
-            }
-
-            return redirect('/pesananuser');
-        }else{
-            return redirect('/userLogin');
-        }*/
-    }
-
-    public function destroy(Transaction $transaction)
-    {
-        /*$transaction_id = $transaction->id;
-        // dd($transaction_id);
-        $transDetail = Transaction_Detail::where('transaction_id',$transaction_id)->get();
-        // echo $transDetail->id;
-        foreach ($transDetail as $detail) {
-            // echo($detail->id); 
-            Transaction_Detail::destroy($detail->id);
-        }
-
-        Transaction::where('id', $transaction_id)
-            ->update([
-                'status' => 'canceled'
-            ]);
-
-        return redirect('/pesananuser');*/
+        return redirect('order')->with("success", "Bukti pembayaran berhasil diupload!");
     }
 }

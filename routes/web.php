@@ -109,3 +109,7 @@ Route::get('/order/delivered', 'TransactionsController@orderDelivered')->name('o
 Route::get('/order/success', 'TransactionsController@orderSuccess')->name('order.success')->middleware('auth');
 Route::get('/order/expired', 'TransactionsController@orderExpired')->name('order.expired')->middleware('auth');
 Route::get('/order/canceled', 'TransactionsController@orderCanceled')->name('order.canceled')->middleware('auth');
+
+//Notification
+Route::get('user/{id}', 'HomeController@userNotif')->name('user.notification')->middleware('auth');
+Route::get('admin/{id}', 'AdminController@adminNotif')->name('admin.notification')->middleware('auth:admin');

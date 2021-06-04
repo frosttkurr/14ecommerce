@@ -144,6 +144,9 @@
                                                 </tbody>
                                             </table>
                                             <div class="form-group">
+                                                <form action="{{ route('order.payment') }}" method="POST" enctype="multipart/form-data">
+                                                {{ method_field('POST') }}
+                                                {{ csrf_field() }}
                                                 <input type="text" hidden name="transaction_id" class="form-control" placeholder="{{ $order->id }}" value="{{ $order->id }}">
                                                 <input type="file" name="payment" class="form-control {{ $errors->has('payment') ? ' is-invalid' : '' }}" >
                                                 @if ($errors->has('payment'))
@@ -155,6 +158,7 @@
                                             <button type="submit" class="btn btn-dark btn-lg btn-block">
                                                 Upload Bukti Pembayaran   <span class="glyphicon glyphicon-chevron-right"></span>
                                             </button>
+                                            </form>
                                             <div class="container-fluid">
                                                 <form action="{{ url('userCanceled/'. $order->id) }}" method="POST">
                                                     {{ method_field('PUT') }}

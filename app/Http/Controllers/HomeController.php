@@ -10,6 +10,9 @@ use App\Response;
 use App\Admin;
 use App\User;
 use App\Transaction;
+use Carbon\Carbon;
+use App\AdminNotifications;
+use App\UserNotifications;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -74,8 +77,56 @@ class HomeController extends Controller
                 'link' => url(route('product.edit',['id'=> $id])),
             ];
 
+            //Notif Admin
+            $admin = Admin::find(10);
+            $data = [
+                'nama'=> $user->name,
+                'message'=>'mereview product!',
+                'id'=> $id,
+                'category' => 'review'
+            ];
+            $data_encode = json_encode($data);
+            $admin->createNotif($data_encode);
+
+            //Notif User
+            $data = [
+                'nama'=> $user->name,
+                'message'=>'Review dikirimkan!',
+                'id'=> $id,
+                'category' => 'review'
+            ];
+            $data_encode = json_encode($data);
+            $user->createNotifUser($data_encode);
+
             return redirect()->back()->with("Success", "Successfully Comment");
         }
         return redirect()->back()->with("error", "Failed Comment");
+    }
+
+    public function userNotif($id) 
+    {
+        $notification = UserNotifications::find($id);
+        $notif = json_decode($notification->data);
+        $date = Carbon::now('Asia/Makassar');
+        UserNotifications::where('id', $id)
+                ->update([
+                    'read_at' => $date
+                ]);
+        
+        if ($notif->category == 'transaction') {
+            return redirect()->route('order.all');
+        } elseif ($notif->category == 'approved') {
+            return redirect()->route('order.verified');
+        } elseif ($notif->category == 'delivered') {
+            return redirect()->route('order.delivered');
+        } elseif ($notif->category == 'canceled') {
+            return redirect()->route('order.canceled');
+        } elseif ($notif->category == 'expired') {
+            return redirect()->route('order.expired');
+        } elseif ($notif->category == 'success') {
+            return redirect()->route('order.success');
+        } elseif ($notif->category == 'review') {
+            return redirect()->route('detail_product', $notif->id);
+        }
     }
 }

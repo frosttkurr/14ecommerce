@@ -102,7 +102,7 @@ class DiscountController extends Controller
         $discount->start = $request->start;
         $discount->end = $request->end;
         $discount->save();
-        return redirect("product.edit");
+        return redirect()->route('product.edit', $request->id_product);
         
     }
 

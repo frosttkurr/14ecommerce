@@ -19,8 +19,8 @@
             
             <div class="col-md-7">
              <div>
-                <img src="{{ url('storage/public_html/gambarproduct/'.$image->image_name) }}" alt class="img-fluid wc-image">
-                <div class="single-gallery-image" style="background: url({{ url('storage/public_html/gambarproduct/'.$image->image_name) }});"></div>
+                <img src="{{ url('storage/app/public/public_html/gambarproduct/'.$image->image_name) }}" alt class="img-fluid wc-image">
+                <div class="single-gallery-image" style="background: url({{ url('storage/app/public/public_html/gambarproduct/'.$image->image_name) }});"></div>
               </div>
 		    </div>
             @endforeach
@@ -112,7 +112,7 @@
         	@foreach ($product_reviews as $item)
          <div class="row">
 					<div class="d-inline-flex">
-            <img src="{{asset('image_user/'.$item->user->profile_image)}}" style="width: 75px; height:75px;" alt="" class="img-fluid">
+            <img src="{{url('storage/app/public/public_html/user/user.png')}}" style="width: 75px; height:75px;" alt="" class="img-fluid">
 					</div>
 					<div class="col-md-9 mt-sm-20">
             <p><b>{{$loop->iteration.'. '.$item->user->name}}</b></p>

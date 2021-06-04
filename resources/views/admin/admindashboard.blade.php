@@ -39,16 +39,17 @@
 				<div id="navbar-menu">
 					<ul class="nav navbar-nav navbar-right">
 						<li class="dropdown">
-							@php $admin_unRead = \App\AdminNotifications::where('notifiable_id', 10)->where('read_at', NULL)->orderBy('created_at','desc')->get(); @endphp
+							@php $admin_unRead = \App\AdminNotifications::where('notifiable_id', 10)->where('read_at', NULL)->orderBy('created_at','desc')->count(); @endphp
 							<a href="#" class="dropdown-toggle icon-menu" data-toggle="dropdown">
 								<i class="lnr lnr-alarm"></i>
-								<span class="badge bg-danger">@php count($admin_unRead) @endphp</span>
+								<span class="badge bg-danger">@php echo $admin_unRead @endphp</span>
 							</a>
 							<ul class="dropdown-menu notifications">
-								@php $admin_notifikasi = \App\AdminNotifications::where('notifiable_id', 10)->orderBy('created_at','desc')->get(); @endphp
+								@php $admin_notifikasi = \App\AdminNotifications::where('notifiable_id', 10)->where('read_at', NULL)->orderBy('created_at','desc')->get(); @endphp
 								@forelse ($admin_notifikasi as $notifikasi)
 									@php $notif = json_decode($notifikasi->data); @endphp
-									<li><a href="{{route('transactions.detail', $notif->id)}}" class="notification-item"><span class="dot bg-warning"></span><small>[{{$notif->nama}}]</small> {{$notif->message}}</a></li>
+									<li>
+										<a href="@if ($notif->category == 'transaction') {{ route('admin.notification', $notifikasi->id) }} @elseif ($notif->category == 'review') {{ route('admin.notification', $notifikasi->id) }} @endif" class="notification-item"><span class="dot bg-warning"></span><small>[{{$notif->nama}}]</small> {{$notif->message}}</a></li>
 								@empty
 									<li><a href="" class="notification-item">Tidak ada notifikasi</a></li>
 								@endforelse
@@ -93,17 +94,19 @@
 					<!-- OVERVIEW -->
 					<div class="panel panel-headline">
 						<div class="panel-heading">
-							<h3 class="panel-title">Weekly Overview</h3>
-							<p class="panel-subtitle">Period: Maret 14, 2021 - Mei 21, 2021</p>
+							<h3 class="panel-title">Admin Dashboard</h3>
+							<p class="panel-subtitle">Period: {{ date('d-m-Y H:m:s', strtotime($now)) }}</p>
 						</div>
 						<div class="panel-body">
 							<div class="row">
 								<div class="col-md-3">
 									<div class="metric">
-										<span class="icon"><i class="fa fa-download"></i></span>
+										<span class="icon">
+											<i class="fa fa-shopping-cart" aria-hidden="true"></i>
+										</span>
 										<p>
-											<span class="number">1,252</span>
-											<span class="title">Downloads</span>
+											<span class="number">{{ $monthlySales }}</span>
+											<span class="title">Penjualan Bulanan</span>
 										</p>
 									</div>
 								</div>
@@ -111,46 +114,45 @@
 									<div class="metric">
 										<span class="icon"><i class="fa fa-shopping-bag"></i></span>
 										<p>
-											<span class="number">203</span>
-											<span class="title">Sales</span>
+											<span class="number">{{ $annualSales }}</span>
+											<span class="title">Penjualan Tahunan</span>
 										</p>
 									</div>
 								</div>
 								<div class="col-md-3">
 									<div class="metric">
-										<span class="icon"><i class="fa fa-eye"></i></span>
+										<span class="icon"><i class="fa fa-cart-plus" aria-hidden="true"></i>
+										</span>
 										<p>
-											<span class="number">274,678</span>
-											<span class="title">Visits</span>
-										</p>
-									</div>
-								</div>
-								<div class="col-md-3">
-									<div class="metric">
-										<span class="icon"><i class="fa fa-bar-chart"></i></span>
-										<p>
-											<span class="number">35%</span>
-											<span class="title">Conversions</span>
+											<span class="number">{{ $allSales }}</span>
+											<span class="title">Total Penjualan</span>
 										</p>
 									</div>
 								</div>
 							</div>
 							<div class="row">
 								<div class="col-md-9">
-									<div id="headline-chart" class="ct-chart"></div>
+									<div id="monthly-chart" class="ct-chart"></div>
 								</div>
 								<div class="col-md-3">
 									<div class="weekly-summary text-right">
-										<span class="number">2,315</span> <span class="percentage"><i class="fa fa-caret-up text-success"></i> 12%</span>
-										<span class="info-label">Total Sales</span>
+										<span class="number">Rp{{ number_format($incomeMonthly) }}</span>
+										<span class="info-label">Pendapatan Bulanan</span>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-9">
+									<div id="annual-chart" class="ct-chart"></div>
+								</div>
+								<div class="col-md-3">
+									<div class="weekly-summary text-right">
+										<span class="number">Rp{{ number_format($incomeAnnual) }}</span>
+										<span class="info-label">Pendapatan Tahunan</span>
 									</div>
 									<div class="weekly-summary text-right">
-										<span class="number">$5,758</span> <span class="percentage"><i class="fa fa-caret-up text-success"></i> 23%</span>
-										<span class="info-label">Monthly Income</span>
-									</div>
-									<div class="weekly-summary text-right">
-										<span class="number">$65,938</span> <span class="percentage"><i class="fa fa-caret-down text-danger"></i> 8%</span>
-										<span class="info-label">Total Income</span>
+										<span class="number">Rp{{ number_format($incomeTotal) }}</span>
+										<span class="info-label">Total Pendapatan</span>
 									</div>
 								</div>
 							</div>
@@ -183,39 +185,15 @@
 	$(function() {
 		var data, options;
 
-		// headline charts
-		data = {
-			labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-			series: [
-				[23, 29, 24, 40, 25, 24, 35],
-				[14, 25, 18, 34, 29, 38, 44],
-			]
-		};
-
-		options = {
-			height: 300,
-			showArea: true,
-			showLine: false,
-			showPoint: false,
-			fullWidth: true,
-			axisX: {
-				showGrid: false
-			},
-			lineSmooth: false,
-		};
-
-		new Chartist.Line('#headline-chart', data, options);
-
-
-		// visits trend charts
+		// sales monthly charts
 		data = {
 			labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
 			series: [{
 				name: 'series-real',
-				data: [200, 380, 350, 320, 410, 450, 570, 400, 555, 620, 750, 900],
+				data: ['{{$january}}', '{{$february}}', '{{$march}}', '{{$april}}', '{{$may}}', '{{$june}}', '{{$july}}', '{{$august}}', '{{$september}}', '{{$october}}', '{{$november}}', '{{$december}}'],
 			}, {
 				name: 'series-projection',
-				data: [240, 350, 360, 380, 400, 450, 480, 523, 555, 600, 700, 800],
+				data: ['{{$january}}', '{{$february}}', '{{$march}}', '{{$april}}', '{{$may}}', '{{$june}}', '{{$july}}', '{{$august}}', '{{$september}}', '{{$october}}', '{{$november}}', '{{$december}}'],
 			}]
 		};
 
@@ -247,39 +225,49 @@
 			}
 		};
 
-		new Chartist.Line('#visits-trends-chart', data, options);
+		new Chartist.Line('#monthly-chart', data, options);
 
-
-		// visits chart
+		// sales annual charts
 		data = {
-			labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-			series: [
-				[6384, 6342, 5437, 2764, 3958, 5068, 7654]
-			]
+			labels: ['2020', '2021'],
+			series: [{
+				name: 'series-real',
+				data: [0, '{{$annualSales}}'],
+			}, {
+				name: 'series-projection',
+				data: [0, '{{$annualSales}}'],
+			}]
 		};
 
 		options = {
-			height: 300,
-			axisX: {
-				showGrid: false
+			fullWidth: true,
+			lineSmooth: false,
+			height: "270px",
+			low: 0,
+			high: 'auto',
+			series: {
+				'series-projection': {
+					showArea: true,
+					showPoint: false,
+					showLine: false
+				},
 			},
+			axisX: {
+				showGrid: false,
+
+			},
+			axisY: {
+				showGrid: false,
+				onlyInteger: true,
+				offset: 0,
+			},
+			chartPadding: {
+				left: 20,
+				right: 20
+			}
 		};
 
-		new Chartist.Bar('#visits-chart', data, options);
-
-
-		// real-time pie chart
-		var sysLoad = $('#system-load').easyPieChart({
-			size: 130,
-			barColor: function(percent) {
-				return "rgb(" + Math.round(200 * percent / 100) + ", " + Math.round(200 * (1.1 - percent / 100)) + ", 0)";
-			},
-			trackColor: 'rgba(245, 245, 245, 0.8)',
-			scaleColor: false,
-			lineWidth: 5,
-			lineCap: "square",
-			animate: 800
-		});
+		new Chartist.Line('#annual-chart', data, options);
 
 		var updateInterval = 3000; // in milliseconds
 

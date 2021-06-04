@@ -21,7 +21,7 @@ USE `db_paktikum_prognet`;
 DROP TABLE IF EXISTS `admin_notifications`;
 
 CREATE TABLE `admin_notifications` (
-  `id` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `type` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `notifiable_type` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `notifiable_id` int(10) unsigned NOT NULL,
@@ -33,7 +33,7 @@ CREATE TABLE `admin_notifications` (
   KEY `seller_notifications_notifiable_type_notifiable_id_index` (`notifiable_type`,`notifiable_id`),
   KEY `notifiable_id` (`notifiable_id`),
   CONSTRAINT `admin_notifications_ibfk_1` FOREIGN KEY (`notifiable_id`) REFERENCES `admins` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 /*Data for the table `admin_notifications` */
 
@@ -57,15 +57,7 @@ CREATE TABLE `admins` (
 
 /*Data for the table `admins` */
 
-insert  into `admins`(`id`,`username`,`password`,`name`,`profile_image`,`phone`,`remember_token`,`created_at`,`updated_at`) values (1,'coba123','2e3b95f861f9685e17c4bb5c356881b7','','','',NULL,NULL,NULL);
-insert  into `admins`(`id`,`username`,`password`,`name`,`profile_image`,`phone`,`remember_token`,`created_at`,`updated_at`) values (2,'awan08','$2y$10$Il/Rz8Dqn8KLdePf.LOVWeAFVvRg.zHf6cNMh1/EWaVBcgTgkvicG','awan','IMG_8788.JPG','085237594798',NULL,'2021-03-14 05:00:09','2021-03-14 05:00:09');
-insert  into `admins`(`id`,`username`,`password`,`name`,`profile_image`,`phone`,`remember_token`,`created_at`,`updated_at`) values (5,'vigyan08','$2y$10$DFNi8oK.qBzyDJmpOPd6yeXN8OFFVRRUTSpSNyk3sdwY1HAAR/X2e','vigyan','IMG_8796.JPG','082247716884',NULL,'2021-03-14 05:08:48','2021-03-14 05:08:48');
-insert  into `admins`(`id`,`username`,`password`,`name`,`profile_image`,`phone`,`remember_token`,`created_at`,`updated_at`) values (6,'kristi08','$2y$10$wguh1ZwJ9/.E2VYZHyu5hO337AE70C6Ihn.wjWZGBXTmBQtNziBVO','kristi','IMG_8796.JPG','083723673884',NULL,'2021-03-14 05:11:59','2021-03-14 05:11:59');
-insert  into `admins`(`id`,`username`,`password`,`name`,`profile_image`,`phone`,`remember_token`,`created_at`,`updated_at`) values (7,'mama08','$2y$10$jlEbXo9czlU5Xl7CHE/Qe.1Cj0kmm2gEV6n1dVONGzaeC8J5OD0ki','mama','IMG_8788.JPG','0839738749',NULL,'2021-03-14 05:14:26','2021-03-14 05:14:26');
-insert  into `admins`(`id`,`username`,`password`,`name`,`profile_image`,`phone`,`remember_token`,`created_at`,`updated_at`) values (8,'uhuy123','$2y$10$tLJciG39uk1DcDP4oPMrX.CbEZndFClUzlFjtfB.NqW4AfNuEsJw2','uhuy08','des2.png','0290389479',NULL,'2021-03-14 05:18:45','2021-03-14 05:18:45');
-insert  into `admins`(`id`,`username`,`password`,`name`,`profile_image`,`phone`,`remember_token`,`created_at`,`updated_at`) values (9,'jaya123','$2y$10$ME60U7jCePvc.UxT4Gd/RuYjcOuFQQKWZcUAAiinu4n.f9JsXhd0u','jaya','IMG_8796.JPG','020847479',NULL,'2021-03-16 13:19:27','2021-03-16 13:19:27');
 insert  into `admins`(`id`,`username`,`password`,`name`,`profile_image`,`phone`,`remember_token`,`created_at`,`updated_at`) values (10,'pastibisa08','$2y$10$t/43nuASSK5EYc52.XJYbeZogcOnCIw2SiaJ44jB/KjQCipOOXeuW','pastibisa','IMG_8796.JPG','08733474970',NULL,'2021-03-17 14:23:21','2021-03-17 14:23:21');
-insert  into `admins`(`id`,`username`,`password`,`name`,`profile_image`,`phone`,`remember_token`,`created_at`,`updated_at`) values (12,'sukses123','2e3b95f861f9685e17c4bb5c356881b7','sukses','','086327188173',NULL,NULL,NULL);
 
 /*Table structure for table `carts` */
 
@@ -84,12 +76,18 @@ CREATE TABLE `carts` (
   KEY `product_id` (`product_id`),
   CONSTRAINT `carts_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
   CONSTRAINT `carts_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 /*Data for the table `carts` */
 
 insert  into `carts`(`id`,`user_id`,`product_id`,`qty`,`created_at`,`updated_at`,`status`) values (17,15,3,1,NULL,'2021-05-29 14:39:51','checkedout');
-insert  into `carts`(`id`,`user_id`,`product_id`,`qty`,`created_at`,`updated_at`,`status`) values (19,15,2,1,NULL,'2021-05-29 16:14:40','checkedout');
+insert  into `carts`(`id`,`user_id`,`product_id`,`qty`,`created_at`,`updated_at`,`status`) values (24,15,3,1,NULL,'2021-05-30 12:26:46','checkedout');
+insert  into `carts`(`id`,`user_id`,`product_id`,`qty`,`created_at`,`updated_at`,`status`) values (25,15,2,1,NULL,'2021-05-30 15:07:43','checkedout');
+insert  into `carts`(`id`,`user_id`,`product_id`,`qty`,`created_at`,`updated_at`,`status`) values (27,15,3,1,NULL,'2021-05-30 19:32:04','checkedout');
+insert  into `carts`(`id`,`user_id`,`product_id`,`qty`,`created_at`,`updated_at`,`status`) values (30,15,1,1,NULL,'2021-05-31 10:07:32','checkedout');
+insert  into `carts`(`id`,`user_id`,`product_id`,`qty`,`created_at`,`updated_at`,`status`) values (31,15,1,1,NULL,'2021-05-31 10:10:14','checkedout');
+insert  into `carts`(`id`,`user_id`,`product_id`,`qty`,`created_at`,`updated_at`,`status`) values (32,15,2,1,NULL,'2021-05-31 13:02:56','checkedout');
+insert  into `carts`(`id`,`user_id`,`product_id`,`qty`,`created_at`,`updated_at`,`status`) values (33,15,2,1,NULL,'2021-05-31 13:08:54','checkedout');
 
 /*Table structure for table `cities` */
 
@@ -797,14 +795,14 @@ CREATE TABLE `product_reviews` (
   KEY `user_id` (`user_id`),
   KEY `rate_id` (`rate`),
   KEY `product_id` (`product_id`),
-  CONSTRAINT `product_reviews_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
-  CONSTRAINT `product_reviews_ibfk_3` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`)
+  CONSTRAINT `product_reviews_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`),
+  CONSTRAINT `product_reviews_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 /*Data for the table `product_reviews` */
 
-insert  into `product_reviews`(`id`,`product_id`,`user_id`,`rate`,`content`,`created_at`,`updated_at`) values (1,2,15,5,'Mantap bagus banget!','2021-05-28 15:33:41','2021-05-28 15:33:41');
-insert  into `product_reviews`(`id`,`product_id`,`user_id`,`rate`,`content`,`created_at`,`updated_at`) values (2,1,15,5,'Sangat recommended untuk gamer!','2021-05-29 17:01:25','2021-05-29 17:01:25');
+insert  into `product_reviews`(`id`,`product_id`,`user_id`,`rate`,`content`,`created_at`,`updated_at`) values (1,2,17,5,'Mantap bagus banget!','2021-05-28 15:33:41','2021-05-28 15:33:41');
+insert  into `product_reviews`(`id`,`product_id`,`user_id`,`rate`,`content`,`created_at`,`updated_at`) values (2,1,17,5,'Sangat recommended untuk gamer!','2021-05-29 17:01:25','2021-05-29 17:01:25');
 
 /*Table structure for table `products` */
 
@@ -825,9 +823,9 @@ CREATE TABLE `products` (
 
 /*Data for the table `products` */
 
-insert  into `products`(`id`,`product_name`,`price`,`description`,`product_rate`,`created_at`,`updated_at`,`stock`,`weight`) values (1,'Redmi Note 9 Pro',3000000,'Redmi Note 9 Pro dilengkapi dengan kamera quad level flagship. Kamera utama 64MP dengan jelas mengabadikan momen favoritmu dan lensa sudut ultra lebar, lensa makro, dan sensor kedalaman, akan memastikan kamu untuk mendapatkan hasil terbaik dari momen yang ingin kamu abadikan.',5,'2021-03-24 13:46:08','2021-05-29 17:01:25',7,1000);
-insert  into `products`(`id`,`product_name`,`price`,`description`,`product_rate`,`created_at`,`updated_at`,`stock`,`weight`) values (2,'Poco X3 Pro',3500000,'POCO adalah semua yang Anda butuhkan, tidak ada yang tidak Anda butuhkan.',5,'2021-03-25 12:55:52','2021-05-28 15:33:41',17,1000);
-insert  into `products`(`id`,`product_name`,`price`,`description`,`product_rate`,`created_at`,`updated_at`,`stock`,`weight`) values (3,'iPhone 12 Pro MAX',24000000,'Sistem kamera Pro yang menghadirkan fotografi pencahayaan rendah ke tingkat lebih tinggi — bahkan dengan peningkatan yang signifikan di iPhone 12 Pro Max. ',4,'2021-03-27 23:04:25','2021-03-27 23:04:25',7,1000);
+insert  into `products`(`id`,`product_name`,`price`,`description`,`product_rate`,`created_at`,`updated_at`,`stock`,`weight`) values (1,'Redmi Note 9 Pro',3000000,'Redmi Note 9 Pro dilengkapi dengan kamera quad level flagship. Kamera utama 64MP dengan jelas mengabadikan momen favoritmu dan lensa sudut ultra lebar, lensa makro, dan sensor kedalaman, akan memastikan kamu untuk mendapatkan hasil terbaik dari momen yang ingin kamu abadikan.',5,'2021-03-24 13:46:08','2021-05-30 20:52:24',50,1000);
+insert  into `products`(`id`,`product_name`,`price`,`description`,`product_rate`,`created_at`,`updated_at`,`stock`,`weight`) values (2,'Poco X3 Pro',3500000,'POCO adalah semua yang Anda butuhkan, tidak ada yang tidak Anda butuhkan.',5,'2021-03-25 12:55:52','2021-05-30 19:19:03',48,1000);
+insert  into `products`(`id`,`product_name`,`price`,`description`,`product_rate`,`created_at`,`updated_at`,`stock`,`weight`) values (3,'iPhone 12 Pro MAX',24000000,'Sistem kamera Pro yang menghadirkan fotografi pencahayaan rendah ke tingkat lebih tinggi — bahkan dengan peningkatan yang signifikan di iPhone 12 Pro Max. ',4,'2021-03-27 23:04:25','2021-05-30 13:31:49',32,1000);
 
 /*Table structure for table `provinces` */
 
@@ -919,11 +917,9 @@ CREATE TABLE `transaction_details` (
   KEY `id_product` (`product_id`),
   CONSTRAINT `transaction_details_ibfk_1` FOREIGN KEY (`transaction_id`) REFERENCES `transactions` (`id`),
   CONSTRAINT `transaction_details_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 /*Data for the table `transaction_details` */
-
-insert  into `transaction_details`(`id`,`transaction_id`,`product_id`,`qty`,`discount`,`selling_price`,`created_at`,`updated_at`) values (14,10,1,1,8,3000000,'2021-05-30 06:29:22','2021-05-30 06:29:22');
 
 /*Table structure for table `transactions` */
 
@@ -949,18 +945,16 @@ CREATE TABLE `transactions` (
   KEY `user_id` (`user_id`),
   CONSTRAINT `transactions_ibfk_1` FOREIGN KEY (`courier_id`) REFERENCES `couriers` (`id`),
   CONSTRAINT `transactions_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 /*Data for the table `transactions` */
-
-insert  into `transactions`(`id`,`timeout`,`address`,`regency`,`province`,`total`,`shipping_cost`,`sub_total`,`user_id`,`courier_id`,`proof_of_payment`,`created_at`,`updated_at`,`status`) values (10,'2021-05-31 14:29:22','Jalan Temba Bedi No. 123, RT 004 RW 009','Bengkayang','Kalimantan Barat',2814000.00,54000.00,2760000.00,15,10,NULL,'2021-05-30 06:29:22','2021-05-30 06:51:59','unverified');
 
 /*Table structure for table `user_notifications` */
 
 DROP TABLE IF EXISTS `user_notifications`;
 
 CREATE TABLE `user_notifications` (
-  `id` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `type` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `notifiable_type` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `notifiable_id` int(11) unsigned NOT NULL,
@@ -971,8 +965,9 @@ CREATE TABLE `user_notifications` (
   PRIMARY KEY (`id`),
   KEY `user_notifications_notifiable_type_notifiable_id_index` (`notifiable_type`,`notifiable_id`),
   KEY `notifiable_id` (`notifiable_id`),
+  KEY `id` (`id`),
   CONSTRAINT `user_notifications_ibfk_1` FOREIGN KEY (`notifiable_id`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 /*Data for the table `user_notifications` */
 
@@ -1013,7 +1008,7 @@ insert  into `users`(`id`,`name`,`email`,`profile_image`,`status`,`email_verifie
 insert  into `users`(`id`,`name`,`email`,`profile_image`,`status`,`email_verified_at`,`password`,`remember_token`,`created_at`,`updated_at`) values (14,'kusuma','kusumadewi@gmail.com',NULL,NULL,NULL,'$2y$10$x5n5rSglka5Jsmn0fcfz6.3A3nUPuswfHTXYdH8zQfl.YXL63N2pm',NULL,'2021-03-19 00:27:44','2021-03-19 00:27:44');
 insert  into `users`(`id`,`name`,`email`,`profile_image`,`status`,`email_verified_at`,`password`,`remember_token`,`created_at`,`updated_at`) values (15,'cobadulu','cobadulu@gmail.com','IMG_8788.PNG','Sudah Terdaftar','2021-03-24 12:19:52','$2y$10$Jt./odmpBgLorwC9AOh8Iu58bXEdbUqdZyDwApNlZwQgWRWFa8HIm',NULL,'2021-03-24 12:17:53','2021-03-24 12:19:52');
 insert  into `users`(`id`,`name`,`email`,`profile_image`,`status`,`email_verified_at`,`password`,`remember_token`,`created_at`,`updated_at`) values (16,'komang','komang@gmail.com','user.png','1','2021-03-25 05:23:33','$2y$10$GILlXAxeR6RdwGmVSsD/5OwJAJilxPer27E8TKN8X23/YeNd.5AGe',NULL,'2021-03-25 05:23:05','2021-03-25 05:23:33');
-insert  into `users`(`id`,`name`,`email`,`profile_image`,`status`,`email_verified_at`,`password`,`remember_token`,`created_at`,`updated_at`) values (17,'ayu','ayu@gmail.com','user.png','1','2021-03-25 10:56:08','$2y$10$ig7sYYu.q9UzqaN5ZPq1Ueofgv813nSwIT3nFYSlQ40b3fMofVbuS',NULL,'2021-03-25 10:55:41','2021-03-25 10:56:08');
+insert  into `users`(`id`,`name`,`email`,`profile_image`,`status`,`email_verified_at`,`password`,`remember_token`,`created_at`,`updated_at`) values (17,'ayu','ayu@gmail.com','IMG_8788.PNG','1','2021-03-25 10:56:08','$2y$10$ig7sYYu.q9UzqaN5ZPq1Ueofgv813nSwIT3nFYSlQ40b3fMofVbuS',NULL,'2021-03-25 10:55:41','2021-03-25 10:56:08');
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
