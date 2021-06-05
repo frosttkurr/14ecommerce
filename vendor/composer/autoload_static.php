@@ -498,6 +498,7 @@ class ComposerStaticInit18aa3fc0c0911580b0144b1d7c383ab2
 
     public static $classMap = array (
         'App\\Admin' => __DIR__ . '/../..' . '/app/Admin.php',
+        'App\\AdminNotifications' => __DIR__ . '/../..' . '/app/AdminNotifications.php',
         'App\\Cart' => __DIR__ . '/../..' . '/app/Cart.php',
         'App\\City' => __DIR__ . '/../..' . '/app/City.php',
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
@@ -520,6 +521,7 @@ class ComposerStaticInit18aa3fc0c0911580b0144b1d7c383ab2
         'App\\Http\\Controllers\\CourierController' => __DIR__ . '/../..' . '/app/Http/Controllers/CourierController.php',
         'App\\Http\\Controllers\\DiscountController' => __DIR__ . '/../..' . '/app/Http/Controllers/DiscountController.php',
         'App\\Http\\Controllers\\HomeController' => __DIR__ . '/../..' . '/app/Http/Controllers/HomeController.php',
+        'App\\Http\\Controllers\\NotifController' => __DIR__ . '/../..' . '/app/Http/Controllers/NotifController.php',
         'App\\Http\\Controllers\\OngkirController' => __DIR__ . '/../..' . '/app/Http/Controllers/OngkirController.php',
         'App\\Http\\Controllers\\ProductCategoriesController' => __DIR__ . '/../..' . '/app/Http/Controllers/ProductCategoriesController.php',
         'App\\Http\\Controllers\\ProductCategoryDetailsController' => __DIR__ . '/../..' . '/app/Http/Controllers/ProductCategoryDetailsController.php',
@@ -537,7 +539,9 @@ class ComposerStaticInit18aa3fc0c0911580b0144b1d7c383ab2
         'App\\Http\\Middleware\\TrimStrings' => __DIR__ . '/../..' . '/app/Http/Middleware/TrimStrings.php',
         'App\\Http\\Middleware\\TrustProxies' => __DIR__ . '/../..' . '/app/Http/Middleware/TrustProxies.php',
         'App\\Http\\Middleware\\VerifyCsrfToken' => __DIR__ . '/../..' . '/app/Http/Middleware/VerifyCsrfToken.php',
+        'App\\Notifications\\AdminNotification' => __DIR__ . '/../..' . '/app/Notifications/AdminNotification.php',
         'App\\Notifications\\AdminResetPasswordNotification' => __DIR__ . '/../..' . '/app/Notifications/AdminResetPasswordNotification.php',
+        'App\\Notifications\\UserNotification' => __DIR__ . '/../..' . '/app/Notifications/UserNotification.php',
         'App\\Product' => __DIR__ . '/../..' . '/app/Product.php',
         'App\\Product_Categories' => __DIR__ . '/../..' . '/app/Product_Categories.php',
         'App\\Product_Category_Details' => __DIR__ . '/../..' . '/app/Product_Category_Details.php',
@@ -553,6 +557,7 @@ class ComposerStaticInit18aa3fc0c0911580b0144b1d7c383ab2
         'App\\Transaction' => __DIR__ . '/../..' . '/app/Transaction.php',
         'App\\Transaction_Detail' => __DIR__ . '/../..' . '/app/Transaction_Detail.php',
         'App\\User' => __DIR__ . '/../..' . '/app/User.php',
+        'App\\UserNotifications' => __DIR__ . '/../..' . '/app/UserNotifications.php',
         'Asm89\\Stack\\Cors' => __DIR__ . '/..' . '/asm89/stack-cors/src/Asm89/Stack/Cors.php',
         'Asm89\\Stack\\CorsService' => __DIR__ . '/..' . '/asm89/stack-cors/src/Asm89/Stack/CorsService.php',
         'Attribute' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/Attribute.php',
