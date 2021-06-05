@@ -60,7 +60,7 @@
                                         @foreach ($images as $image)
                                         <tr>
                                              <td class="text-center" hidden><input type="checkbox" checked name="product_id[]" value="{{ $item->product_id }}"></td>
-                                             <td><img src="{{ url('storage/app/public/public_html/gambarproduct/'.$image->image_name) }}" height="45"/> </td>
+                                             <td><img src="{{ url('storage/public_html/gambarproduct/'.$image->image_name) }}" height="45"/> </td>
                                              <td>{{ $item->product->product_name }}</td>
                                              <td class="text-center">{{ "Rp" . number_format($item->product->price, 0, ",", ",") }}</td>
                                              <td class="text-center">{{ $item->qty }}</td>

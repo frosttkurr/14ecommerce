@@ -64,20 +64,35 @@ class ResponseController extends Controller
             'content' => ['required'],
         ]);
 
-
         $response = new Response();
         $response->review_id = $request->review_id;
         $response->admin_id = $request->admin_id;
         $response->content = $request->content;
 
+        $review = Product_Review::find($request->review_id);
+        $user = User::find($review->user_id);
+
         if ($response->save()) {
-            $product_review = Product_Review::find($request->review_id);
-            $user = User::find($product_review->user_id);
-            $details = [
-                'order' => 'Response',
-                'body' => 'Admin has respond your review!',
-                'link' => url(route('detail_product', ['id' => $product_review->product_id])),
+            //Notif Admin
+            $admin = Admin::find(10);
+            $data = [
+                'nama'=> 'Admin',
+                'message'=>'Response dikirim!',
+                'id'=> $review->product_id,
+                'category' => 'review'
             ];
+            $data_encode = json_encode($data);
+            $admin->createNotif($data_encode);
+
+            //Notif User
+            $data = [
+                'nama'=> $user->name,
+                'message'=>'Review diresponse!',
+                'id'=> $review->product_id,
+                'category' => 'review'
+            ];
+            $data_encode = json_encode($data);
+            $user->createNotifUser($data_encode);
             return redirect("/products");
         }
     }

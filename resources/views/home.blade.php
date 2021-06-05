@@ -50,7 +50,7 @@
                                           <div class="product-img rounded-xll">
                                           @foreach ($product_images as $image)
                                               <a href="{{route('detail_product',['id'=>$item->id])}}" style="color: inherit;">
-                                              <img src="{{ url('storage/app/public/public_html/gambarproduct/'.$image->image_name) }}" style="height:250px;" alt="">
+                                              <img src="{{ url('storage/public_html/gambarproduct/'.$image->image_name) }}" style="height:250px;" alt="">
                                               @php break; @endphp
                                           @endforeach
                                            </div>  
